@@ -1,16 +1,15 @@
-# timetracker
+# Timetracker
 
-A new Flutter project.
+The Projects Helps you to add ***User Time Spent functionality*** in existing Flutter Project
 
-## Getting Started
+# Steps 
 
-This project is a starting point for a Flutter application.
+1. Add UserTracker.dart, UserTrackerController Files to your project 
 
-A few resources to get you started if this is your first Flutter project:
+2. Add provider as a dependency in pubspec.yaml
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```
+provider: ^6.0.0
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ 
