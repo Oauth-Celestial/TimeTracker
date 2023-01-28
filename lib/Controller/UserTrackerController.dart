@@ -7,4 +7,13 @@ class UserTrackerController with ChangeNotifier {
     timeSpend = UserTracker.instance.seconds;
     notifyListeners();
   }
+
+  String getFormattedTime() {
+    final duration = Duration(seconds: timeSpend);
+    return duration.format();
+  }
+}
+
+extension on Duration {
+  String format() => '$this'.split('.')[0].padLeft(8, '0');
 }

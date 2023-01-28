@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker/Controller/UserTrackerController.dart';
 import 'package:timetracker/Services/UserTracker.dart';
+import 'dart:math' as math;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,21 +41,31 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: Container(
-        child: Column(
-          children: [
-            Consumer<UserTrackerController>(builder: ((context, value, child) {
-              return Container(
-                child: Text(
-                  "${value.timeSpend}",
-                  style: TextStyle(color: Colors.black),
-                ),
-              );
-            }))
-          ],
+        backgroundColor: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+            .withOpacity(1.0),
+        appBar: AppBar(
+          title: Text("Time Spent"),
+          centerTitle: true,
         ),
-      ),
-    ));
+        body: SafeArea(
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Consumer<UserTrackerController>(
+                    builder: ((context, value, child) {
+                  return Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      value.getFormattedTime(),
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                  );
+                }))
+              ],
+            ),
+          ),
+        ));
   }
 }
