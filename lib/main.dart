@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker/Controller/UserTrackerController.dart';
 import 'package:timetracker/Screens/HomePage.dart';
+import 'package:timetracker/Services/UserTracker.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       ],
       builder: ((context, child) {
         return MaterialApp(
+          navigatorObservers: [UserTracker.instance.routeObserver],
           title: 'Flutter Demo',
           theme: ThemeData(
             primarySwatch: Colors.blue,

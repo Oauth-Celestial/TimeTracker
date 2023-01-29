@@ -3,54 +3,33 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker/Controller/RouteHandler.dart';
+import 'dart:math' as math;
 import 'package:timetracker/Controller/UserTrackerController.dart';
-import 'package:timetracker/Screens/SecondPage.dart';
+import 'package:timetracker/Screens/ThirdPage.dart';
 import 'package:timetracker/Services/RouteManager.dart';
 import 'package:timetracker/Services/UserTracker.dart';
-import 'dart:math' as math;
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class SecondPage extends StatefulWidget with ScreenTimeHandler {
+  const SecondPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<SecondPage> createState() => _SecondPageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with WidgetsBindingObserver, ScreenTimeHandler {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print("Name of Class :- ${this.runtimeType}");
-
-    UserTracker.instance.startTimer(context);
-    UserTracker.instance.startScreenTracker(this.runtimeType.toString());
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.resumed) {
-      UserTracker.instance.startTimer(context);
-
-      print("Resumed");
-    } else if (state == AppLifecycleState.paused) {
-      UserTracker.instance.pauseTimer(context);
-      print("Paused");
-    } else if (state == AppLifecycleState.inactive) {
-      UserTracker.instance.pauseTimer(context);
-      print("inactive");
-    }
-  }
-
+class _SecondPageState extends State<SecondPage> with ScreenTimeHandler {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     UserTracker.instance.startScreenTracker(this.runtimeType.toString());
     UserTracker.instance.routeObserver
         .subscribe(this, ModalRoute.of(context) as PageRoute);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    UserTracker.instance.startScreenTracker(this.runtimeType.toString());
+    super.initState();
   }
 
   @override
@@ -88,7 +67,7 @@ class _HomePageState extends State<HomePage>
                 InkWell(
                   onTap: (() {
                     RouteManager.instance
-                        .push(to: SecondPage(), context: context);
+                        .push(to: ThirdPage(), context: context);
                   }),
                   child: Container(
                     width: 50,
