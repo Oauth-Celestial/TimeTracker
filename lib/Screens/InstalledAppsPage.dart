@@ -21,13 +21,14 @@ class _InstalledAppsState extends State<InstalledApps> {
     super.initState();
 
     Provider.of<InstalledAppController>(context, listen: false).getAllApps();
+    Provider.of<InstalledAppController>(context, listen: false).getUsageStats();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Insatlled Apps"),
+        title: Text("Installed Apps"),
       ),
       backgroundColor: Colors.black,
       body: SafeArea(child:
