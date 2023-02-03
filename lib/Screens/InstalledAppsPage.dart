@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
+import 'package:timetracker/Model/InstalledAppModel.dart';
 import 'package:timetracker/Services/Extension.dart';
 
 class InstalledApps extends StatefulWidget {
@@ -21,7 +22,13 @@ class _InstalledAppsState extends State<InstalledApps> {
     super.initState();
 
     Provider.of<InstalledAppController>(context, listen: false).getAllApps();
-    Provider.of<InstalledAppController>(context, listen: false).getUsageStats();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+    super.dispose();
   }
 
   @override
@@ -29,11 +36,30 @@ class _InstalledAppsState extends State<InstalledApps> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Installed Apps"),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              InkWell(
+                onTap: () {
+                  Provider.of<InstalledAppController>(context, listen: false)
+                      .refreshList();
+                },
+                child: Container(
+                  child: Icon(Icons.refresh),
+                ),
+              ),
+              SizedBox(
+                width: 20,
+              )
+            ],
+          )
+        ],
       ),
       backgroundColor: Colors.black,
       body: SafeArea(child:
           Consumer<InstalledAppController>(builder: ((context, value, child) {
-        List<Application> installedApps = value.installedApps;
+        List<InstalledAppData> installedApps = value.userInstalledApps;
 
         if (value.hasLoaded) {
           return Container(
@@ -57,7 +83,7 @@ class _InstalledAppsState extends State<InstalledApps> {
   }
 }
 
-Widget slideIt(BuildContext context, Application app, animation) {
+Widget slideIt(BuildContext context, InstalledAppData app, animation) {
   return Padding(
     padding: const EdgeInsets.all(10.0),
     child: ClipRRect(
@@ -79,16 +105,7 @@ Widget slideIt(BuildContext context, Application app, animation) {
                 color: Colors.transparent,
                 width: 60,
                 height: 60,
-                child: app is ApplicationWithIcon
-                    ? CircleAvatar(
-                        backgroundImage: MemoryImage(app.icon),
-                        backgroundColor: Theme.of(context).primaryColorDark,
-                      )
-                    : CircleAvatar(
-                        backgroundColor: Theme.of(context).primaryColorDark,
-                        child: Text("Error",
-                            style: TextStyle(color: Colors.white)),
-                      ),
+                child: app.appIcon,
               ),
             ),
           ),
@@ -101,7 +118,7 @@ Widget slideIt(BuildContext context, Application app, animation) {
               SizedBox(
                 height: 20,
               ),
-              Text(app.appName.capiltizeFirstLetter(),
+              Text(app.appname.capiltizeFirstLetter(),
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,
@@ -109,7 +126,7 @@ Widget slideIt(BuildContext context, Application app, animation) {
               SizedBox(
                 height: 20,
               ),
-              Text("v ${app.versionName}",
+              Text("Time Spent ${app.appDuration.inMinutes} Min",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,
