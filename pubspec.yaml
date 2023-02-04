@@ -40,6 +40,8 @@ dependencies:
   device_apps: ^2.2.0
   app_usage: ^2.1.1
   open_settings: ^2.0.2
+  sqflite: ^2.2.4+1
+  path_provider: ^2.0.12
   
   # permission_handler: ^10.2.0
 
@@ -66,9 +68,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

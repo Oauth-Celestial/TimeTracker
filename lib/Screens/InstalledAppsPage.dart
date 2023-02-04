@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
+import 'package:timetracker/Services/DataBaseHelper.dart';
 import 'package:timetracker/Services/Extension.dart';
 
 class InstalledApps extends StatefulWidget {
@@ -84,57 +85,62 @@ class _InstalledAppsState extends State<InstalledApps> {
 }
 
 Widget slideIt(BuildContext context, InstalledAppData app, animation) {
-  return Padding(
-    padding: const EdgeInsets.all(10.0),
-    child: ClipRRect(
-        child: Container(
-      height: 100,
-      decoration: BoxDecoration(
-        border: Border.all(width: 0.5, color: Colors.white),
-        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            color: Colors.transparent,
-            width: 100,
-            height: 100,
-            alignment: Alignment.center,
-            child: ClipRRect(
-              child: Container(
-                color: Colors.transparent,
-                width: 60,
-                height: 60,
-                child: app.appIcon,
+  return InkWell(
+    onTap: (() {
+      DataBaseHelper.instance.initDb("tracker.db");
+    }),
+    child: Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: ClipRRect(
+          child: Container(
+        height: 100,
+        decoration: BoxDecoration(
+          border: Border.all(width: 0.5, color: Colors.white),
+          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              color: Colors.transparent,
+              width: 100,
+              height: 100,
+              alignment: Alignment.center,
+              child: ClipRRect(
+                child: Container(
+                  color: Colors.transparent,
+                  width: 60,
+                  height: 60,
+                  child: app.appIcon,
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              Text(app.appname.capiltizeFirstLetter(),
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold)),
-              SizedBox(
-                height: 20,
-              ),
-              Text("Time Spent ${app.appDuration.inMinutes} Min",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.normal)),
-            ],
-          ),
-        ],
-      ),
-    )),
+            SizedBox(
+              width: 10,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Text(app.appname.capiltizeFirstLetter(),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 20,
+                ),
+                Text("Time Spent ${app.appDuration.inMinutes} Min",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.normal)),
+              ],
+            ),
+          ],
+        ),
+      )),
+    ),
   );
 }
