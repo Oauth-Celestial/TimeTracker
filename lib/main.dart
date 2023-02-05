@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Controller/UserTrackerController.dart';
-import 'package:timetracker/Screens/HomePage.dart';
 import 'package:timetracker/Screens/InstalledAppsPage.dart';
 import 'package:timetracker/Services/UserTracker.dart';
 

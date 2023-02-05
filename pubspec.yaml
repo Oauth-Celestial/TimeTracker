@@ -42,6 +42,8 @@ dependencies:
   open_settings: ^2.0.2
   sqflite: ^2.2.4+1
   path_provider: ^2.0.12
+  workmanager: ^0.5.1
+  flutter_animate: ^3.1.0
   
   # permission_handler: ^10.2.0
 

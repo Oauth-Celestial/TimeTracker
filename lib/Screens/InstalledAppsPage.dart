@@ -2,6 +2,7 @@ import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
@@ -21,7 +22,7 @@ class _InstalledAppsState extends State<InstalledApps> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    DataBaseHelper.instance.initDb("tracker.db");
     Provider.of<InstalledAppController>(context, listen: false).getAllApps();
   }
 
@@ -87,7 +88,7 @@ class _InstalledAppsState extends State<InstalledApps> {
 Widget slideIt(BuildContext context, InstalledAppData app, animation) {
   return InkWell(
     onTap: (() {
-      DataBaseHelper.instance.initDb("tracker.db");
+      DataBaseHelper.instance.saveAllDataToDb();
     }),
     child: Padding(
       padding: const EdgeInsets.all(10.0),
@@ -113,7 +114,7 @@ Widget slideIt(BuildContext context, InstalledAppData app, animation) {
                   child: app.appIcon,
                 ),
               ),
-            ),
+            ).animate().slide(duration: 500.ms),
             SizedBox(
               width: 10,
             ),
@@ -124,18 +125,22 @@ Widget slideIt(BuildContext context, InstalledAppData app, animation) {
                   height: 20,
                 ),
                 Text(app.appname.capiltizeFirstLetter(),
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold)),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold))
+                    .animate()
+                    .slideX(delay: 350.ms, begin: 10, end: 0, duration: 500.ms),
                 SizedBox(
                   height: 20,
                 ),
                 Text("Time Spent ${app.appDuration.inMinutes} Min",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal)),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal))
+                    .animate()
+                    .slideX(delay: 350.ms, begin: 10, end: 0, duration: 500.ms),
               ],
             ),
           ],

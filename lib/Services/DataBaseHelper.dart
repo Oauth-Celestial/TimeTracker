@@ -31,4 +31,11 @@ class DataBaseHelper {
   closeDataBase() async {
     await database?.close();
   }
+
+  saveAllDataToDb() async {
+    // int? data = await database?.rawInsert(
+    //     'INSERT INTO appUsageTable(appName,Duration , Date) VALUES(?, ?, ?)',
+    //     ["test", 10, "27 Feb 2023"]);
+    // print(data);
+  }
 }
