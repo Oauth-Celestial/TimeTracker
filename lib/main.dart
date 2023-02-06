@@ -3,9 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Controller/UserTrackerController.dart';
 import 'package:timetracker/Screens/InstalledAppsPage.dart';
+import 'package:timetracker/Services/DataBaseHelper.dart';
 import 'package:timetracker/Services/UserTracker.dart';
+import 'package:workmanager/workmanager.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  DataBaseHelper.instance.initDb("tracker.db");
+
   runApp(MyApp());
 }
 

@@ -44,6 +44,7 @@ dependencies:
   path_provider: ^2.0.12
   workmanager: ^0.5.1
   flutter_animate: ^3.1.0
+  intl: any
   
   # permission_handler: ^10.2.0
 

@@ -1,3 +1,4 @@
+import 'package:app_usage/app_usage.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -6,8 +7,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
+import 'package:timetracker/Services/AppHelper..dart';
 import 'package:timetracker/Services/DataBaseHelper.dart';
 import 'package:timetracker/Services/Extension.dart';
+import 'package:workmanager/workmanager.dart';
+import 'package:app_usage/app_usage.dart';
 
 class InstalledApps extends StatefulWidget {
   const InstalledApps({super.key});
@@ -16,13 +20,57 @@ class InstalledApps extends StatefulWidget {
   State<InstalledApps> createState() => _InstalledAppsState();
 }
 
+@pragma(
+    'vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
+void callbackDispatcher() {
+  Workmanager().executeTask((task, inputData) async {
+    try {
+      List<InstalledAppData> userInstalledApps = [];
+      List<Application> installedApps =
+          await DeviceApps.getInstalledApplications(includeAppIcons: true);
+      List<AppUsageInfo> appUsageInfo =
+          await AppHelper.instance.getUsageStats();
+
+      for (Application app in installedApps) {
+        for (AppUsageInfo appinfo in appUsageInfo) {
+          if (app.packageName == appinfo.packageName) {
+            userInstalledApps.add(InstalledAppData(
+                appIcon: app is ApplicationWithIcon
+                    ? CircleAvatar(
+                        backgroundImage: MemoryImage(app.icon),
+                      )
+                    : CircleAvatar(
+                        backgroundColor: Colors.white,
+                        child: Text("Error",
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                packageName: app.packageName,
+                appname: app.appName,
+                appDuration: appinfo.usage));
+          }
+        }
+        DataBaseHelper.instance.saveAllDataToDb(userInstalledApps);
+      }
+    } catch (e) {}
+    return Future.value(true);
+  });
+}
+
 class _InstalledAppsState extends State<InstalledApps> {
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    DataBaseHelper.instance.initDb("tracker.db");
+    Workmanager().initialize(
+        callbackDispatcher, // The top level function, aka callbackDispatcher
+        isInDebugMode:
+            true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
+        );
+    var date = DateTime.now().toString();
+    Workmanager().registerPeriodicTask(date, "simplePeriodicTask",
+        frequency: Duration(minutes: 15));
     Provider.of<InstalledAppController>(context, listen: false).getAllApps();
   }
 
@@ -88,7 +136,7 @@ class _InstalledAppsState extends State<InstalledApps> {
 Widget slideIt(BuildContext context, InstalledAppData app, animation) {
   return InkWell(
     onTap: (() {
-      DataBaseHelper.instance.saveAllDataToDb();
+      //DataBaseHelper.instance.saveAllDataToDb();
     }),
     child: Padding(
       padding: const EdgeInsets.all(10.0),

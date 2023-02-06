@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
+import 'package:timetracker/Model/InstalledAppModel.dart';
 
 class DataBaseHelper {
   static DataBaseHelper instance = DataBaseHelper();
@@ -32,7 +34,24 @@ class DataBaseHelper {
     await database?.close();
   }
 
-  saveAllDataToDb() async {
+  saveAllDataToDb(List<InstalledAppData> saveApps) async {
+    var now = new DateTime.now();
+    var formatter = new DateFormat('dd-MM-yyyy');
+    String formattedTime = DateFormat('kk:mm:a').format(now);
+    String formattedDate = formatter.format(now);
+    print(formattedTime);
+    print(formattedDate);
+
+    if (now.hour >= 22 && now.minute > 45) {
+      for (InstalledAppData app in saveApps) {
+        await database?.rawInsert(
+            'INSERT INTO appUsageTable(appName,Duration , Date) VALUES(?, ?, ?)',
+            [app.packageName, app.appDuration.inSeconds, formattedDate]);
+      }
+
+      database?.close();
+    }
+
     // int? data = await database?.rawInsert(
     //     'INSERT INTO appUsageTable(appName,Duration , Date) VALUES(?, ?, ?)',
     //     ["test", 10, "27 Feb 2023"]);
