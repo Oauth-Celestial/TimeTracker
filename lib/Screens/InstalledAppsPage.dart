@@ -7,25 +7,19 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
+import 'package:timetracker/Screens/SavedDatabasePage.dart';
 import 'package:timetracker/Services/AppHelper..dart';
 import 'package:timetracker/Services/DataBaseHelper.dart';
 import 'package:timetracker/Services/Extension.dart';
-import 'package:workmanager/workmanager.dart';
+
 import 'package:app_usage/app_usage.dart';
+import 'package:timetracker/Services/RouteManager.dart';
 
 class InstalledApps extends StatefulWidget {
   const InstalledApps({super.key});
 
   @override
   State<InstalledApps> createState() => _InstalledAppsState();
-}
-
-@pragma(
-    'vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
-void callbackDispatcher() {
-  Workmanager().executeTask((task, inputData) async {
-    return Future.value(true);
-  });
 }
 
 class _InstalledAppsState extends State<InstalledApps> {
@@ -109,10 +103,11 @@ class _InstalledAppsState extends State<InstalledApps> {
 
 Widget slideIt(BuildContext context, InstalledAppData app, animation) {
   return InkWell(
-    onTap: (() {
-      // DataBaseHelper.instance.saveAllDataToDb(
-      //     Provider.of<InstalledAppController>(context, listen: false)
-      //         .userInstalledApps);
+    onTap: (() async {
+      // DataBaseHelper.instance.getAllRecords();
+      await Provider.of<InstalledAppController>(context, listen: false)
+          .getAllData();
+      RouteManager.instance.push(to: RecordPage(), context: context);
     }),
     child: Padding(
       padding: const EdgeInsets.all(10.0),

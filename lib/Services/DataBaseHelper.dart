@@ -9,6 +9,18 @@ class DataBaseHelper {
   static DataBaseHelper instance = DataBaseHelper();
   Database? database;
 
+  Future<Database> getdataBase() async {
+    String baseDbPath = await getDatabasesPath();
+    String dataBasePath = path.join(baseDbPath, "tracker.db");
+    bool isDatabasePresent = await databaseExists(dataBasePath);
+    if (!isDatabasePresent) {
+      await initDb("tracker.db");
+    }
+    Database database = await openDatabase(dataBasePath);
+
+    return database;
+  }
+
   Future initDb(String fileName) async {
     String baseDbPath = await getDatabasesPath();
     String dataBasePath = path.join(baseDbPath, fileName);
@@ -36,7 +48,16 @@ class DataBaseHelper {
     await database?.close();
   }
 
-  saveAllDataToDb(List<InstalledAppData> saveApps, String fileName) async {
+  Future<List<Map>> getAllRecords() async {
+    Database db = await getdataBase();
+    List<Map>? records = await db.rawQuery("select * from appUsageTable");
+    return records;
+  }
+
+  saveAllDataToDb(
+    List<InstalledAppData> saveApps,
+    String fileName,
+  ) async {
     var now = new DateTime.now().toString();
     // var formatter = new DateFormat('dd-MM-yyyy');
     // String formattedTime = DateFormat('kk:mm:a').format(now);

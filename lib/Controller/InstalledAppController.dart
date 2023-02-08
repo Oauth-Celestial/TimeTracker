@@ -4,10 +4,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:open_settings/open_settings.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
+import 'package:timetracker/Services/DataBaseHelper.dart';
 
 class InstalledAppController with ChangeNotifier {
   List<InstalledAppData> userInstalledApps = [];
   bool hasLoaded = false;
+  List<appData> data = [];
 
   getAllApps() async {
     userInstalledApps.clear();
@@ -44,6 +46,12 @@ class InstalledAppController with ChangeNotifier {
     userInstalledApps.clear();
     notifyListeners();
     getAllApps();
+  }
+
+  getAllData() async {
+    List<Map> alldata = await DataBaseHelper.instance.getAllRecords();
+    data = alldata.map((e) => appData.fromJson(e)).toList();
+    print(data.length);
   }
 
   Future<List<AppUsageInfo>> getUsageStats() async {
