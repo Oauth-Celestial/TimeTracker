@@ -45,6 +45,7 @@ dependencies:
   workmanager: ^0.5.1
   flutter_animate: ^3.1.0
   intl: any
+  flutter_background_service: ^2.4.6
   
   # permission_handler: ^10.2.0
 
