@@ -11,6 +11,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Controller/UserTrackerController.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
+import 'package:timetracker/Screens/DashBoard.dart';
 import 'package:timetracker/Screens/InstalledAppsPage.dart';
 import 'package:timetracker/Screens/SavedDatabasePage.dart';
 import 'package:timetracker/Services/AppHelper..dart';
@@ -58,7 +59,7 @@ void onStart(ServiceInstance service) async {
   DartPluginRegistrant.ensureInitialized();
   DataBaseHelper.instance.initDb("tracker.db");
   print("service Started");
-  Timer.periodic(Duration(minutes: 30), (timer) async {
+  Timer.periodic(Duration(hours: 20), (timer) async {
     try {
       List<InstalledAppData> userInstalledApps = [];
       List<Application> installedApps =
@@ -112,8 +113,11 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: InstalledApps());
+            home: DashBoard());
       }),
     );
   }
 }
+
+
+// https://stackoverflow.com/questions/62575091/possible-to-copy-ios-app-store-transition-using-flutter

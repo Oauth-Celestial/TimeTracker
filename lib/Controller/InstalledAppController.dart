@@ -13,6 +13,7 @@ class InstalledAppController with ChangeNotifier {
 
   getAllApps() async {
     userInstalledApps.clear();
+    hasLoaded = false;
     List<Application> installedApps =
         await DeviceApps.getInstalledApplications(includeAppIcons: true);
     List<AppUsageInfo> appUsageInfo = await getUsageStats();
