@@ -11,8 +11,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Controller/UserTrackerController.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
-import 'package:timetracker/Screens/DashBoard.dart';
-import 'package:timetracker/Screens/InstalledAppsPage.dart';
+import 'package:timetracker/Screens/DashBoard/DashBoard.dart';
+import 'package:timetracker/Screens/DashBoard/Pages/AppsPage.dart';
 import 'package:timetracker/Screens/SavedDatabasePage.dart';
 import 'package:timetracker/Services/AppHelper..dart';
 import 'package:timetracker/Services/DataBaseHelper.dart';
@@ -60,34 +60,34 @@ void onStart(ServiceInstance service) async {
   DataBaseHelper.instance.initDb("tracker.db");
   print("service Started");
   Timer.periodic(Duration(hours: 20), (timer) async {
-    try {
-      List<InstalledAppData> userInstalledApps = [];
-      List<Application> installedApps =
-          await DeviceApps.getInstalledApplications(includeAppIcons: true);
-      List<AppUsageInfo> appUsageInfo =
-          await AppHelper.instance.getUsageStats();
+    // try {
+    //   List<InstalledAppData> userInstalledApps = [];
+    //   List<Application> installedApps =
+    //       await DeviceApps.getInstalledApplications(includeAppIcons: true);
+    //   List<AppUsageInfo> appUsageInfo =
+    //       await AppHelper.instance.getUsageStats();
 
-      for (Application app in installedApps) {
-        for (AppUsageInfo appinfo in appUsageInfo) {
-          if (app.packageName == appinfo.packageName) {
-            userInstalledApps.add(InstalledAppData(
-                appIcon: app is ApplicationWithIcon
-                    ? CircleAvatar(
-                        backgroundImage: MemoryImage(app.icon),
-                      )
-                    : CircleAvatar(
-                        backgroundColor: Colors.white,
-                        child: Text("Error",
-                            style: TextStyle(color: Colors.white)),
-                      ),
-                packageName: app.packageName,
-                appname: app.appName,
-                appDuration: appinfo.usage));
-          }
-        }
-      }
-      DataBaseHelper.instance.saveAllDataToDb(userInstalledApps, "tracker.db");
-    } catch (e) {}
+    //   for (Application app in installedApps) {
+    //     for (AppUsageInfo appinfo in appUsageInfo) {
+    //       if (app.packageName == appinfo.packageName) {
+    //         userInstalledApps.add(InstalledAppData(
+    //             appIcon: app is ApplicationWithIcon
+    //                 ? CircleAvatar(
+    //                     backgroundImage: MemoryImage(app.icon),
+    //                   )
+    //                 : CircleAvatar(
+    //                     backgroundColor: Colors.white,
+    //                     child: Text("Error",
+    //                         style: TextStyle(color: Colors.white)),
+    //                   ),
+    //             packageName: app.packageName,
+    //             appname: app.appName,
+    //             appDuration: appinfo.usage));
+    //       }
+    //     }
+    //   }
+    //   DataBaseHelper.instance.saveAllDataToDb(userInstalledApps, "tracker.db");
+    // } catch (e) {}
   });
 
   service.on('stopService').listen((event) {
@@ -113,7 +113,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: DashBoard());
+            home: DashBoardPage());
       }),
     );
   }
