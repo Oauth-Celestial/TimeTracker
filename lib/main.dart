@@ -16,6 +16,7 @@ import 'package:timetracker/Screens/DashBoard/Pages/AppsPage.dart';
 import 'package:timetracker/Screens/SavedDatabasePage.dart';
 import 'package:timetracker/Services/AppHelper..dart';
 import 'package:timetracker/Services/DataBaseHelper.dart';
+import 'package:timetracker/Services/Theme/ThemeManager.dart';
 import 'package:timetracker/Services/UserTracker.dart';
 
 Database? database;
@@ -107,13 +108,19 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => InstalledAppController())
       ],
       builder: ((context, child) {
-        return MaterialApp(
-            navigatorObservers: [UserTracker.instance.routeObserver],
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
-            home: DashBoardPage());
+        return ChangeNotifierProvider(
+            create: (context) => ThemeProvider(),
+            builder: (context, _) {
+              final themeprovider = Provider.of<ThemeProvider>(context);
+              print(themeprovider.themeMode);
+              return MaterialApp(
+                  navigatorObservers: [UserTracker.instance.routeObserver],
+                  title: 'Flutter Demo',
+                  themeMode: ThemeMode.dark,
+                  theme: MyTheme.lightTheme,
+                  darkTheme: MyTheme.darkTheme,
+                  home: DashBoardPage());
+            });
       }),
     );
   }

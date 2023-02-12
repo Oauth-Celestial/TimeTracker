@@ -26,6 +26,7 @@ class _DashBoardPage extends State {
     // Build a simple container that switches content based of off the selected navigation item
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.transparent,
         extendBody: true,
         body: _child,
         bottomNavigationBar: FluidNavBar(
@@ -47,7 +48,7 @@ class _DashBoardPage extends State {
           style: FluidNavBarStyle(
               iconUnselectedForegroundColor: Colors.black,
               iconSelectedForegroundColor: Colors.blueAccent,
-              barBackgroundColor: Colors.white),
+              barBackgroundColor: Theme.of(context).primaryColor),
           scaleFactor: 1.5,
           defaultIndex: 0,
           itemBuilder: (icon, item) => Semantics(
