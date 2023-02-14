@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
+import 'package:timetracker/Screens/DashBoard/Pages/AppHome/InstalledAppCard.dart';
+import 'package:timetracker/Screens/DashBoard/Pages/AppHome/TopAppCard.dart';
 import 'package:timetracker/Services/Theme/ThemeManager.dart';
 
 class AppHomePage extends StatefulWidget {
@@ -32,7 +34,7 @@ class _AppHomePageState extends State<AppHomePage>
       appBar: AppBar(
         title: Container(
           child: Text(
-            "WelCome",
+            "Welcome",
             style: TextStyle(fontSize: 23),
           ),
         ),
@@ -68,11 +70,10 @@ class _AppHomePageState extends State<AppHomePage>
               Animate(
                 effects: [
                   FadeEffect(
-                      curve: Curves.bounceIn,
-                      delay: Duration(milliseconds: 300))
+                      curve: Curves.easeIn, delay: Duration(milliseconds: 500))
                 ],
                 child: Text(
-                  "Installed Apps",
+                  "Top Used Apps",
                   style: TextStyle(color: Colors.white, fontSize: 22),
                 ),
               ),
@@ -101,21 +102,45 @@ class _AppHomePageState extends State<AppHomePage>
                         builder: (context, value, child) {
                           return Transform.scale(
                             scale: index == currentPage ? 1 : 0.8,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 4),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Container(
-                                  width: 20,
-                                  height: 130,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
+                            child: TopAppCard(),
                           );
                         },
                       );
                     })),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Installed Apps",
+                style: TextStyle(color: Colors.white, fontSize: 22),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Container(
+                    child: GridView.builder(
+                  itemCount: 100,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: (2.5 / 2),
+                  ),
+                  itemBuilder: (
+                    context,
+                    index,
+                  ) {
+                    return InstalledAppCard(
+                      index: index,
+                    ).animate().fadeIn(delay: Duration(milliseconds: 100));
+                  },
+                )),
               )
             ],
           ),
