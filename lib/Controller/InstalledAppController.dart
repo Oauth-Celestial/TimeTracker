@@ -23,13 +23,19 @@ class InstalledAppController with ChangeNotifier {
         if (app.packageName == appinfo.packageName) {
           userInstalledApps.add(InstalledAppData(
               appIcon: app is ApplicationWithIcon
-                  ? CircleAvatar(
-                      backgroundImage: MemoryImage(app.icon),
+                  ? Hero(
+                      tag: app.packageName,
+                      child: CircleAvatar(
+                        backgroundImage: MemoryImage(app.icon),
+                      ),
                     )
-                  : CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child:
-                          Text("Error", style: TextStyle(color: Colors.white)),
+                  : Hero(
+                      tag: app.packageName,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        child: Text("Error",
+                            style: TextStyle(color: Colors.white)),
+                      ),
                     ),
               packageName: app.packageName,
               appname: app.appName,

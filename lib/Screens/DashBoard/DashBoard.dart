@@ -1,6 +1,6 @@
 import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:timetracker/Screens/DashBoard/Pages/AppHome.dart';
+import 'package:timetracker/Screens/DashBoard/Pages/AppHome/AppHome.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AppsPage.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/SettingsPage.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/StatisticsPage.dart';
