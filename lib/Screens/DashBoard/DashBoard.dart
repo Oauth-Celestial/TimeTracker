@@ -46,7 +46,7 @@ class _DashBoardPage extends State {
           ],
           onChange: _handleNavigationChange,
           style: FluidNavBarStyle(
-              iconUnselectedForegroundColor: Colors.black,
+              iconUnselectedForegroundColor: Colors.grey.shade900,
               iconSelectedForegroundColor: Colors.blueAccent,
               barBackgroundColor: Theme.of(context).primaryColor),
           scaleFactor: 1.5,

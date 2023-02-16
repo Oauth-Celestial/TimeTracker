@@ -40,9 +40,14 @@ class InstalledAppCard extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              Text(
-                app.appname,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              Hero(
+                tag: app.appname,
+                child: Material(
+                  child: Text(
+                    app.appname,
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 8,

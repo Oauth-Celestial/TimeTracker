@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:timetracker/Services/Theme/ColorConstant.dart';
 
 class MyTheme {
   static final darkTheme = ThemeData(
       scaffoldBackgroundColor: Colors.grey.shade900,
       colorScheme: ColorScheme.dark(),
-      primaryColor: Colors.white,
+      primaryColor: darkBackground,
       backgroundColor: Colors.black);
 
   static final lightTheme = ThemeData(

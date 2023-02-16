@@ -43,9 +43,9 @@ class TopAppCard extends StatelessWidget {
                             width: 38,
                             height: 38,
                             color: Colors.black,
-                            child: ClipOval(
-                              child: app.appIcon,
-                            ),
+                            // child: ClipOval(
+                            //   child: app.appIcon,
+                            // ),
                           ),
                         ),
                       ),

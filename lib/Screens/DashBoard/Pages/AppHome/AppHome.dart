@@ -70,99 +70,102 @@ class _AppHomePageState extends State<AppHomePage>
                   builder: ((context, value, child) {
                     List<InstalledAppData> installedApps =
                         value.userInstalledApps;
-                    return ListView(
-                      children: [
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Animate(
-                          effects: [
-                            FadeEffect(
-                                curve: Curves.easeIn,
-                                delay: Duration(milliseconds: 500))
-                          ],
-                          child: Text(
+
+                    if (value.hasLoaded) {
+                      return ListView(
+                        children: [
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Text(
                             "Top Used Apps",
                             style: TextStyle(color: Colors.white, fontSize: 22),
                           ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 130,
-                          color: Colors.transparent,
-                          child: PageView.builder(
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 130,
+                            color: Colors.transparent,
+                            child: PageView.builder(
+                                itemCount: installedApps.length,
+                                padEnds: false,
+                                pageSnapping: true,
+                                controller: pageController,
+                                physics: BouncingScrollPhysics(),
+                                onPageChanged: (pageIndex) {
+                                  setState(() {
+                                    currentPage = pageIndex;
+                                  });
+                                },
+                                itemBuilder: ((context, index) {
+                                  return TweenAnimationBuilder(
+                                    duration: Duration(milliseconds: 350),
+                                    tween: Tween(begin: 0, end: 0),
+                                    curve: Curves.ease,
+                                    builder: (context, value, child) {
+                                      return Transform.scale(
+                                        scale: index == currentPage ? 1 : 0.8,
+                                        child: TopAppCard(
+                                          app: installedApps[index],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                })),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Installed Apps",
+                            style: TextStyle(color: Colors.white, fontSize: 22),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Container(
+                                child: GridView.builder(
                               itemCount: installedApps.length,
-                              padEnds: false,
-                              pageSnapping: true,
-                              controller: pageController,
-                              physics: BouncingScrollPhysics(),
-                              onPageChanged: (pageIndex) {
-                                setState(() {
-                                  currentPage = pageIndex;
-                                });
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              physics: NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: (2.5 / 2),
+                              ),
+                              itemBuilder: (
+                                context,
+                                index,
+                              ) {
+                                return InstalledAppCard(
+                                  index: index,
+                                  app: installedApps[index],
+                                )
+                                    .animate()
+                                    .fadeIn(delay: Duration(milliseconds: 100));
                               },
-                              itemBuilder: ((context, index) {
-                                return TweenAnimationBuilder(
-                                  duration: Duration(milliseconds: 350),
-                                  tween: Tween(begin: 0, end: 0),
-                                  curve: Curves.ease,
-                                  builder: (context, value, child) {
-                                    return Transform.scale(
-                                      scale: index == currentPage ? 1 : 0.8,
-                                      child: TopAppCard(
-                                        app: installedApps[index],
-                                      ),
-                                    );
-                                  },
-                                );
-                              })),
+                            )),
+                          )
+                        ],
+                      );
+                    } else {
+                      return Container(
+                        alignment: Alignment.center,
+                        child: CircularProgressIndicator(
+                          color: Colors.amber,
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "Installed Apps",
-                          style: TextStyle(color: Colors.white, fontSize: 22),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Container(
-                              child: GridView.builder(
-                            itemCount: installedApps.length,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            physics: NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                              childAspectRatio: (2.5 / 2),
-                            ),
-                            itemBuilder: (
-                              context,
-                              index,
-                            ) {
-                              return InstalledAppCard(
-                                index: index,
-                                app: installedApps[index],
-                              )
-                                  .animate()
-                                  .fadeIn(delay: Duration(milliseconds: 100));
-                            },
-                          )),
-                        )
-                      ],
-                    );
+                      );
+                    }
                   }),
                 ),
               )),
-        ));
+        )).animate().fadeIn(delay: Duration(milliseconds: 200));
   }
 }
