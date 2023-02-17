@@ -41,7 +41,12 @@ class _AppDetailPageState extends State<AppDetailPage> {
                   width: 80,
                   height: 80,
                   color: Colors.black,
-                  child: widget.app.appIcon,
+                  child: Hero(
+                    tag: widget.app.packageName,
+                    child: CircleAvatar(
+                      backgroundImage: MemoryImage(widget.app.bytes!),
+                    ),
+                  ),
                 ),
               )
             ],
@@ -52,17 +57,14 @@ class _AppDetailPageState extends State<AppDetailPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Hero(
-                tag: widget.app.appname,
-                child: Material(
-                  color: Colors.transparent,
-                  child: Text(
-                    widget.app.appname,
-                    style: TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
+              Material(
+                color: Colors.transparent,
+                child: Text(
+                  widget.app.appname,
+                  style: TextStyle(
+                      fontSize: 23,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
               ),
             ],

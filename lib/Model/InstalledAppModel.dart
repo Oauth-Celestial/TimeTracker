@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class InstalledAppData {
   String appname;
   String packageName;
   Widget appIcon;
   Duration appDuration;
+  Uint8List? bytes;
 
   InstalledAppData(
       {required this.appIcon,
       required this.packageName,
       required this.appname,
-      required this.appDuration});
+      required this.appDuration,
+      this.bytes});
 }
 
 class appData {

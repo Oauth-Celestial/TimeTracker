@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:ui';
-
 import 'package:app_usage/app_usage.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +10,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Controller/UserTrackerController.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
-import 'package:timetracker/Screens/DashBoard/DashBoard.dart';
-import 'package:timetracker/Screens/DashBoard/Pages/AppsPage.dart';
+import 'package:timetracker/Screens/DashBoard/Pages/AppHome/HomePage.dart';
+
 import 'package:timetracker/Screens/SavedDatabasePage.dart';
 import 'package:timetracker/Services/AppHelper..dart';
 import 'package:timetracker/Services/DataBaseHelper.dart';
@@ -119,7 +118,7 @@ class MyApp extends StatelessWidget {
                   themeMode: ThemeMode.dark,
                   theme: MyTheme.lightTheme,
                   darkTheme: MyTheme.darkTheme,
-                  home: DashBoardPage());
+                  home: HomePage());
             });
       }),
     );

@@ -46,7 +46,7 @@ dependencies:
   flutter_animate: ^3.1.0
   intl: any
   flutter_background_service: ^2.4.6
-  fluid_bottom_nav_bar: ^1.4.0
+  # fluid_bottom_nav_bar: ^1.4.0
   lottie: ^2.2.0
 
   
