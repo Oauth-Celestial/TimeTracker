@@ -33,45 +33,68 @@ class _AppDetailPageState extends State<AppDetailPage> {
           SizedBox(
             height: 30,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ClipOval(
-                child: Container(
-                  width: 80,
-                  height: 80,
-                  color: Colors.black,
-                  child: Hero(
-                    tag: widget.app.packageName,
-                    child: CircleAvatar(
-                      backgroundImage: MemoryImage(widget.app.bytes!),
+          Container(
+              height: 200,
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Container(
+                      alignment: Alignment.topCenter,
+                      child: Hero(
+                        tag: widget.app.packageName,
+                        child: ClipOval(
+                          child: Image.memory(
+                            widget.app.bytes!,
+                            width: 100,
+                            height: 100,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Material(
-                color: Colors.transparent,
-                child: Text(
-                  widget.app.appname,
-                  style: TextStyle(
-                      fontSize: 23,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 15,
-          ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 30),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Hero(
+                        tag: widget.app.appname,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: Container(
+                            child: Text(
+                              widget.app.appname,
+                              style: TextStyle(
+                                decoration: TextDecoration.none,
+                                color: Colors.amber,
+                                fontSize: 28.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )),
+
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Material(
+          //       color: Colors.transparent,
+          //       child: Text(
+          //         widget.app.appname,
+          //         style: TextStyle(
+          //             fontSize: 23,
+          //             fontWeight: FontWeight.bold,
+          //             color: Colors.white),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+
           Container(
             height: 100,
             color: Colors.transparent,

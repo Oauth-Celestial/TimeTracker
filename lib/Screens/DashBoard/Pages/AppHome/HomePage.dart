@@ -9,7 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  PageController _controller = PageController(viewportFraction: 0.6);
+  PageController _controller = PageController(viewportFraction: 0.7);
   double? offset = 0;
 
   @override
@@ -26,13 +26,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ParallaxPageView(
-          controller: _controller,
-          offset: offset!,
-        ),
-      ],
+    return Scaffold(
+      body: Stack(
+        children: [
+          ParallaxPageView(
+            controller: _controller,
+            offset: offset!,
+          ),
+        ],
+      ),
     );
   }
 }

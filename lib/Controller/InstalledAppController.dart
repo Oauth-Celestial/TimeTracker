@@ -33,6 +33,7 @@ class InstalledAppController with ChangeNotifier {
                     ),
               packageName: app.packageName,
               appname: app.appName,
+              lastUsedOn: appinfo.lastForeground,
               bytes: (app as ApplicationWithIcon).icon,
               appDuration: appinfo.usage));
         }

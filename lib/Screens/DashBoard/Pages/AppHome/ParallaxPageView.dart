@@ -29,27 +29,55 @@ class _ParallaxPageViewState extends State<ParallaxPageView> {
   Widget build(BuildContext context) {
     return Consumer<InstalledAppController>(builder: (context, value, child) {
       List<InstalledAppData> installedApps = value.userInstalledApps;
-      return PageView(
-        physics: BouncingScrollPhysics(),
-        pageSnapping: false,
-        scrollDirection: Axis.vertical,
-        controller: widget.controller,
-        children: [
-          for (int i = 0; i < installedApps.length; i++) ...[
-            ParallaxContainer(
-                image: Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            scale: 1.0,
-                            alignment: Alignment(0.0, -0.35),
-                            image: MemoryImage(
-                                installedApps[i].bytes ?? Uint8List(10))))),
-                offset: widget.offset,
-                i: i.toDouble(),
-                appData: installedApps[i],
-                text: installedApps[i].appname)
-          ]
-        ],
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("All Apps"),
+        ),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: PageView(
+                  physics: BouncingScrollPhysics(),
+                  pageSnapping: false,
+                  padEnds: false,
+                  scrollDirection: Axis.vertical,
+                  controller: widget.controller,
+                  children: [
+                    for (int i = 0; i < installedApps.length; i++) ...[
+                      ParallaxContainer(
+                          image: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                scale: 1.0,
+                                alignment: Alignment(0.0, -0.35),
+                                image: MemoryImage(
+                                  installedApps[i].bytes ?? Uint8List(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                          offset: widget.offset,
+                          i: i.toDouble(),
+                          appData: installedApps[i],
+                          text: installedApps[i].appname)
+                    ],
+                    if (installedApps.length == 0 && value.hasLoaded) ...[
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "No Activity Today",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      )
+                    ]
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       );
     });
   }

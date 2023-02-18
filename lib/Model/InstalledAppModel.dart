@@ -7,12 +7,14 @@ class InstalledAppData {
   Widget appIcon;
   Duration appDuration;
   Uint8List? bytes;
+  DateTime? lastUsedOn;
 
   InstalledAppData(
       {required this.appIcon,
       required this.packageName,
       required this.appname,
       required this.appDuration,
+      this.lastUsedOn,
       this.bytes});
 }
 
