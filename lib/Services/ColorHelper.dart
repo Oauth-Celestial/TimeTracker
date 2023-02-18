@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 Color getColorForHex(String hexColor) {
   hexColor = hexColor.toUpperCase().replaceAll('#', '');
@@ -8,4 +9,9 @@ Color getColorForHex(String hexColor) {
   }
 
   return Color(int.parse(hexColor, radix: 16));
+}
+
+Color getRandomColor() {
+  return Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+      .withOpacity(1.0);
 }

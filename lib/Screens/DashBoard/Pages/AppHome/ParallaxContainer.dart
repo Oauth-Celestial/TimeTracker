@@ -167,7 +167,6 @@ class _ParallaxContainerState extends State<ParallaxContainer> {
                                     color: Colors.white,
                                     fontSize: 25.0,
                                     fontWeight: FontWeight.normal,
-                                    fontFamily: 'SlimPlay',
                                   ),
                                 ),
                               ),

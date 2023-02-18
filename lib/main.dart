@@ -119,7 +119,7 @@ class MyApp extends StatelessWidget {
                   themeMode: ThemeMode.dark,
                   theme: MyTheme.lightTheme,
                   darkTheme: MyTheme.darkTheme,
-                  home: HomePage());
+                  home: DashBoardPage());
             });
       }),
     );
