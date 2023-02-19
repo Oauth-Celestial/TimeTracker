@@ -1,8 +1,8 @@
 import 'package:app_usage/app_usage.dart';
 import 'package:device_apps/device_apps.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:open_settings/open_settings.dart';
+import 'package:timetracker/Model/CardDataModel.dart';
+import 'package:timetracker/Model/DoughnutDataModel%20.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
 import 'package:timetracker/Model/PieDataModel.dart';
 import 'package:timetracker/Services/DataBaseHelper.dart';
@@ -14,10 +14,23 @@ class InstalledAppController with ChangeNotifier {
   List<appData> data = [];
   List<PieChartDataModel> pieData = [];
   int totalScreenTime = 0;
+  List<DoughnutData> graphData = [];
+  List<CardDataModel> cardData = [
+    CardDataModel(
+        icon: Icon(
+          Icons.home,
+          size: 60,
+        ),
+        title: "All Apps"),
+    CardDataModel(icon: Icon(Icons.home, size: 60), title: "All Apps"),
+    CardDataModel(icon: Icon(Icons.home, size: 60), title: "All Apps"),
+    CardDataModel(icon: Icon(Icons.home, size: 60), title: "All Apps")
+  ];
 
   getAllApps() async {
     userInstalledApps.clear();
     pieData.clear();
+    graphData.clear();
     totalScreenTime = 0;
     hasLoaded = false;
     totalScreenTime = 0;
@@ -49,8 +62,10 @@ class InstalledAppController with ChangeNotifier {
           //     value: (app as ApplicationWithIcon).icon));
           pieData.add(PieChartDataModel(
               title: "",
-              value: appinfo.usage.inSeconds.toDouble,
+              timeSpent: appinfo.usage.inSeconds.toDouble(),
               bytes: (app as ApplicationWithIcon).icon));
+          graphData.add(DoughnutData(
+              appinfo.appName, appinfo.usage.inSeconds.toDouble()));
           totalScreenTime += appinfo.usage.inSeconds;
         }
       }

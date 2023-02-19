@@ -3,8 +3,9 @@ import 'package:flutter/foundation.dart';
 
 class PieChartDataModel {
   String? title;
-  double? value;
+  double? timeSpent;
   Uint8List? bytes;
 
-  PieChartDataModel({required this.title, required value, required this.bytes});
+  PieChartDataModel(
+      {required this.title, required this.timeSpent, required this.bytes});
 }
