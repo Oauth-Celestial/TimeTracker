@@ -18,13 +18,16 @@ class InstalledAppController with ChangeNotifier {
   List<CardDataModel> cardData = [
     CardDataModel(
         icon: Icon(
-          Icons.home,
+          Icons.apps,
           size: 60,
         ),
         title: "All Apps"),
-    CardDataModel(icon: Icon(Icons.home, size: 60), title: "All Apps"),
-    CardDataModel(icon: Icon(Icons.home, size: 60), title: "All Apps"),
-    CardDataModel(icon: Icon(Icons.home, size: 60), title: "All Apps")
+    CardDataModel(
+        icon: Icon(Icons.auto_graph_rounded, size: 60), title: "App Usage"),
+    CardDataModel(
+        icon: Icon(Icons.arrow_upward, size: 60), title: "Top Usage Apps"),
+    CardDataModel(
+        icon: Icon(Icons.arrow_downward, size: 60), title: "Least Used Apps")
   ];
 
   getAllApps() async {

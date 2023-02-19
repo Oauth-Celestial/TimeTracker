@@ -9,20 +9,7 @@ class DateHelper {
   }
 
   String getFormattedAppUsage(InstalledAppData app) {
-    String appUsed = "";
-    if (app.appDuration.inHours > 0) {
-      appUsed += app.appDuration.inHours.toString() + " Hours ";
-    }
-    if (app.appDuration.inMinutes > 0) {
-      appUsed += (app.appDuration.inMinutes > 60
-                  ? app.appDuration.inMinutes - 60
-                  : app.appDuration.inMinutes)
-              .toString() +
-          " Min";
-    }
-    if (app.appDuration.inMinutes < 2 && app.appDuration.inHours <= 0) {
-      appUsed = "< 1 min";
-    }
+    String appUsed = getFormattedTimeFromSeconds(app.appDuration.inSeconds);
     return appUsed;
   }
 
@@ -46,10 +33,14 @@ class DateHelper {
 
     String result = "";
 
-    if (h >= 0) {
+    if (h > 0) {
       result = "$hourLeft Hours $minuteLeft Min ";
     } else {
-      result = "$minuteLeft Min";
+      if (m < 5) {
+        result = "< 2min";
+      } else {
+        result = "$minuteLeft Min";
+      }
     }
 
     return result;

@@ -1,3 +1,4 @@
+import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
@@ -113,10 +114,15 @@ class _AppDetailPageState extends State<AppDetailPage> {
                           SizedBox(
                             height: 10,
                           ),
-                          Icon(
-                            Icons.delete,
-                            color: Colors.amber,
-                            size: 30,
+                          InkWell(
+                            onTap: () {
+                              DeviceApps.uninstallApp(widget.app.packageName);
+                            },
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.amber,
+                              size: 30,
+                            ),
                           ),
                           SizedBox(
                             height: 10,

@@ -50,6 +50,8 @@ dependencies:
   lottie: ^2.2.0
   fl_chart: ^0.60.0
   syncfusion_flutter_charts: ^20.4.50
+  d_chart: ^2.2.11
+  animations: ^2.0.7
   # chart_components: ^1.0.1
  
  
