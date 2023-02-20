@@ -42,6 +42,7 @@ dependencies:
   open_settings: ^2.0.2
   sqflite: ^2.2.4+1
   path_provider: ^2.0.12
+  usage_stats: ^1.2.0
 
   flutter_animate: ^3.1.0
   intl: any

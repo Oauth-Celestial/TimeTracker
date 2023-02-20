@@ -429,6 +429,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.1"
+  usage_stats:
+    dependency: "direct main"
+    description:
+      name: usage_stats
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   vector_math:
     dependency: transitive
     description:

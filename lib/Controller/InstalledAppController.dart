@@ -7,6 +7,7 @@ import 'package:timetracker/Model/InstalledAppModel.dart';
 import 'package:timetracker/Model/PieDataModel.dart';
 import 'package:timetracker/Services/DataBaseHelper.dart';
 import 'package:timetracker/Services/DateHelper.dart';
+import 'package:usage_stats/usage_stats.dart';
 
 class InstalledAppController with ChangeNotifier {
   List<InstalledAppData> userInstalledApps = [];
@@ -37,9 +38,11 @@ class InstalledAppController with ChangeNotifier {
     totalScreenTime = 0;
     hasLoaded = false;
     totalScreenTime = 0;
-    List<Application> installedApps =
-        await DeviceApps.getInstalledApplications(includeAppIcons: true);
+    List<Application> installedApps = await DeviceApps.getInstalledApplications(
+        includeAppIcons: true, includeSystemApps: true);
     List<AppUsageInfo> appUsageInfo = await getUsageStats();
+    // // List<EventInfo> eventStats =
+    // //     await UsageStats.queryEventStats(startDate, endDate);
 
     for (Application app in installedApps) {
       for (AppUsageInfo appinfo in appUsageInfo) {
@@ -106,5 +109,32 @@ class InstalledAppController with ChangeNotifier {
       print(exception);
       return [];
     }
+  }
+
+  getAppStats() async {
+    DateTime endDate = new DateTime.now();
+    DateTime startDate =
+        DateTime(endDate.year, endDate.month, endDate.day, 0, 0, 0);
+    List<UsageInfo> usageStats =
+        await UsageStats.queryUsageStats(startDate, endDate);
+    Map<String, UsageInfo> queryAndAggregateUsageStats =
+        await UsageStats.queryAndAggregateUsageStats(startDate, endDate);
+    print(queryAndAggregateUsageStats);
+    // for (var i in usageStats) {
+    //   if (double.parse(i.totalTimeInForeground!) > 0) {
+    //     print(i.packageName);
+    //     print(DateTime.fromMillisecondsSinceEpoch(int.parse(i.firstTimeStamp!))
+    //         .toIso8601String());
+
+    //     print(DateTime.fromMillisecondsSinceEpoch(int.parse(i.lastTimeStamp!))
+    //         .toIso8601String());
+
+    //     print(DateTime.fromMillisecondsSinceEpoch(int.parse(i.lastTimeUsed!))
+    //         .toIso8601String());
+    //     print(int.parse(i.totalTimeInForeground!) / 1000 / 60);
+
+    //     print('-----\n');
+    //   }
+    // }
   }
 }
