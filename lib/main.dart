@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:app_usage/app_usage.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -12,6 +13,7 @@ import 'package:timetracker/Controller/UserTrackerController.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
 import 'package:timetracker/Screens/DashBoard/Dashboard.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AnimatedDrawer/AnimatedDrawer.dart';
+import 'package:timetracker/Screens/DashBoard/Pages/AnimatedDrawer/Drawer.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AppHome/HomePage.dart';
 
 import 'package:timetracker/Screens/SavedDatabasePage.dart';
@@ -21,11 +23,16 @@ import 'package:timetracker/Services/Theme/ThemeManager.dart';
 import 'package:timetracker/Services/UserTracker.dart';
 
 Database? database;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //await DataBaseHelper.instance.initDb("tracker.db");
   database = DataBaseHelper.instance.database;
-  // await initializeService();
+
+  MethodChannel platform = MethodChannel('timeTracker');
+  platform.invokeMethod("getForegroundPackage");
+  await initializeService();
+
   runApp(MyApp());
 }
 
@@ -42,6 +49,7 @@ Future<void> initializeService() async {
         isForegroundMode: true,
         initialNotificationTitle: 'Time Tracker',
         initialNotificationContent: 'Tracking app usage time',
+
         foregroundServiceNotificationId: 888,
       ),
       iosConfiguration: IosConfiguration(
@@ -60,36 +68,39 @@ Future<void> initializeService() async {
 void onStart(ServiceInstance service) async {
   DartPluginRegistrant.ensureInitialized();
   DataBaseHelper.instance.initDb("tracker.db");
-  print("service Started");
-  Timer.periodic(Duration(hours: 20), (timer) async {
-    try {
-      List<InstalledAppData> userInstalledApps = [];
-      List<Application> installedApps =
-          await DeviceApps.getInstalledApplications(includeAppIcons: true);
-      List<AppUsageInfo> appUsageInfo =
-          await AppHelper.instance.getUsageStats();
 
-      for (Application app in installedApps) {
-        for (AppUsageInfo appinfo in appUsageInfo) {
-          if (app.packageName == appinfo.packageName) {
-            userInstalledApps.add(InstalledAppData(
-                appIcon: app is ApplicationWithIcon
-                    ? CircleAvatar(
-                        backgroundImage: MemoryImage(app.icon),
-                      )
-                    : CircleAvatar(
-                        backgroundColor: Colors.white,
-                        child: Text("Error",
-                            style: TextStyle(color: Colors.white)),
-                      ),
-                packageName: app.packageName,
-                appname: app.appName,
-                appDuration: appinfo.usage));
-          }
-        }
-      }
-      DataBaseHelper.instance.saveAllDataToDb(userInstalledApps, "tracker.db");
-    } catch (e) {}
+  print("service Started");
+  Timer.periodic(Duration(milliseconds: 300), (timer) async {
+    try {} on PlatformException catch (e) {}
+
+    // try {
+    //   List<InstalledAppData> userInstalledApps = [];
+    //   List<Application> installedApps =
+    //       await DeviceApps.getInstalledApplications(includeAppIcons: true);
+    //   List<AppUsageInfo> appUsageInfo =
+    //       await AppHelper.instance.getUsageStats();
+
+    //   for (Application app in installedApps) {
+    //     for (AppUsageInfo appinfo in appUsageInfo) {
+    //       if (app.packageName == appinfo.packageName) {
+    //         userInstalledApps.add(InstalledAppData(
+    //             appIcon: app is ApplicationWithIcon
+    //                 ? CircleAvatar(
+    //                     backgroundImage: MemoryImage(app.icon),
+    //                   )
+    //                 : CircleAvatar(
+    //                     backgroundColor: Colors.white,
+    //                     child: Text("Error",
+    //                         style: TextStyle(color: Colors.white)),
+    //                   ),
+    //             packageName: app.packageName,
+    //             appname: app.appName,
+    //             appDuration: appinfo.usage));
+    //       }
+    //     }
+    //   }
+    //   DataBaseHelper.instance.saveAllDataToDb(userInstalledApps, "tracker.db");
+    // } catch (e) {}
   });
 
   service.on('stopService').listen((event) {
@@ -117,10 +128,13 @@ class MyApp extends StatelessWidget {
               return MaterialApp(
                   navigatorObservers: [UserTracker.instance.routeObserver],
                   title: 'Flutter Demo',
-                  themeMode: ThemeMode.dark,
+                  themeMode: Provider.of<ThemeProvider>(context).themeMode,
                   theme: MyTheme.lightTheme,
                   darkTheme: MyTheme.darkTheme,
-                  home: DashBoardPage());
+                  home: AnimatedDrawer(
+                    drawerWiget: DashboardDrawer(),
+                    baseWidget: DashBoardPage(),
+                  ));
             });
       }),
     );

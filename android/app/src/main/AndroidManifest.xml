@@ -5,6 +5,9 @@
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
     
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
@@ -14,6 +17,7 @@
         android:label="timetracker"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+       <service android:name=".ActiveAppService"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

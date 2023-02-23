@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<InstalledAppController>(context, listen: false).getAllApps();
+    // Provider.of<InstalledAppController>(context, listen: false).getAllApps();
     _controller.addListener(() {
       setState(() {
         offset = _controller.page;

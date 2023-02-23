@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
 
 class DateHelper {
@@ -44,5 +45,9 @@ class DateHelper {
     }
 
     return result;
+  }
+
+  String formatDateToYearMonthDate(DateTime dateTime) {
+    return DateFormat('yyyy-MM-dd').format(dateTime);
   }
 }

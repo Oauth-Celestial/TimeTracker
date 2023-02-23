@@ -1,6 +1,7 @@
 import 'package:app_usage/app_usage.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:timetracker/Model/CardDataModel.dart';
 import 'package:timetracker/Model/DoughnutDataModel%20.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
@@ -120,21 +121,21 @@ class InstalledAppController with ChangeNotifier {
     Map<String, UsageInfo> queryAndAggregateUsageStats =
         await UsageStats.queryAndAggregateUsageStats(startDate, endDate);
     print(queryAndAggregateUsageStats);
-    // for (var i in usageStats) {
-    //   if (double.parse(i.totalTimeInForeground!) > 0) {
-    //     print(i.packageName);
-    //     print(DateTime.fromMillisecondsSinceEpoch(int.parse(i.firstTimeStamp!))
-    //         .toIso8601String());
 
-    //     print(DateTime.fromMillisecondsSinceEpoch(int.parse(i.lastTimeStamp!))
-    //         .toIso8601String());
+    for (var i in usageStats) {
+      if (double.parse(i.totalTimeInForeground!) > 0) {
+        print(i.packageName);
+        DateTime appInstalledDate =
+            DateTime.fromMillisecondsSinceEpoch(int.parse(i.firstTimeStamp!));
+        print(DateHelper.instance.formatDateToYearMonthDate(appInstalledDate));
 
-    //     print(DateTime.fromMillisecondsSinceEpoch(int.parse(i.lastTimeUsed!))
-    //         .toIso8601String());
-    //     print(int.parse(i.totalTimeInForeground!) / 1000 / 60);
+        print(appInstalledDate);
+        DateTime lastUsedAt =
+            DateTime.fromMillisecondsSinceEpoch(int.parse(i.lastTimeStamp!));
 
-    //     print('-----\n');
-    //   }
-    // }
+        int totalScreenTime =
+            ((int.parse(i.totalTimeInForeground!) ~/ 1000) ~/ 60).toInt();
+      }
+    }
   }
 }
