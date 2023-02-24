@@ -31,7 +31,7 @@ void main() async {
 
   MethodChannel platform = MethodChannel('timeTracker');
   platform.invokeMethod("getForegroundPackage");
-  await initializeService();
+  // await initializeService();
 
   runApp(MyApp());
 }
