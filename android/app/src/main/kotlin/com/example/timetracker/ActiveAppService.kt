@@ -8,12 +8,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.example.timetracker.Models.AppInfoModel
 import java.util.*
 
 class ActiveAppService: Service() {
@@ -21,13 +23,14 @@ class ActiveAppService: Service() {
     private var notification: Notification? = null
     var mNotificationManager: NotificationManager? = null
 
+
     private val mNotificationId = 123
 
     val TAG = "RaviForeground"
-    val builder = NotificationCompat.Builder(this, "service_channel")
+    private val builder = NotificationCompat.Builder(this, "service_channel")
 
-
-    private fun printForegroundTask() {
+// BuildForeGroundTaskNotification is responsible to build notification every time the foreground app change
+    private fun buildForegroundTaskNotification() {
         var currentApp = "NULL"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val usm = this.getSystemService(USAGE_STATS_SERVICE) as UsageStatsManager
@@ -50,38 +53,52 @@ class ActiveAppService: Service() {
         }
         val packageManager: PackageManager = applicationContext.packageManager
         val appName = packageManager.getApplicationLabel(packageManager.getApplicationInfo(currentApp, PackageManager.GET_META_DATA)) as String
-        Log.e(TAG, "Current App in foreground is: $currentApp")
-        Log.e(TAG, "Current AppNam in foreground is: $appName")
+//        Log.e(TAG, "Current App in foreground is: $currentApp")
+//        Log.e(TAG, "Current AppNam in foreground is: $appName")
         val intentMainLanding = Intent(this, MainActivity::class.java)
         val pendingIntent =
                 PendingIntent.getActivity(this, 0, intentMainLanding, PendingIntent.FLAG_IMMUTABLE)
         val mNotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        builder.setContentTitle(
-                StringBuilder(appName).append("service is running")
-                        .toString()
-        )
+        try {
+            var appUsage:Int =  DatabaseHandler.instance.getAppDuration(currentApp,appName)
 
-                .setContentText("App In Use") //                    , swipe down for more options.
+            DatabaseHandler.instance.addOrUpdateAppDuration(AppInfoModel(appName,currentApp,(appUsage +1).toString()))
+            val icon: Drawable = this.packageManager.getApplicationIcon(currentApp)
+            builder.setContentTitle(
+                    StringBuilder(appName).
+                    toString()
+            )
+                    .setContentText("App In Use: $appUsage") //                    , swipe down for more options.
 
-                .setPriority(NotificationCompat.PRIORITY_LOW)
-                .setWhen(0)
-                .setOnlyAlertOnce(true)
-                .setSmallIcon(R.drawable.launch_background)
-                .setContentIntent(pendingIntent)
-                .setOngoing(true)
-        if (iconNotification != null) {
-            builder.setLargeIcon(Bitmap.createScaledBitmap(iconNotification!!, 128, 128, false))
-        }
+                    .setPriority(NotificationCompat.PRIORITY_LOW)
+                    .setWhen(0)
+                    .setOnlyAlertOnce(true)
+                    .setSmallIcon(R.drawable.launch_background)
+                    .setContentIntent(pendingIntent)
+                    .setOngoing(true)
+            if (iconNotification != null) {
+                builder.setLargeIcon(Bitmap.createScaledBitmap(iconNotification!!, 128, 128, false))
+            }
 //            builder.color =
-        notification = builder.build()
-        mNotificationManager.notify(mNotificationId,notification);
+            notification = builder.build()
+            //DatabaseHandler.instance.getAllApps()
+
+
+            mNotificationManager.notify(mNotificationId,notification);
+
+
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+
 
 
     }
 
     fun getForegroundApplication(context: Context) {
         try {
-            printForegroundTask()
+            buildForegroundTaskNotification()
+
         } catch (e: Exception) {
 
             e.printStackTrace()
@@ -99,18 +116,14 @@ class ActiveAppService: Service() {
     }
 
 
-//    @Deprecated("Deprecated in Java")
-//    override fun onHandleIntent(intent: Intent?) {
-//        Log.d("GulshanForeground", "onStartCommand: Started")
-//        generateForegroundNotification()
-//    }
+
 
     override fun onCreate() {
         super.onCreate()
     }
 
     private fun startContinue() {
-        val timer = object : CountDownTimer(500000000000, 1000) {
+        val timer = object : CountDownTimer(Long.MAX_VALUE, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 getForegroundApplication(this@ActiveAppService)
             }
@@ -125,7 +138,7 @@ class ActiveAppService: Service() {
 
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d("GulshanForeground", "onStartCommand: Started")
+        Log.d("Ravi", "onStartCommand: Started")
         generateForegroundNotification()
         startContinue()
         return super.onStartCommand(intent, flags, startId)
@@ -183,4 +196,8 @@ class ActiveAppService: Service() {
         }
 
     }
+
+
+
+
     }

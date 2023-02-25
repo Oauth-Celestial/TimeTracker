@@ -92,7 +92,6 @@ class InstalledAppController with ChangeNotifier {
   getAllData() async {
     List<Map> alldata = await DataBaseHelper.instance.getAllRecords();
     data = alldata.map((e) => appData.fromJson(e)).toList();
-    print(data.length);
   }
 
   Future<List<AppUsageInfo>> getUsageStats() async {
@@ -120,16 +119,16 @@ class InstalledAppController with ChangeNotifier {
         await UsageStats.queryUsageStats(startDate, endDate);
     Map<String, UsageInfo> queryAndAggregateUsageStats =
         await UsageStats.queryAndAggregateUsageStats(startDate, endDate);
-    print(queryAndAggregateUsageStats);
+    //print(queryAndAggregateUsageStats);
 
     for (var i in usageStats) {
       if (double.parse(i.totalTimeInForeground!) > 0) {
-        print(i.packageName);
+        //print(i.packageName);
         DateTime appInstalledDate =
             DateTime.fromMillisecondsSinceEpoch(int.parse(i.firstTimeStamp!));
         print(DateHelper.instance.formatDateToYearMonthDate(appInstalledDate));
 
-        print(appInstalledDate);
+        // print(appInstalledDate);
         DateTime lastUsedAt =
             DateTime.fromMillisecondsSinceEpoch(int.parse(i.lastTimeStamp!));
 

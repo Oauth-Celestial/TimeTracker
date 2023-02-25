@@ -8,10 +8,11 @@ import 'package:timetracker/Model/InstalledAppModel.dart';
 class DataBaseHelper {
   static DataBaseHelper instance = DataBaseHelper();
   Database? database;
+  String dataBasePath = "";
 
   Future<Database> getdataBase() async {
     String baseDbPath = await getDatabasesPath();
-    String dataBasePath = path.join(baseDbPath, "tracker.db");
+    dataBasePath = path.join(baseDbPath, "tracker.db");
     bool isDatabasePresent = await databaseExists(dataBasePath);
     if (!isDatabasePresent) {
       await initDb("tracker.db");
@@ -23,7 +24,7 @@ class DataBaseHelper {
 
   Future initDb(String fileName) async {
     String baseDbPath = await getDatabasesPath();
-    String dataBasePath = path.join(baseDbPath, fileName);
+    dataBasePath = path.join(baseDbPath, fileName);
     bool isDatabasePresent = await databaseExists(dataBasePath);
 
     if (isDatabasePresent) {
