@@ -43,7 +43,6 @@ dependencies:
   sqflite: ^2.2.4+1
   path_provider: ^2.0.12
   usage_stats: ^1.2.0
-
   flutter_animate: ^3.1.0
   intl: any
   flutter_background_service: ^2.4.6
@@ -53,6 +52,8 @@ dependencies:
   syncfusion_flutter_charts: ^20.4.50
   d_chart: ^2.2.11
   animations: ^2.0.7
+  liquid_swipe: ^3.0.0
+  smooth_page_indicator: ^1.0.1
   # chart_components: ^1.0.1
  
  

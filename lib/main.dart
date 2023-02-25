@@ -9,11 +9,13 @@ import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
+import 'package:timetracker/Controller/OnBoardingController.dart';
 import 'package:timetracker/Controller/UserTrackerController.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
 import 'package:timetracker/Screens/DashBoard/Dashboard.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AnimatedDrawer/AnimatedDrawer.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AnimatedDrawer/Drawer.dart';
+import 'package:timetracker/Screens/OnboardingScreen/OnboardingHome.dart';
 
 import 'package:timetracker/Services/DataBaseHelper.dart';
 import 'package:timetracker/Services/Theme/ThemeManager.dart';
@@ -29,8 +31,8 @@ void main() async {
   MethodChannel platform = MethodChannel(
     'timeTracker',
   );
-  platform.invokeMethod(
-      "getForegroundPackage", {"dbPath": DataBaseHelper.instance.dataBasePath});
+  // platform.invokeMethod(
+  //     "getForegroundPackage", {"dbPath": DataBaseHelper.instance.dataBasePath});
   runApp(MyApp());
 }
 
@@ -43,7 +45,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserTrackerController()),
-        ChangeNotifierProvider(create: (_) => InstalledAppController())
+        ChangeNotifierProvider(create: (_) => InstalledAppController()),
+        ChangeNotifierProvider(create: (_) => OnBoardingController())
       ],
       builder: ((context, child) {
         return ChangeNotifierProvider(
@@ -57,10 +60,14 @@ class MyApp extends StatelessWidget {
                   themeMode: Provider.of<ThemeProvider>(context).themeMode,
                   theme: MyTheme.lightTheme,
                   darkTheme: MyTheme.darkTheme,
-                  home: AnimatedDrawer(
-                    drawerWiget: DashboardDrawer(),
-                    baseWidget: DashBoardPage(),
-                  ));
+                  home: OnboardingPage()
+
+                  // AnimatedDrawer(
+                  //   drawerWiget: DashboardDrawer(),
+                  //   baseWidget: DashBoardPage(),
+                  // )
+
+                  );
             });
       }),
     );
