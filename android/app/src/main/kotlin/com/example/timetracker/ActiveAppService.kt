@@ -1,6 +1,7 @@
 package com.example.timetracker
 
 import android.app.*
+import android.app.usage.UsageEvents
 import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.Context
@@ -8,6 +9,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.CountDownTimer
@@ -33,22 +35,11 @@ class ActiveAppService: Service() {
     private fun buildForegroundTaskNotification() {
         var currentApp = "NULL"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val usm = this.getSystemService(USAGE_STATS_SERVICE) as UsageStatsManager
-            val time = System.currentTimeMillis()
-            val appList =
-                    usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, time - 1000 * 1000, time)
-            if (appList != null && appList.size > 0) {
-                val mySortedMap: SortedMap<Long, UsageStats> = TreeMap()
-                for (usageStats in appList) {
-                    mySortedMap[usageStats.lastTimeUsed] = usageStats
-                }
-                if (mySortedMap != null && !mySortedMap.isEmpty()) {
-                    currentApp = mySortedMap[mySortedMap.lastKey()]!!.packageName
-                }
-            }
+           currentApp = getTopPkgName(this)
         } else {
             val am = this.getSystemService(ACTIVITY_SERVICE) as ActivityManager
             val tasks = am.runningAppProcesses
+            Log.e("Running Task","${tasks.size}")
             currentApp = tasks[0].processName
         }
         val packageManager: PackageManager = applicationContext.packageManager
@@ -64,27 +55,53 @@ class ActiveAppService: Service() {
 
             DatabaseHandler.instance.addOrUpdateAppDuration(AppInfoModel(appName,currentApp,(appUsage +1).toString()))
             val icon: Drawable = this.packageManager.getApplicationIcon(currentApp)
+
+
             builder.setContentTitle(
-                    StringBuilder(appName).
+                    StringBuilder("App In Use: $appName").
                     toString()
             )
-                    .setContentText("App In Use: $appUsage") //                    , swipe down for more options.
+                    .setContentText("Today's Usage : ${convertSeconds(appUsage)}") //
+                    //                , swipe down for more options.
 
                     .setPriority(NotificationCompat.PRIORITY_LOW)
                     .setWhen(0)
                     .setOnlyAlertOnce(true)
-                    .setSmallIcon(R.drawable.launch_background)
+
+                    .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentIntent(pendingIntent)
+
+
                     .setOngoing(true)
+            //
             if (iconNotification != null) {
-                builder.setLargeIcon(Bitmap.createScaledBitmap(iconNotification!!, 128, 128, false))
+                builder.setLargeIcon(Bitmap.createScaledBitmap(drawableToBitmap(icon)!!, 128, 128, false))
             }
 //            builder.color =
             notification = builder.build()
             //DatabaseHandler.instance.getAllApps()
+            if(Helper.isAppRunning(this,currentApp)){
+                Log.e("App Is Running",currentApp)
+            }
+            else{
+                Log.e("service is running For",currentApp)
+            }
 
+
+            val activeApp = getTopPkgName(this);
+            Log.e("Current Active App","$currentApp")
+            Log.e("fromTopPkg","$activeApp")
+
+
+//            if (found) {
+//                Toast.makeText(this@MainActivity, "Running", Toast.LENGTH_SHORT).show()
+//            } else {
+//                Toast.makeText(this@MainActivity, "Not Running", Toast.LENGTH_SHORT).show()
+//            }
 
             mNotificationManager.notify(mNotificationId,notification);
+
+
 
 
         } catch (e: PackageManager.NameNotFoundException) {
@@ -93,6 +110,20 @@ class ActiveAppService: Service() {
 
 
 
+    }
+
+    fun drawableToBitmap(drawable: Drawable): Bitmap? {
+        if (drawable is BitmapDrawable) {
+            val bitmapDrawable: BitmapDrawable = drawable as BitmapDrawable
+            if (bitmapDrawable.getBitmap() != null) {
+                return bitmapDrawable.getBitmap()
+            }
+        }
+        return if (drawable.intrinsicWidth <= 0 || drawable.intrinsicHeight <= 0) {
+            Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888) // Single color bitmap will be created of 1x1 pixel
+        } else {
+            Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        }
     }
 
     fun getForegroundApplication(context: Context) {
@@ -185,11 +216,12 @@ class ActiveAppService: Service() {
                     .setWhen(0)
                     .setOnlyAlertOnce(true)
                     .setSmallIcon(R.drawable.launch_background)
-                    .setContentIntent(pendingIntent)
+
                     .setOngoing(true)
-            if (iconNotification != null) {
-                builder.setLargeIcon(Bitmap.createScaledBitmap(iconNotification!!, 128, 128, false))
-            }
+
+//            if (iconNotification != null) {
+//                builder.setLargeIcon(Bitmap.createScaledBitmap(iconNotification!!, 128, 128, false))
+//            }
 //            builder.color =
             notification = builder.build()
             startForeground(mNotificationId, notification)
@@ -197,7 +229,65 @@ class ActiveAppService: Service() {
 
     }
 
+    object Helper {
+        fun isAppRunning(context: Context, packageName: String?): Boolean {
+            val activityManager = context.getSystemService(ACTIVITY_SERVICE) as ActivityManager
+            val procInfos = activityManager.runningAppProcesses
+            if (procInfos != null) {
+                for (processInfo in procInfos) {
+                    if (processInfo.processName.equals(packageName)) {
+                        return true
+                    }
+                }
+            }
+            return false
+        }
+    }
 
+    fun convertSeconds(seconds: Int): String? {
+        val h = seconds / 3600
+        val m = seconds % 3600 / 60
+        val s = seconds % 60
+        val sh = if (h > 0) "$h h" else ""
+        val sm = (if (m < 10 &&( m > 0) && h > 0) "0" else "") + if (m > 0) (if (h > 0 && s == 0) m.toString() else "$m min") else ""
+        val ss = if (s == 0 && (h > 0 || m > 0)) "" else (if (s < 10 && (h > 0 || m > 0)) "0" else "") + s.toString() + " " + "sec"
+        return sh + (if (h > 0) " " else "") + sm + (if (m > 0) " " else "") + ss
+    }
 
+    fun getTopPkgName(context: Context): String {
+        var pkgName: String? = null
+        val usageStatsManager = context
+                .getSystemService(USAGE_STATS_SERVICE) as UsageStatsManager
+        val timeTnterval = (1000 * 600).toLong()
+        val endTime = System.currentTimeMillis()
+        val beginTime = endTime - timeTnterval
+        val myUsageEvents: UsageEvents = usageStatsManager.queryEvents(beginTime, endTime)
+        while (myUsageEvents.hasNextEvent()) {
+            val myEvent: UsageEvents.Event = UsageEvents.Event()
+            myUsageEvents.getNextEvent(myEvent)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                when (myEvent.eventType) {
+                    UsageEvents.Event.ACTIVITY_RESUMED -> pkgName = myEvent.packageName
+                    UsageEvents.Event.ACTIVITY_PAUSED -> if (myEvent.packageName.equals(pkgName)) {
+                        pkgName = null
+                    }
+                }
+            } else {
+                when (myEvent.eventType) {
+                    UsageEvents.Event.MOVE_TO_FOREGROUND -> pkgName = myEvent.packageName
+                    UsageEvents.Event.MOVE_TO_BACKGROUND -> if (myEvent.packageName.equals(pkgName)) {
+                        pkgName = null
+                    }
+                }
+            }
+        }
+        if (pkgName == null){
+            return  this.packageName
+        }
+        else{
+            return  pkgName
+        }
+
+    }
 
     }

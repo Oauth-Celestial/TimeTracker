@@ -31,8 +31,8 @@ void main() async {
   MethodChannel platform = MethodChannel(
     'timeTracker',
   );
-  // platform.invokeMethod(
-  //     "getForegroundPackage", {"dbPath": DataBaseHelper.instance.dataBasePath});
+  platform.invokeMethod(
+      "getForegroundPackage", {"dbPath": DataBaseHelper.instance.dataBasePath});
   runApp(MyApp());
 }
 
@@ -78,3 +78,6 @@ class MyApp extends StatelessWidget {
 // https://stackoverflow.com/questions/62575091/possible-to-copy-ios-app-store-transition-using-flutter
 
 // https://blog.karenying.com/posts/50-shades-of-dark-mode-gray
+
+
+// https://gist.github.com/paulo-raca/471680c0fe4d8f91b8cde486039b0dcd

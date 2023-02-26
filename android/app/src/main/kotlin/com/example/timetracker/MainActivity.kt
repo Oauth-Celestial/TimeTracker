@@ -1,5 +1,7 @@
 package com.example.timetracker
 
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.annotation.NonNull
@@ -20,13 +22,24 @@ class MainActivity: FlutterActivity() {
                 Log.e("DbPath","$dbPath")//Get the argument based on the key passed from Flutter
                 DatabaseHandler.instance.dataBasePath = dbPath as String
                 DatabaseHandler.instance.openDataBase(dbPath as String)
-                DatabaseHandler.instance.clearTableData("DailyUsage")
+//                DatabaseHandler.instance.clearTableData("DailyUsage")
 
 
 
                 val i = Intent(context, ActiveAppService::class.java)
 
-                context.startService(i)
+                val isAlreadyRunning:Boolean = context.isMyServiceRunning(ActiveAppService::class.java)
+
+                if (!isAlreadyRunning){
+                    context.startService(i)
+                    Log.e("Service Status","Started New Service")
+
+                }
+                else{
+                    Log.e("Service Status","Already Running")
+                }
+
+
             }
             else {
 
@@ -34,5 +47,11 @@ class MainActivity: FlutterActivity() {
         }
     }
 
+
+    fun Context.isMyServiceRunning(serviceClass: Class<*>): Boolean {
+        val manager = this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        return manager.getRunningServices(Integer.MAX_VALUE)
+                .any { it.service.className == serviceClass.name }
+    }
 
 }
