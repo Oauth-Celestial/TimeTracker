@@ -16,6 +16,7 @@ import 'package:timetracker/Screens/DashBoard/Dashboard.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AnimatedDrawer/AnimatedDrawer.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AnimatedDrawer/Drawer.dart';
 import 'package:timetracker/Screens/OnboardingScreen/OnboardingHome.dart';
+import 'package:timetracker/Screens/SplashScreen/SplashScreen.dart';
 
 import 'package:timetracker/Services/DataBaseHelper.dart';
 import 'package:timetracker/Services/Theme/ThemeManager.dart';
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
                   themeMode: Provider.of<ThemeProvider>(context).themeMode,
                   theme: MyTheme.lightTheme,
                   darkTheme: MyTheme.darkTheme,
-                  home: OnboardingPage()
+                  home: SplashScreen()
 
                   // AnimatedDrawer(
                   //   drawerWiget: DashboardDrawer(),
@@ -81,3 +82,5 @@ class MyApp extends StatelessWidget {
 
 
 // https://gist.github.com/paulo-raca/471680c0fe4d8f91b8cde486039b0dcd
+
+// https://medium.com/flutter-community/everything-you-need-to-know-about-flutter-page-route-transition-9ef5c1b32823

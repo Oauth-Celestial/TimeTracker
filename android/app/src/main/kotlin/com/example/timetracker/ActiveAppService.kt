@@ -282,7 +282,21 @@ class ActiveAppService: Service() {
             }
         }
         if (pkgName == null){
-            return  this.packageName
+            var currentApp = ""
+            val usm = this.getSystemService(USAGE_STATS_SERVICE) as UsageStatsManager
+            val time = System.currentTimeMillis()
+            val appList =
+                    usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, time - 1000 * 1000, time)
+            if (appList != null && appList.size > 0) {
+                val mySortedMap: SortedMap<Long, UsageStats> = TreeMap()
+                for (usageStats in appList) {
+                    mySortedMap[usageStats.lastTimeUsed] = usageStats
+                }
+                if (mySortedMap != null && !mySortedMap.isEmpty()) {
+                    currentApp = mySortedMap[mySortedMap.lastKey()]!!.packageName
+                }
+            }
+            return currentApp
         }
         else{
             return  pkgName
