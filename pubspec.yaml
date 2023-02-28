@@ -54,6 +54,7 @@ dependencies:
   animations: ^2.0.7
   liquid_swipe: ^3.0.0
   smooth_page_indicator: ^1.0.1
+  shimmer: ^2.0.0
   # chart_components: ^1.0.1
  
  

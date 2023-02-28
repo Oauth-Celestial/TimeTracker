@@ -3,6 +3,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
+import 'package:timetracker/Screens/OnboardingScreen/UsageAccessPage.dart';
+import 'package:timetracker/Services/RouteManager.dart';
 import 'package:timetracker/Services/Theme/ColorConstant.dart';
 
 class ThirdPage extends StatelessWidget {
@@ -61,44 +63,50 @@ class ThirdPage extends StatelessWidget {
               padding: const EdgeInsets.only(left: 10),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  width: 200,
-                  height: 40,
-                  color: Colors.amber,
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        "Get Started",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Expanded(
-                        child: Container(
-                          alignment: Alignment.centerRight,
-                          child: ClipOval(
-                              child: Container(
-                            width: 30,
-                            height: 30,
-                            color: Colors.white,
-                            child: Icon(
-                              Icons.arrow_right,
-                              color: Colors.black,
-                            ),
-                          )),
+                child: InkWell(
+                  onTap: () {
+                    RouteManager.instance
+                        .push(to: UsageAcessPage(), context: context);
+                  },
+                  child: Container(
+                    width: 200,
+                    height: 40,
+                    color: Colors.amber,
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                    ],
+                        Text(
+                          "Get Started",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Expanded(
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            child: ClipOval(
+                                child: Container(
+                              width: 30,
+                              height: 30,
+                              color: Colors.white,
+                              child: Icon(
+                                Icons.arrow_right,
+                                color: Colors.black,
+                              ),
+                            )),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

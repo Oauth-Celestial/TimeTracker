@@ -17,36 +17,41 @@ class OnboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size deviceSize = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Container(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            LiquidSwipe(
-                enableSideReveal: true,
-                slideIconWidget: const Icon(Icons.arrow_back_ios),
-                enableLoop: false,
-                onPageChangeCallback: ((activePageIndex) {
-                  Provider.of<OnBoardingController>(context, listen: false)
-                      .changeOnBoardingPage(activePageIndex);
-                }),
-                waveType: WaveType.liquidReveal,
-                pages: [FirstPage(), SecondPage(), ThirdPage()]),
-            Consumer<OnBoardingController>(builder: (context, value, child) {
-              return Positioned(
-                bottom: 30,
-                child: AnimatedSmoothIndicator(
-                  count: 3,
-                  activeIndex: value.currentPage,
-                  curve: Curves.bounceIn,
-                  // onDotClicked: (index) {
-                  //   Provider.of<OnBoardingController>(context, listen: false)
-                  //       .changeOnBoardingPage(index);
-                  // },
-                ),
-              );
-            }),
-          ],
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        body: Container(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              LiquidSwipe(
+                  enableSideReveal: true,
+                  slideIconWidget: const Icon(Icons.arrow_back_ios),
+                  enableLoop: false,
+                  onPageChangeCallback: ((activePageIndex) {
+                    Provider.of<OnBoardingController>(context, listen: false)
+                        .changeOnBoardingPage(activePageIndex);
+                  }),
+                  waveType: WaveType.liquidReveal,
+                  pages: [FirstPage(), SecondPage(), ThirdPage()]),
+              Consumer<OnBoardingController>(builder: (context, value, child) {
+                return Positioned(
+                  bottom: 30,
+                  child: AnimatedSmoothIndicator(
+                    count: 3,
+                    activeIndex: value.currentPage,
+                    curve: Curves.bounceIn,
+                    // onDotClicked: (index) {
+                    //   Provider.of<OnBoardingController>(context, listen: false)
+                    //       .changeOnBoardingPage(index);
+                    // },
+                  ),
+                );
+              }),
+            ],
+          ),
         ),
       ),
     );

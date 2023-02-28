@@ -16,6 +16,7 @@ import 'package:timetracker/Screens/DashBoard/Dashboard.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AnimatedDrawer/AnimatedDrawer.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AnimatedDrawer/Drawer.dart';
 import 'package:timetracker/Screens/OnboardingScreen/OnboardingHome.dart';
+import 'package:timetracker/Screens/OnboardingScreen/UsageAccessPage.dart';
 import 'package:timetracker/Screens/SplashScreen/SplashScreen.dart';
 
 import 'package:timetracker/Services/DataBaseHelper.dart';
@@ -32,8 +33,8 @@ void main() async {
   MethodChannel platform = MethodChannel(
     'timeTracker',
   );
-  platform.invokeMethod(
-      "getForegroundPackage", {"dbPath": DataBaseHelper.instance.dataBasePath});
+  // platform.invokeMethod(
+  //     "getForegroundPackage", {"dbPath": DataBaseHelper.instance.dataBasePath});
   runApp(MyApp());
 }
 
@@ -61,7 +62,7 @@ class MyApp extends StatelessWidget {
                   themeMode: Provider.of<ThemeProvider>(context).themeMode,
                   theme: MyTheme.lightTheme,
                   darkTheme: MyTheme.darkTheme,
-                  home: SplashScreen()
+                  home: OnboardingPage()
 
                   // AnimatedDrawer(
                   //   drawerWiget: DashboardDrawer(),
