@@ -30,11 +30,6 @@ void main() async {
   await DataBaseHelper.instance.initDb("tracker.db");
   database = DataBaseHelper.instance.database;
 
-  MethodChannel platform = MethodChannel(
-    'timeTracker',
-  );
-  // platform.invokeMethod(
-  //     "getForegroundPackage", {"dbPath": DataBaseHelper.instance.dataBasePath});
   runApp(MyApp());
 }
 
@@ -62,8 +57,7 @@ class MyApp extends StatelessWidget {
                   themeMode: Provider.of<ThemeProvider>(context).themeMode,
                   theme: MyTheme.lightTheme,
                   darkTheme: MyTheme.darkTheme,
-                  home: OnboardingPage()
-
+                  home: SplashScreen()
                   // AnimatedDrawer(
                   //   drawerWiget: DashboardDrawer(),
                   //   baseWidget: DashBoardPage(),

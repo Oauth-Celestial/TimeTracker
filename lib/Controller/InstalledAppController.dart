@@ -117,24 +117,26 @@ class InstalledAppController with ChangeNotifier {
         DateTime(endDate.year, endDate.month, endDate.day, 0, 0, 0);
     List<UsageInfo> usageStats =
         await UsageStats.queryUsageStats(startDate, endDate);
-    Map<String, UsageInfo> queryAndAggregateUsageStats =
-        await UsageStats.queryAndAggregateUsageStats(startDate, endDate);
-    //print(queryAndAggregateUsageStats);
+    print(usageStats);
 
-    for (var i in usageStats) {
-      if (double.parse(i.totalTimeInForeground!) > 0) {
-        //print(i.packageName);
-        DateTime appInstalledDate =
-            DateTime.fromMillisecondsSinceEpoch(int.parse(i.firstTimeStamp!));
-        print(DateHelper.instance.formatDateToYearMonthDate(appInstalledDate));
+    // Map<String, UsageInfo> queryAndAggregateUsageStats =
+    //     await UsageStats.queryAndAggregateUsageStats(startDate, endDate);
+    // print(queryAndAggregateUsageStats);
 
-        // print(appInstalledDate);
-        DateTime lastUsedAt =
-            DateTime.fromMillisecondsSinceEpoch(int.parse(i.lastTimeStamp!));
+    // for (var i in usageStats) {
+    //   if (double.parse(i.totalTimeInForeground!) > 0) {
+    //     //print(i.packageName);
+    //     DateTime appInstalledDate =
+    //         DateTime.fromMillisecondsSinceEpoch(int.parse(i.firstTimeStamp!));
+    //     print(DateHelper.instance.formatDateToYearMonthDate(appInstalledDate));
 
-        int totalScreenTime =
-            ((int.parse(i.totalTimeInForeground!) ~/ 1000) ~/ 60).toInt();
-      }
-    }
+    //     // print(appInstalledDate);
+    //     DateTime lastUsedAt =
+    //         DateTime.fromMillisecondsSinceEpoch(int.parse(i.lastTimeStamp!));
+
+    //     int totalScreenTime =
+    //         ((int.parse(i.totalTimeInForeground!) ~/ 1000) ~/ 60).toInt();
+    //   }
+    // }
   }
 }

@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen>
                   RouteManager.instance
                       .push(to: OnboardingPage(), context: context);
                 });
-              })),
+              })).animate().scaleY(delay: Duration(milliseconds: 300)),
           Text(
             "Track It",
             style: TextStyle(

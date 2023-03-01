@@ -274,8 +274,8 @@ class ActiveAppService: Service() {
                 }
             } else {
                 when (myEvent.eventType) {
-                    UsageEvents.Event.MOVE_TO_FOREGROUND -> pkgName = myEvent.packageName
-                    UsageEvents.Event.MOVE_TO_BACKGROUND -> if (myEvent.packageName.equals(pkgName)) {
+                    UsageEvents.Event.ACTIVITY_RESUMED -> pkgName = myEvent.packageName
+                    UsageEvents.Event.ACTIVITY_RESUMED -> if (myEvent.packageName.equals(pkgName)) {
                         pkgName = null
                     }
                 }

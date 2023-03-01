@@ -5,6 +5,7 @@ import 'package:animations/animations.dart';
 import 'package:d_chart/d_chart.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ import 'package:timetracker/Model/PieDataModel.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AnimatedDrawer/Drawer.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AppDetail/AppDetail.dart';
 import 'package:timetracker/Services/ColorHelper.dart';
+import 'package:timetracker/Services/DataBaseHelper.dart';
 import 'package:timetracker/Services/DateHelper.dart';
 import 'package:timetracker/Services/Theme/ColorConstant.dart';
 
@@ -28,11 +30,16 @@ class DashBoardPage extends StatefulWidget {
 
 class _DashBoardPageState extends State<DashBoardPage>
     with SingleTickerProviderStateMixin {
+  MethodChannel platform = MethodChannel(
+    'timeTracker',
+  );
   @override
   void initState() {
     // TODO: implement initState
 
-    Provider.of<InstalledAppController>(context, listen: false).getAllApps();
+    // Provider.of<InstalledAppController>(context, listen: false).getAllApps();
+    platform.invokeMethod("getForegroundPackage",
+        {"dbPath": DataBaseHelper.instance.dataBasePath});
     Provider.of<InstalledAppController>(context, listen: false).getAppStats();
     super.initState();
   }

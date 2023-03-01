@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:timetracker/Screens/DashBoard/Dashboard.dart';
+import 'package:timetracker/Services/RouteManager.dart';
 import 'package:timetracker/Services/TextConstant/TextConstant.dart';
 import 'package:usage_stats/usage_stats.dart';
 
@@ -57,7 +59,8 @@ class UsageAcessPage extends StatelessWidget {
                     if (!(await UsageStats.checkUsagePermission() ?? false)) {
                       UsageStats.grantUsagePermission();
                     } else {
-                      print("Permission Granted");
+                      RouteManager.instance
+                          .push(to: DashBoardPage(), context: context);
                     }
                   },
                   child: Container(
@@ -66,7 +69,7 @@ class UsageAcessPage extends StatelessWidget {
                     alignment: Alignment.center,
                     color: Colors.amber,
                     child: Text(
-                      "Grant Access",
+                      "Allow",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
