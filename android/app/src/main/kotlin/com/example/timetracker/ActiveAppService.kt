@@ -56,23 +56,43 @@ class ActiveAppService: Service() {
             DatabaseHandler.instance.addOrUpdateAppDuration(AppInfoModel(appName,currentApp,(appUsage +1).toString()))
             val icon: Drawable = this.packageManager.getApplicationIcon(currentApp)
 
+            if(this.packageName == currentApp){
+                builder.setContentTitle(
+                        StringBuilder("Today's Device Usage").
+                        toString()
+                )
+                        .setContentText("Today's Usage : ${convertSeconds(DatabaseHandler.instance.getTotalDeviceUsage())}") //
+                        //                , swipe down for more options.
 
-            builder.setContentTitle(
-                    StringBuilder("App In Use: $appName").
-                    toString()
-            )
-                    .setContentText("Today's Usage : ${convertSeconds(appUsage)}") //
-                    //                , swipe down for more options.
+                        .setPriority(NotificationCompat.PRIORITY_LOW)
+                        .setWhen(0)
+                        .setOnlyAlertOnce(true)
 
-                    .setPriority(NotificationCompat.PRIORITY_LOW)
-                    .setWhen(0)
-                    .setOnlyAlertOnce(true)
-
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentIntent(pendingIntent)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentIntent(pendingIntent)
 
 
-                    .setOngoing(true)
+                        .setOngoing(true)
+            }
+            else{
+                builder.setContentTitle(
+                        StringBuilder("App In Use: $appName").
+                        toString()
+                )
+                        .setContentText("Today's Usage : ${convertSeconds(appUsage)}") //
+                        //                , swipe down for more options.
+
+                        .setPriority(NotificationCompat.PRIORITY_LOW)
+                        .setWhen(0)
+                        .setOnlyAlertOnce(true)
+
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentIntent(pendingIntent)
+
+
+                        .setOngoing(true)
+            }
+
             //
             if (iconNotification != null) {
                 builder.setLargeIcon(Bitmap.createScaledBitmap(drawableToBitmap(icon)!!, 128, 128, false))

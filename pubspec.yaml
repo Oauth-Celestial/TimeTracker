@@ -55,6 +55,7 @@ dependencies:
   liquid_swipe: ^3.0.0
   smooth_page_indicator: ^1.0.1
   shimmer: ^2.0.0
+  shared_preferences: ^2.0.18
   # chart_components: ^1.0.1
  
  

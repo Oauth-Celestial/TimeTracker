@@ -75,7 +75,7 @@ class ThirdPage extends StatelessWidget {
                     child: Row(
                       children: [
                         SizedBox(
-                          width: 10,
+                          width: 30,
                         ),
                         Text(
                           "Get Started",

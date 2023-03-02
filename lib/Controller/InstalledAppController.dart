@@ -1,13 +1,9 @@
 import 'package:app_usage/app_usage.dart';
-import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:timetracker/Model/CardDataModel.dart';
 import 'package:timetracker/Model/DoughnutDataModel%20.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
 import 'package:timetracker/Model/PieDataModel.dart';
-import 'package:timetracker/Services/DataBaseHelper.dart';
-import 'package:timetracker/Services/DateHelper.dart';
 import 'package:usage_stats/usage_stats.dart';
 
 class InstalledAppController with ChangeNotifier {
@@ -39,45 +35,8 @@ class InstalledAppController with ChangeNotifier {
     totalScreenTime = 0;
     hasLoaded = false;
     totalScreenTime = 0;
-    List<Application> installedApps = await DeviceApps.getInstalledApplications(
-        includeAppIcons: true, includeSystemApps: true);
-    List<AppUsageInfo> appUsageInfo = await getUsageStats();
-    // // List<EventInfo> eventStats =
-    // //     await UsageStats.queryEventStats(startDate, endDate);
+    // Application? app = await DeviceApps.getApp('com.frandroid.app');
 
-    for (Application app in installedApps) {
-      for (AppUsageInfo appinfo in appUsageInfo) {
-        if (app.packageName == appinfo.packageName) {
-          userInstalledApps.add(InstalledAppData(
-              appIcon: app is ApplicationWithIcon
-                  ? CircleAvatar(
-                      backgroundImage: MemoryImage(app.icon),
-                    )
-                  : CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child:
-                          Text("Error", style: TextStyle(color: Colors.white)),
-                    ),
-              packageName: app.packageName,
-              appname: app.appName,
-              lastUsedOn: appinfo.lastForeground,
-              bytes: (app as ApplicationWithIcon).icon,
-              appDuration: appinfo.usage));
-          // pieData.add(PieChartDataModel(
-          //     title: DateHelper.instance
-          //         .getFormattedTimeFromSeconds(appinfo.usage.inSeconds),
-          //     value: (app as ApplicationWithIcon).icon));
-          pieData.add(PieChartDataModel(
-              title: "",
-              timeSpent: appinfo.usage.inSeconds.toDouble(),
-              bytes: (app as ApplicationWithIcon).icon));
-          graphData.add(DoughnutData(
-              appinfo.appName, appinfo.usage.inSeconds.toDouble()));
-          totalScreenTime += appinfo.usage.inSeconds;
-        }
-      }
-    }
-    userInstalledApps.sort((b, a) => a.appDuration.compareTo(b.appDuration));
     hasLoaded = true;
     notifyListeners();
   }
@@ -89,10 +48,10 @@ class InstalledAppController with ChangeNotifier {
     getAllApps();
   }
 
-  getAllData() async {
-    List<Map> alldata = await DataBaseHelper.instance.getAllRecords();
-    data = alldata.map((e) => appData.fromJson(e)).toList();
-  }
+  // getAllData() async {
+  //   List<Map> alldata = await DataBaseHelper.instance.getAllRecords();
+  //   data = alldata.map((e) => appData.fromJson(e)).toList();
+  // }
 
   Future<List<AppUsageInfo>> getUsageStats() async {
     try {

@@ -47,6 +47,12 @@ class DateHelper {
     return result;
   }
 
+  String getTodaysFormattedDate() {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy/MM/dd').format(now);
+    return formattedDate;
+  }
+
   String formatDateToYearMonthDate(DateTime dateTime) {
     return DateFormat('yyyy-MM-dd').format(dateTime);
   }

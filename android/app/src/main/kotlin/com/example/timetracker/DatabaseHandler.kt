@@ -23,6 +23,24 @@ companion object{
         }
     }
 
+    fun getTotalDeviceUsage():Int {
+        // SELECT SUM(CAST(appDuration as int ))FROM DailyUsage WHERE usedOn = "2023/03/02"
+        var appUsage = "0"
+        var sqlQuery = "SELECT SUM(CAST(appDuration as int )) FROM DailyUsage WHERE usedOn = ?"
+        var todayDate: String = DateHelper.instance.getTodaysDate()
+        val c: Cursor = db!!.rawQuery(sqlQuery, arrayOf<String>(todayDate))
+
+        if (c.count == 1) {
+
+            while (c.moveToNext()) {
+                appUsage = c.getString(0)
+
+            }
+
+        }
+        return appUsage.toInt();
+    }
+
 
     fun getAppDuration(appPackageName:String,appName:String):Int {
         openDataBase(dataBasePath as String)
@@ -48,10 +66,6 @@ companion object{
           Log.e("Insert Sql","$sql")
 
             db!!.execSQL(sql)
-
-
-
-
         }
         c.close()
             return appUsedFor

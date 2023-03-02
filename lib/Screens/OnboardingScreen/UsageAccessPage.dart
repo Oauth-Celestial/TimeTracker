@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timetracker/Screens/DashBoard/Dashboard.dart';
 import 'package:timetracker/Services/RouteManager.dart';
@@ -59,6 +60,8 @@ class UsageAcessPage extends StatelessWidget {
                     if (!(await UsageStats.checkUsagePermission() ?? false)) {
                       UsageStats.grantUsagePermission();
                     } else {
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.setBool('hasOnBoarded', true);
                       RouteManager.instance
                           .push(to: DashBoardPage(), context: context);
                     }

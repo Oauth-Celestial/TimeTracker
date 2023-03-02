@@ -37,10 +37,11 @@ class _DashBoardPageState extends State<DashBoardPage>
   void initState() {
     // TODO: implement initState
 
-    // Provider.of<InstalledAppController>(context, listen: false).getAllApps();
     platform.invokeMethod("getForegroundPackage",
         {"dbPath": DataBaseHelper.instance.dataBasePath});
-    Provider.of<InstalledAppController>(context, listen: false).getAppStats();
+    // Provider.of<InstalledAppController>(context, listen: false).getAppStats();
+    String todaysDate = DateHelper.instance.getTodaysFormattedDate();
+    DataBaseHelper.instance.getAllRecords(todaysDate);
     super.initState();
   }
 
@@ -70,80 +71,6 @@ class _DashBoardPageState extends State<DashBoardPage>
                       color: darkBackground,
                       child: ListView(
                         children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            height: 300,
-                            child: Stack(
-                              children: [
-                                AspectRatio(
-                                  aspectRatio: 16 / 9,
-                                  child: Stack(
-                                    children: [
-                                      DChartPie(
-                                        animate: false,
-                                        data: value.graphData
-                                            .map((e) => e.toJson())
-                                            .toList(),
-                                        fillColor: (pieData, index) =>
-                                            Colors.amber,
-                                        donutWidth: 15,
-                                        strokeWidth: 0,
-                                        showLabelLine: false,
-                                        pieLabel: (pieData, index) {
-                                          return "";
-                                        },
-                                      ),
-                                      Align(
-                                        alignment: Alignment.center,
-                                        child: AspectRatio(
-                                          aspectRatio: 8 / 2.3,
-                                          child: Lottie.asset(
-                                            "assets/phone.json",
-                                          ),
-                                        ),
-                                      )
-                                          .animate()
-                                          .fadeIn(delay: Duration(seconds: 1))
-                                    ],
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Container(
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Container(
-                                          alignment: Alignment.center,
-                                          child: Text("Todays App Usage",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        Container(
-                                          alignment: Alignment.center,
-                                          child: Text(timeSpend,
-                                              style: TextStyle(
-                                                  color: Colors.amber,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold)),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
                           for (int i = 0;
                               i < value.userInstalledApps.length;
                               i++) ...[

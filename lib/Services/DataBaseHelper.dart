@@ -49,9 +49,12 @@ class DataBaseHelper {
     await database?.close();
   }
 
-  Future<List<Map>> getAllRecords() async {
+  Future<List<Map>> getAllRecords(String date) async {
     Database db = await getdataBase();
-    List<Map>? records = await db.rawQuery("select * from appUsageTable");
+    List<Map>? records = await db.rawQuery(
+        "select * from DailyUsage where usedOn = ? ORDER BY  CAST (appDuration as int) DESC ",
+        [date]);
+    print(records);
     return records;
   }
 
