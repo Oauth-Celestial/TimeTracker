@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timetracker/Screens/DashBoard/Dashboard.dart';
@@ -58,7 +60,17 @@ class UsageAcessPage extends StatelessWidget {
                 child: InkWell(
                   onTap: () async {
                     if (!(await UsageStats.checkUsagePermission() ?? false)) {
-                      UsageStats.grantUsagePermission();
+                      //UsageStats.grantUsagePermission();
+                      if (await Permission.systemAlertWindow
+                          .request()
+                          .isGranted) {
+                        MethodChannel platform = MethodChannel(
+                          'timeTracker',
+                        );
+                        platform.invokeMethod(
+                          "drawOverLay",
+                        );
+                      }
                     } else {
                       final prefs = await SharedPreferences.getInstance();
                       await prefs.setBool('hasOnBoarded', true);

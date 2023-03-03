@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.annotation.NonNull
+import com.example.timetracker.Helpers.AppRestrictWindow
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -41,10 +42,20 @@ class MainActivity: FlutterActivity() {
 
 
             }
+            else if (call.method == "drawOverLay"){
+                val window = AppRestrictWindow(this)
+                window.open()
+            }
+
             else {
 
             }
         }
+    }
+
+
+    fun drawOverLay(){
+
     }
 
 
