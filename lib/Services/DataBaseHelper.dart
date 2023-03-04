@@ -51,10 +51,13 @@ class DataBaseHelper {
 
   Future<List<Map>> getAllRecords(String date) async {
     Database db = await getdataBase();
+    List<InstalledAppData> appData = [];
     List<Map>? records = await db.rawQuery(
         "select * from DailyUsage where usedOn = ? ORDER BY  CAST (appDuration as int) DESC ",
         [date]);
-    print(records);
+    for (Map<dynamic, dynamic> record in records) {
+      print(record["appPackageName"]);
+    }
     return records;
   }
 

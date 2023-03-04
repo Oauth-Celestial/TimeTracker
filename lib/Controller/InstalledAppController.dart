@@ -8,7 +8,7 @@ import 'package:usage_stats/usage_stats.dart';
 
 class InstalledAppController with ChangeNotifier {
   List<InstalledAppData> userInstalledApps = [];
-  bool hasLoaded = false;
+  bool hasLoaded = true;
   List<appData> data = [];
   List<PieChartDataModel> pieData = [];
   int totalScreenTime = 0;

@@ -1,30 +1,37 @@
 package com.example.timetracker.Helpers
 
+import android.app.KeyguardManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
 import android.util.Log
 import android.view.*
+import android.widget.RelativeLayout
 import com.example.timetracker.R
+import io.flutter.embedding.android.FlutterActivity
 
 
 class AppRestrictWindow (  // declaring required variables
-        private val context: Context) {
+        private val context: Context):FlutterActivity() {
     private val mView: View
     private var mParams: WindowManager.LayoutParams? = null
     private val mWindowManager: WindowManager
     private val layoutInflater: LayoutInflater
+
 
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // set the layout parameters of the window
             mParams = WindowManager.LayoutParams( // Shrink the window to wrap the content rather
                     // than filling the screen
-                    WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT,  // Display it on top of other application windows
+
+                    WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,  // Display it on top of other application windows
                     WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,  // Don't let it grab the input focus
                     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,  // Make the underlying application window visible
                     // through any transparent parts
                     PixelFormat.TRANSLUCENT)
+
         }
         // getting a LayoutInflater
         layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -32,12 +39,66 @@ class AppRestrictWindow (  // declaring required variables
         mView = layoutInflater.inflate(R.layout.apprestrictlayout, null)
         // set onClickListener on the remove button, which removes
         // the view from the window
-        mView.findViewById<View>(R.id.window_close).setOnClickListener { close() }
+        mView.findViewById<View>(R.id.window_close).setOnClickListener { close()
+            val startMain = Intent(Intent.ACTION_MAIN)
+            startMain.addCategory(Intent.CATEGORY_HOME)
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(startMain)
+        }
         // Define the position of the
         // window within the screen
         mParams!!.gravity = Gravity.CENTER
+//        val view: RelativeLayout = object : RelativeLayout(activity) {
+//            override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+//                return if (event.keyCode === KeyEvent.KEYCODE_BACK) {
+//                    // do you code
+//                    close()
+//                    true
+//                } else super.dispatchKeyEvent(event)
+//            }
+//        }
+
+
+
         mWindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
+
     }
+
+
+
+    override fun onTrimMemory(level: Int) {
+        if (level == TRIM_MEMORY_UI_HIDDEN) {
+            // Application going to background, do something
+            Log.d("HomePressed", "home key clicked")
+        }
+    }
+
+    override fun onAttachedToWindow() {
+        this.window.setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG)
+        val keyguardManager: KeyguardManager = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
+        val lock: KeyguardManager.KeyguardLock = keyguardManager.newKeyguardLock(KEYGUARD_SERVICE)
+        lock.disableKeyguard()
+    }
+
+    override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
+        Log.d("HomePressed", "home key clicked")
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_HOME) {
+            Log.i("Home Button", "Clicked")
+        }
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+        }
+        return false
+    }
+
+
+
+
 
     fun open() {
         try {

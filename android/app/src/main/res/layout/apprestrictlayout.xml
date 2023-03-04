@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="4dp"
@@ -13,40 +15,91 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:cardCornerRadius="5dp">
+        android:layout_centerVertical="true"
+
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:background="#ff272727"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/titleText"
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+            </Space>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+
                 android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+            </Space>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Daily Limit Usage Reached"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                android:textColor="#FFFF"
+                android:gravity="center"
+                android:text="Daily Limit Reached" />
 
             <TextView
                 android:id="@+id/appName"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Displaying over other apps!"
+                android:text=""
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:padding="10dp"/>
 
-            <Button
-                android:id="@+id/window_close"
-                android:layout_width="match_parent"
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Remove" />
+                android:layout_marginTop="15dp" >
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:minWidth="150dp"
+                    android:layout_marginLeft="30dp"
+                    android:background="#FFBF00"
+                    android:text="Button 1" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+                <Button
+                    android:id="@+id/window_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:minWidth="150dp"
+                    android:layout_marginRight="30dp"
+                    android:background="#FFBF00"
+                    android:text="Button 2" />
+            </TableRow>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+            </Space>
+
+
 
         </LinearLayout>
 

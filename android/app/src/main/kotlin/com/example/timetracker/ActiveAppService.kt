@@ -16,6 +16,7 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.os.IBinder
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.example.timetracker.Models.AppInfoModel
 import java.util.*
@@ -118,6 +119,9 @@ class ActiveAppService: Service() {
 //            } else {
 //                Toast.makeText(this@MainActivity, "Not Running", Toast.LENGTH_SHORT).show()
 //            }
+            if (currentApp == "com.chess"){
+                closeRestrictedApp()
+            }
 
             mNotificationManager.notify(mNotificationId,notification);
 
@@ -195,6 +199,14 @@ class ActiveAppService: Service() {
         return super.onStartCommand(intent, flags, startId)
     }
 
+    fun closeRestrictedApp(){
+        val startMain = Intent(Intent.ACTION_MAIN)
+        startMain.addCategory(Intent.CATEGORY_HOME)
+        startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        Toast.makeText(this, "Daily Usage Reached", Toast.LENGTH_SHORT).show()
+        this.startActivity(startMain)
+    }
+
 
     private fun generateForegroundNotification() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -246,6 +258,8 @@ class ActiveAppService: Service() {
             notification = builder.build()
             startForeground(mNotificationId, notification)
         }
+
+
 
     }
 

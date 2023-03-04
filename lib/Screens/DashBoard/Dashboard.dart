@@ -63,23 +63,30 @@ class _DashBoardPageState extends State<DashBoardPage>
                 .getFormattedTimeFromSeconds(value.totalScreenTime);
             List<PieChartDataModel> data = value.pieData;
             if (value.hasLoaded) {
-              return Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Container(
-                      color: darkBackground,
-                      child: ListView(
-                        children: [
-                          for (int i = 0;
-                              i < value.userInstalledApps.length;
-                              i++) ...[
-                            DashboardListCard(
-                              app: value.userInstalledApps[i],
-                            )
-                          ]
-                        ],
-                      ),
+              return CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    expandedHeight: 200,
+                    title: Text("Testing"),
+                    stretch: true,
+                    backgroundColor: Colors.amber,
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int pdIndex) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 80,
+                            color: Colors.white,
+                            child: Text(
+                              "DATA",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: 10,
                     ),
                   ),
                 ],
@@ -99,77 +106,6 @@ class _DashBoardPageState extends State<DashBoardPage>
   }
 }
 
-class DashboardListCard extends StatelessWidget {
-  InstalledAppData app;
-  DashboardListCard({required this.app});
 
-  @override
-  Widget build(BuildContext context) {
-    String appTime = DateHelper.instance.getFormattedAppUsage(app);
-    return OpenContainer(
-      closedColor: Colors.transparent,
-      openColor: Colors.transparent,
-      openBuilder: ((context, action) {
-        return AppDetailPage(app: app);
-      }),
-      closedBuilder: (context, action) {
-        return Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Container(
-              color: Colors.black,
-              height: 80,
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 10,
-                  ),
-                  app.appIcon,
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        app.appname,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Time Spent :- ${appTime}",
-                        style: TextStyle(color: Colors.amber, fontSize: 15),
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                      child: Container(
-                    alignment: Alignment.centerRight,
-                    child: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Colors.amber,
-                    ),
-                  )),
-                  SizedBox(
-                    width: 20,
-                  )
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    ).animate().scale(delay: Duration(milliseconds: 300));
-  }
-}
 
 // chart_components: ^1.0.1
