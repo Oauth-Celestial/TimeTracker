@@ -1,13 +1,12 @@
 package com.example.timetracker.Helpers
 
-import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
 import android.util.Log
 import android.view.*
-import android.widget.RelativeLayout
+import androidx.annotation.RequiresApi
 import com.example.timetracker.R
 import io.flutter.embedding.android.FlutterActivity
 
@@ -44,20 +43,13 @@ class AppRestrictWindow (  // declaring required variables
             startMain.addCategory(Intent.CATEGORY_HOME)
             startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(startMain)
-        }
-        // Define the position of the
-        // window within the screen
-        mParams!!.gravity = Gravity.CENTER
-//        val view: RelativeLayout = object : RelativeLayout(activity) {
-//            override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-//                return if (event.keyCode === KeyEvent.KEYCODE_BACK) {
-//                    // do you code
-//                    close()
-//                    true
-//                } else super.dispatchKeyEvent(event)
-//            }
-//        }
 
+
+        }
+
+
+
+        mParams!!.gravity = Gravity.CENTER
 
 
         mWindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -65,47 +57,13 @@ class AppRestrictWindow (  // declaring required variables
 
     }
 
-
-
-    override fun onTrimMemory(level: Int) {
-        if (level == TRIM_MEMORY_UI_HIDDEN) {
-            // Application going to background, do something
-            Log.d("HomePressed", "home key clicked")
-        }
-    }
-
-    override fun onAttachedToWindow() {
-        this.window.setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG)
-        val keyguardManager: KeyguardManager = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
-        val lock: KeyguardManager.KeyguardLock = keyguardManager.newKeyguardLock(KEYGUARD_SERVICE)
-        lock.disableKeyguard()
-    }
-
-    override fun onUserLeaveHint() {
-        super.onUserLeaveHint()
-        Log.d("HomePressed", "home key clicked")
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_HOME) {
-            Log.i("Home Button", "Clicked")
-        }
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-
-        }
-        return false
-    }
-
-
-
-
-
     fun open() {
         try {
             // check if the view is already
             // inflated or present in the window
             if (mView.windowToken == null) {
                 if (mView.parent == null) {
+
                     mWindowManager.addView(mView, mParams)
                 }
             }

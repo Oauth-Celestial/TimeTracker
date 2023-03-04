@@ -18,6 +18,7 @@ import android.os.IBinder
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import com.example.timetracker.Helpers.AppRestrictWindow
 import com.example.timetracker.Models.AppInfoModel
 import java.util.*
 
@@ -25,6 +26,9 @@ class ActiveAppService: Service() {
     private var iconNotification: Bitmap? = null
     private var notification: Notification? = null
     var mNotificationManager: NotificationManager? = null
+    var window:AppRestrictWindow? = null
+    var previousApp = ""
+    var currentApp = ""
 
 
     private val mNotificationId = 123
@@ -34,14 +38,23 @@ class ActiveAppService: Service() {
 
 // BuildForeGroundTaskNotification is responsible to build notification every time the foreground app change
     private fun buildForegroundTaskNotification() {
-        var currentApp = "NULL"
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            previousApp = currentApp
+
            currentApp = getTopPkgName(this)
+            if(previousApp != currentApp){
+                window?.close()
+            }
         } else {
             val am = this.getSystemService(ACTIVITY_SERVICE) as ActivityManager
             val tasks = am.runningAppProcesses
             Log.e("Running Task","${tasks.size}")
+            previousApp = currentApp
             currentApp = tasks[0].processName
+            if(previousApp != currentApp){
+                window?.close()
+            }
         }
         val packageManager: PackageManager = applicationContext.packageManager
         val appName = packageManager.getApplicationLabel(packageManager.getApplicationInfo(currentApp, PackageManager.GET_META_DATA)) as String
@@ -175,6 +188,8 @@ class ActiveAppService: Service() {
 
     override fun onCreate() {
         super.onCreate()
+        window = AppRestrictWindow(this@ActiveAppService)
+
     }
 
     private fun startContinue() {
@@ -200,11 +215,14 @@ class ActiveAppService: Service() {
     }
 
     fun closeRestrictedApp(){
-        val startMain = Intent(Intent.ACTION_MAIN)
-        startMain.addCategory(Intent.CATEGORY_HOME)
-        startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        Toast.makeText(this, "Daily Usage Reached", Toast.LENGTH_SHORT).show()
-        this.startActivity(startMain)
+
+        window?.open()
+
+//        val startMain = Intent(Intent.ACTION_MAIN)
+//        startMain.addCategory(Intent.CATEGORY_HOME)
+//        startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//        Toast.makeText(this, "Daily Usage Reached", Toast.LENGTH_SHORT).show()
+//        this.startActivity(startMain)
     }
 
 
