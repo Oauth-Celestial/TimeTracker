@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AppDetail/AppDetail.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AppHome/HomePage.dart';
-import 'package:timetracker/Services/DateHelper.dart';
+import 'package:timetracker/Helpers/DateHelper.dart';
 import 'package:timetracker/Services/RouteManager.dart';
 
 class ParallaxContainer extends StatefulWidget {

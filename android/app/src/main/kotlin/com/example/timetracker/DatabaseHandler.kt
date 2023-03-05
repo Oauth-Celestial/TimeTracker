@@ -60,7 +60,10 @@ companion object{
         }
         else{
             appUsedFor = 0
-            val sql = "INSERT into DailyUsage (appName,appDuration,appPackageName,usedOn) VALUES(\"$appName\",\"0\",\"$appPackageName\",\"$todayDate\")";
+            var todaysTime:String = DateHelper.instance.getCurrentTime()
+            val lastUsedTime = todaysTime.getQuoted()
+
+            val sql = "INSERT into DailyUsage (appName,appDuration,appPackageName,usedOn,lastActive) VALUES(\"$appName\",\"0\",\"$appPackageName\",\"$todayDate\",$lastUsedTime)";
 
             //val sql = "INSERT into DailyUsage (appName,appDuration,appPackageName,usedOn) VALUES($appdata,\"0\",\"$appPackageName\",\"$todayDate\")"
           Log.e("Insert Sql","$sql")
@@ -77,10 +80,12 @@ companion object{
         openDataBase(dataBasePath as String)
         if(db != null){
             var todayDate:String = DateHelper.instance.getTodaysDate()
+            var todaysTime:String = DateHelper.instance.getCurrentTime()
             val appduration = appInfo.timeUsedFor.getQuoted()
             val packageName = appInfo.appPackageName.getQuoted()
             val dateFor = todayDate.getQuoted()
-            val updateSql:String = "Update $dailyUsageTable SET appDuration = $appduration  WHERE appPackageName = $packageName AND usedOn = $dateFor "
+            val lastUsedTime = todaysTime.getQuoted()
+            val updateSql:String = "Update $dailyUsageTable SET appDuration = $appduration ,lastActive= $lastUsedTime  WHERE appPackageName = $packageName AND usedOn = $dateFor "
 //        val sqlString = "IF EXISTS(SELECT * FROM $dailyUsageTable WHERE appPackageName = ${appInfo.appPackageName} AND usedOn = ${todayDate})" + "THEN" +
 //                "UPDATE $dailyUsageTable SET appDuration  = ${appInfo.timeUsedFor}  WHERE appPackageName = ${appInfo.appPackageName} AND usedOn = ${todayDate})" +
 //                "ELSE" +

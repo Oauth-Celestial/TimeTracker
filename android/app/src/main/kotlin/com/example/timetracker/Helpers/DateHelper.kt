@@ -23,4 +23,15 @@ class DateHelper {
         var formattedDate  = todayDate.toString("yyyy/MM/dd")
         return formattedDate
     }
+
+    fun getCurrentTime():String{
+        val date = Date()
+        val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
+
+// Next, we'll format the date using the SimpleDateFormat object
+        val formattedTime = sdf.format(date)
+
+// Finally, we can use the formatted time string as needed
+        return formattedTime
+    }
 }
