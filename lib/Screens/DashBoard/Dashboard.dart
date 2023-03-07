@@ -63,9 +63,9 @@ class _DashBoardPageState extends State<DashBoardPage>
   void initState() {
     // TODO: implement initState
 
-    // platform.invokeMethod("getForegroundPackage",
-    //     {"dbPath": DataBaseHelper.instance.dataBasePath});
-    // Provider.of<InstalledAppController>(context, listen: false).getAppStats();
+    platform.invokeMethod("getForegroundPackage",
+        {"dbPath": DataBaseHelper.instance.dataBasePath});
+    Provider.of<InstalledAppController>(context, listen: false).getAppStats();
     String todaysDate = DateHelper.instance.getTodaysFormattedDate();
     DataBaseHelper.instance.getAllRecords(todaysDate);
     super.initState();
@@ -129,7 +129,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                             cardData: dashBoardCards[0],
                           );
                         },
-                      ),
+                      ).animate().fadeIn(delay: Duration(milliseconds: 400)),
                       SizedBox(
                         height: 20,
                       ),
@@ -139,7 +139,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                             cardData: dashBoardCards[1],
                           );
                         },
-                      ),
+                      ).animate().fadeIn(delay: Duration(milliseconds: 600)),
                       SizedBox(
                         height: 20,
                       ),
@@ -149,7 +149,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                             cardData: dashBoardCards[2],
                           );
                         },
-                      ),
+                      ).animate().fadeIn(delay: Duration(milliseconds: 800)),
                       SizedBox(
                         height: 20,
                       ),

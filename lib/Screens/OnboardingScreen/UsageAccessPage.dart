@@ -59,23 +59,13 @@ class UsageAcessPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25),
                 child: InkWell(
                   onTap: () async {
-                    if (!(await UsageStats.checkUsagePermission() ?? false)) {
-                      //UsageStats.grantUsagePermission();
-                      if (await Permission.systemAlertWindow
-                          .request()
-                          .isGranted) {
-                        MethodChannel platform = MethodChannel(
-                          'timeTracker',
-                        );
-                        platform.invokeMethod(
-                          "drawOverLay",
-                        );
-                      }
-                    } else {
+                    if ((await UsageStats.checkUsagePermission() ?? false)) {
                       final prefs = await SharedPreferences.getInstance();
                       await prefs.setBool('hasOnBoarded', true);
                       RouteManager.instance
                           .push(to: DashBoardPage(), context: context);
+                    } else {
+                      await UsageStats.grantUsagePermission();
                     }
                   },
                   child: Container(

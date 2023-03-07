@@ -10,6 +10,7 @@
     android:padding="4dp"
     android:background="@null">
 
+
     <androidx.cardview.widget.CardView
 
         android:layout_width="match_parent"
@@ -24,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ff272727"
+
             android:orientation="vertical">
 
             <Space
@@ -77,7 +79,7 @@
                     android:minWidth="150dp"
                     android:layout_marginLeft="30dp"
                     android:background="#FFBF00"
-                    android:text="Button 1" />
+                    android:text="ok" />
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -90,7 +92,7 @@
                     android:minWidth="150dp"
                     android:layout_marginRight="30dp"
                     android:background="#FFBF00"
-                    android:text="Button 2" />
+                    android:text="Close" />
             </TableRow>
 
             <Space

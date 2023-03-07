@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
                   themeMode: Provider.of<ThemeProvider>(context).themeMode,
                   theme: MyTheme.lightTheme,
                   darkTheme: MyTheme.darkTheme,
-                  home: DashBoardPage());
+                  home: SplashScreen());
             });
       }),
     );

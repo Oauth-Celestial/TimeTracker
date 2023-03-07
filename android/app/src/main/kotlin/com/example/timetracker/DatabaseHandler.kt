@@ -41,6 +41,27 @@ companion object{
         return appUsage.toInt();
     }
 
+    fun getAppLaunchCount(appPackageName:String,appName:String):Int{
+        var appLaunch = 0
+        var todayDate:String = DateHelper.instance.getTodaysDate()
+        val sqlQuery = "SELECT * FROM $dailyUsageTable WHERE appPackageName = ? AND usedOn = ?"
+        val c: Cursor = db!!.rawQuery(sqlQuery, arrayOf<String>(appPackageName, todayDate))
+        if (c.count == 1){
+            var appUsage = ""
+            while(c.moveToNext()){
+                appUsage = c.getString(6)
+
+            }
+            appLaunch = appUsage.toInt()
+
+        }
+        else{
+            appLaunch = 0
+        }
+return  appLaunch
+
+    }
+
 
     fun getAppDuration(appPackageName:String,appName:String):Int {
         openDataBase(dataBasePath as String)
@@ -63,7 +84,8 @@ companion object{
             var todaysTime:String = DateHelper.instance.getCurrentTime()
             val lastUsedTime = todaysTime.getQuoted()
 
-            val sql = "INSERT into DailyUsage (appName,appDuration,appPackageName,usedOn,lastActive) VALUES(\"$appName\",\"0\",\"$appPackageName\",\"$todayDate\",$lastUsedTime)";
+
+            val sql = "INSERT into DailyUsage (appName,appDuration,appPackageName,usedOn,lastActive,launchCount) VALUES(\"$appName\",\"0\",\"$appPackageName\",\"$todayDate\",$lastUsedTime,\"0\")";
 
             //val sql = "INSERT into DailyUsage (appName,appDuration,appPackageName,usedOn) VALUES($appdata,\"0\",\"$appPackageName\",\"$todayDate\")"
           Log.e("Insert Sql","$sql")
@@ -85,7 +107,8 @@ companion object{
             val packageName = appInfo.appPackageName.getQuoted()
             val dateFor = todayDate.getQuoted()
             val lastUsedTime = todaysTime.getQuoted()
-            val updateSql:String = "Update $dailyUsageTable SET appDuration = $appduration ,lastActive= $lastUsedTime  WHERE appPackageName = $packageName AND usedOn = $dateFor "
+            val launchCount = appInfo.launchCount.getQuoted()
+            val updateSql:String = "Update $dailyUsageTable SET appDuration = $appduration ,lastActive= $lastUsedTime, launchCount=$launchCount  WHERE appPackageName = $packageName AND usedOn = $dateFor "
 //        val sqlString = "IF EXISTS(SELECT * FROM $dailyUsageTable WHERE appPackageName = ${appInfo.appPackageName} AND usedOn = ${todayDate})" + "THEN" +
 //                "UPDATE $dailyUsageTable SET appDuration  = ${appInfo.timeUsedFor}  WHERE appPackageName = ${appInfo.appPackageName} AND usedOn = ${todayDate})" +
 //                "ELSE" +

@@ -66,8 +66,13 @@ class ActiveAppService: Service() {
         val mNotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         try {
             var appUsage:Int =  DatabaseHandler.instance.getAppDuration(currentApp,appName)
+            var appCount:Int = DatabaseHandler.instance.getAppLaunchCount(currentApp,appName)
 
-            DatabaseHandler.instance.addOrUpdateAppDuration(AppInfoModel(appName,currentApp,(appUsage +1).toString()))
+            if (previousApp != currentApp){
+                appCount += 1
+            }
+
+            DatabaseHandler.instance.addOrUpdateAppDuration(AppInfoModel(appName,currentApp,(appUsage +1).toString(),appCount.toString()))
             val icon: Drawable = this.packageManager.getApplicationIcon(currentApp)
 
             if(this.packageName == currentApp){
@@ -93,7 +98,7 @@ class ActiveAppService: Service() {
                         StringBuilder("App In Use: $appName").
                         toString()
                 )
-                        .setContentText("Today's Usage : ${convertSeconds(appUsage)}") //
+                        .setContentText("Today's Usage : ${convertSeconds(appUsage)} \n App Launch Count $appCount") //
                         //                , swipe down for more options.
 
                         .setPriority(NotificationCompat.PRIORITY_LOW)
@@ -127,12 +132,8 @@ class ActiveAppService: Service() {
             Log.e("fromTopPkg","$activeApp")
 
 
-//            if (found) {
-//                Toast.makeText(this@MainActivity, "Running", Toast.LENGTH_SHORT).show()
-//            } else {
-//                Toast.makeText(this@MainActivity, "Not Running", Toast.LENGTH_SHORT).show()
-//            }
-            if (currentApp == "com.chess"){
+//
+            if (currentApp == "com.lipisoft.quickvpn"){
                 closeRestrictedApp()
             }
 

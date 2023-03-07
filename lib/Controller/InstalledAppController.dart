@@ -38,7 +38,7 @@ class InstalledAppController with ChangeNotifier {
     // Application? app = await DeviceApps.getApp('com.frandroid.app');
 
     hasLoaded = true;
-    notifyListeners();
+    // notifyListeners();
   }
 
   refreshList() {

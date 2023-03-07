@@ -102,12 +102,15 @@ class DashBoardCard extends StatelessWidget {
                     children: [
                       ClipOval(
                         child: Container(
-                          color: Colors.amber,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  stops: [0.3, 1.0],
+                                  colors: [Colors.amber, Colors.yellowAccent])),
                           width: 40,
                           height: 40,
                           child: Icon(
                             Icons.arrow_right_alt,
-                            color: Colors.black,
+                            color: Colors.white,
                             size: 20,
                           ),
                         ),
