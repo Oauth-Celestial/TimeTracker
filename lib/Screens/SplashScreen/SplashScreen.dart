@@ -55,11 +55,8 @@ class _SplashScreenState extends State<SplashScreen>
 
                   var hasOnboarded = prefs.getBool('hasOnBoarded');
                   if (hasOnboarded ?? false) {
-                    RouteManager.instance.push(
-                        to: AnimatedDrawer(
-                          baseWidget: DashBoardPage(),
-                        ),
-                        context: context);
+                    RouteManager.instance
+                        .push(to: DashBoardPage(), context: context);
                   } else {
                     RouteManager.instance
                         .push(to: OnboardingPage(), context: context);

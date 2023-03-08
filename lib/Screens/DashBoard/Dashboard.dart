@@ -63,8 +63,8 @@ class _DashBoardPageState extends State<DashBoardPage>
   void initState() {
     // TODO: implement initState
 
-    platform.invokeMethod("getForegroundPackage",
-        {"dbPath": DataBaseHelper.instance.dataBasePath});
+    // platform.invokeMethod("getForegroundPackage",
+    //     {"dbPath": DataBaseHelper.instance.dataBasePath});
     Provider.of<InstalledAppController>(context, listen: false).getAppStats();
     String todaysDate = DateHelper.instance.getTodaysFormattedDate();
     DataBaseHelper.instance.getAllRecords(todaysDate);
@@ -96,7 +96,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                   child: ListView(
                     children: [
                       SizedBox(
-                        height: 35,
+                        height: 45,
                       ),
                       Container(
                           alignment: Alignment.centerLeft,
@@ -106,12 +106,28 @@ class _DashBoardPageState extends State<DashBoardPage>
                                 width: 18,
                               ),
                               Text(
-                                "Welcome Back",
+                                "Welcome Back To",
                                 style: FontStyleHelper.shared
                                     .getPopppinsBold(Colors.white, 28),
                               ),
                             ],
                           )),
+
+                      Container(
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 18,
+                              ),
+                              Text(
+                                "Time Tracker",
+                                style: FontStyleHelper.shared
+                                    .getPopppinsMedium(Colors.white, 24),
+                              ),
+                            ],
+                          )),
+
                       // Scrollable(
                       //   viewportBuilder: (context, position) {
                       //     return DashBoardCard(
@@ -121,7 +137,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                       //   },
                       // ),
                       SizedBox(
-                        height: 20,
+                        height: 35,
                       ),
                       Scrollable(
                         viewportBuilder: (context, position) {

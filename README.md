@@ -1,15 +1,15 @@
-# Timetracker
+# App Usage tracker
 
-The Projects Helps you to add ***User Time Spent functionality*** in existing Flutter Project
+The App is clone of some of the most popular apps like (Digital well being, Action Dash ) that are build with native language and are capable of tracking your app usage info but with Flutter. App Is Under Development Feel Free to Fork and Contribute
 
-# Steps 
+<!-- # Features Added Till Now -->
+ 
 
-1. Add UserTracker.dart, UserTrackerController Files to your project 
 
-2. Add provider as a dependency in pubspec.yaml
 
-```
-provider: ^6.0.0
-```
+
+
+
+
 
  
