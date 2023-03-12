@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
-
+import 'package:timetracker/Services/Theme/ColorConstant.dart';
 import 'ParallaxContainer.dart';
 
 class ParallaxPageView extends StatefulWidget {
@@ -68,7 +68,7 @@ class _ParallaxPageViewState extends State<ParallaxPageView> {
                         alignment: Alignment.center,
                         child: Text(
                           "No Activity Today",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: whiteText),
                         ),
                       )
                     ]

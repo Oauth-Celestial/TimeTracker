@@ -15,12 +15,6 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Helpers/FontStyleHelper.dart';
 import 'package:timetracker/Model/DashBoardCardModel.dart';
-import 'package:timetracker/Model/DoughnutDataModel%20.dart';
-import 'package:timetracker/Model/InstalledAppModel.dart';
-import 'package:timetracker/Model/PieDataModel.dart';
-import 'package:timetracker/Screens/DashBoard/Pages/AnimatedDrawer/Drawer.dart';
-import 'package:timetracker/Screens/DashBoard/Pages/AppDetail/AppDetail.dart';
-import 'package:timetracker/Helpers/ColorHelper.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/DashBoard/DashBoardCard.dart';
 import 'package:timetracker/Services/DataBaseHelper.dart';
 import 'package:timetracker/Helpers/DateHelper.dart';
@@ -43,20 +37,20 @@ class _DashBoardPageState extends State<DashBoardPage>
         lottieFilePath: "assets/work.json",
         cardTitle: "Today's Device Usage",
         cardDesc: "1 Hour 10 Min",
-        titleColor: Colors.white,
-        descColor: Colors.white),
+        titleColor: whiteText,
+        descColor: whiteText),
     DashboardCardModel(
         lottieFilePath: "assets/rocket.json",
         cardTitle: "Top Used Apps",
         cardDesc: "Get Apps You Use The Most",
-        titleColor: Colors.white,
-        descColor: Colors.white),
+        titleColor: whiteText,
+        descColor: whiteText),
     DashboardCardModel(
         lottieFilePath: "assets/apps.json",
         cardTitle: "All Apps",
         cardDesc: "Detailed App Report",
-        titleColor: Colors.white,
-        descColor: Colors.white)
+        titleColor: whiteText,
+        descColor: whiteText)
   ];
 
   @override
@@ -96,22 +90,8 @@ class _DashBoardPageState extends State<DashBoardPage>
                   child: ListView(
                     children: [
                       SizedBox(
-                        height: 45,
+                        height: 25,
                       ),
-                      Container(
-                          alignment: Alignment.centerLeft,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 18,
-                              ),
-                              Text(
-                                "Welcome Back To",
-                                style: FontStyleHelper.shared
-                                    .getPopppinsBold(Colors.white, 28),
-                              ),
-                            ],
-                          )),
 
                       Container(
                           alignment: Alignment.centerLeft,
@@ -123,7 +103,22 @@ class _DashBoardPageState extends State<DashBoardPage>
                               Text(
                                 "Time Tracker",
                                 style: FontStyleHelper.shared
-                                    .getPopppinsMedium(Colors.white, 24),
+                                    .getPopppinsRegular(whiteText, 24),
+                              ),
+                            ],
+                          )),
+
+                      Container(
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 16,
+                              ),
+                              Text(
+                                "Good Evening",
+                                style: FontStyleHelper.shared
+                                    .getPopppinsBold(whiteText, 28),
                               ),
                             ],
                           )),
@@ -137,7 +132,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                       //   },
                       // ),
                       SizedBox(
-                        height: 35,
+                        height: 20,
                       ),
                       Scrollable(
                         viewportBuilder: (context, position) {

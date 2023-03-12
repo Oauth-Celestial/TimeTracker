@@ -9,10 +9,10 @@ class MyTheme {
       backgroundColor: Colors.black);
 
   static final lightTheme = ThemeData(
-      scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: whiteText,
       colorScheme: ColorScheme.light(),
-      backgroundColor: Colors.white,
-      primaryColor: Colors.white);
+      backgroundColor: whiteText,
+      primaryColor: whiteText);
 }
 
 class ThemeProvider with ChangeNotifier {

@@ -7,6 +7,7 @@ import 'package:timetracker/Model/DashBoardCardModel.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AppUsage/AppUsagePage.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/DashBoard/ParallexDelegate.dart';
 import 'package:timetracker/Services/RouteManager.dart';
+import 'package:timetracker/Services/Theme/ColorConstant.dart';
 
 class DashBoardCard extends StatelessWidget {
   // ScrollableState scroll;
@@ -114,7 +115,7 @@ class DashBoardCard extends StatelessWidget {
                             height: 40,
                             child: Icon(
                               Icons.arrow_right_alt,
-                              color: Colors.white,
+                              color: whiteText,
                               size: 20,
                             ),
                           ),

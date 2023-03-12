@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:timetracker/Services/Theme/ColorConstant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:timetracker/Screens/DashBoard/Dashboard.dart';
+import 'package:timetracker/Screens/DashBoard/Pages/DashBoard/Dashboard.dart';
 import 'package:timetracker/Services/RouteManager.dart';
 import 'package:timetracker/Services/TextConstant/TextConstant.dart';
 import 'package:usage_stats/usage_stats.dart';
@@ -50,7 +49,7 @@ class UsageAcessPage extends StatelessWidget {
                   appUsagePermissionText,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: Colors.white,
+                      color: whiteText,
                       fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),

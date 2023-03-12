@@ -31,7 +31,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                 ),
                 Text(
                   "Dark Mode",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  style: TextStyle(color: whiteText, fontSize: 18),
                 ),
                 Expanded(
                     child: Container(
@@ -55,7 +55,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                 closedBuilder: (context, action) {
                   return Text(
                     "All Apps",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    style: TextStyle(color: whiteText, fontSize: 18),
                   );
                 },
               ),

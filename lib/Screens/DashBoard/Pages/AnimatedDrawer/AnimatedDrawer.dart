@@ -92,7 +92,7 @@ class _AnimatedDrawerState extends State<AnimatedDrawer>
                         )
                       : Icon(
                           Icons.menu,
-                          color: Colors.white,
+                          color: whiteText,
                         ),
                 ),
               ),

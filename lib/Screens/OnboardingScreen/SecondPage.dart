@@ -44,7 +44,7 @@ class SecondPage extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 2),
                       child: Text(
                         "Get Real Time App Usage when you use apps with  powerful notifications",
-                        style: TextStyle(color: Colors.white, fontSize: 15),
+                        style: TextStyle(color: whiteText, fontSize: 15),
                       ),
                     )
                   ],

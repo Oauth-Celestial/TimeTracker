@@ -49,7 +49,7 @@ class ThirdPage extends StatelessWidget {
                     child: Text(
                       "Get Detailed Report for all apps at fingertip",
                       textAlign: TextAlign.left,
-                      style: TextStyle(color: Colors.white, fontSize: 15),
+                      style: TextStyle(color: whiteText, fontSize: 15),
                     ),
                   )
                 ],
@@ -94,7 +94,7 @@ class ThirdPage extends StatelessWidget {
                                 child: Container(
                               width: 30,
                               height: 30,
-                              color: Colors.white,
+                              color: whiteText,
                               child: Icon(
                                 Icons.arrow_right,
                                 color: Colors.black,

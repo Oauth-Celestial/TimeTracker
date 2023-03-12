@@ -1,24 +1,15 @@
-import 'dart:async';
-import 'dart:developer';
-import 'dart:ui';
-import 'package:app_usage/app_usage.dart';
-import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Controller/OnBoardingController.dart';
 import 'package:timetracker/Controller/UserTrackerController.dart';
-import 'package:timetracker/Model/InstalledAppModel.dart';
-import 'package:timetracker/Screens/DashBoard/Dashboard.dart';
+import 'package:timetracker/Screens/DashBoard/Pages/DashBoard/Dashboard.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AnimatedDrawer/AnimatedDrawer.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AnimatedDrawer/Drawer.dart';
 import 'package:timetracker/Screens/OnboardingScreen/OnboardingHome.dart';
 import 'package:timetracker/Screens/OnboardingScreen/UsageAccessPage.dart';
 import 'package:timetracker/Screens/SplashScreen/SplashScreen.dart';
-
 import 'package:timetracker/Services/DataBaseHelper.dart';
 import 'package:timetracker/Services/Theme/ThemeManager.dart';
 import 'package:timetracker/Services/UserTracker.dart';
@@ -57,7 +48,7 @@ class MyApp extends StatelessWidget {
                   themeMode: Provider.of<ThemeProvider>(context).themeMode,
                   theme: MyTheme.lightTheme,
                   darkTheme: MyTheme.darkTheme,
-                  home: SplashScreen());
+                  home: DashBoardPage());
             });
       }),
     );

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
-import 'package:timetracker/Screens/DashBoard/Dashboard.dart';
-import 'package:timetracker/Screens/DashBoard/Pages/AnimatedDrawer/AnimatedDrawer.dart';
+import 'package:timetracker/Screens/DashBoard/Pages/DashBoard/Dashboard.dart';
 import 'package:timetracker/Screens/OnboardingScreen/OnboardingHome.dart';
 import 'package:timetracker/Services/RouteManager.dart';
 import 'package:timetracker/Services/Theme/ColorConstant.dart';
@@ -66,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen>
           Text(
             "Track It",
             style: TextStyle(
-                color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+                color: whiteText, fontSize: 30, fontWeight: FontWeight.bold),
           )
               .animate()
               .fadeIn(delay: Duration(milliseconds: 800))

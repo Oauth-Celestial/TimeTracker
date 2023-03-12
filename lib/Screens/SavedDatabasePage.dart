@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:timetracker/Services/Theme/ColorConstant.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
@@ -24,7 +25,7 @@ class RecordPage extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  color: Colors.white,
+                  color: whiteText,
                   height: 100,
                   child: Column(
                     children: [

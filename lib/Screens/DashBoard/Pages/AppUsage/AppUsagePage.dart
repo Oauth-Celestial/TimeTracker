@@ -18,7 +18,9 @@ class _AppUsagePageState extends State<AppUsagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+      ),
       backgroundColor: darkBackground,
       body: SafeArea(
           child: Container(
@@ -56,7 +58,7 @@ class _AppUsagePageState extends State<AppUsagePage> {
                           Text(
                             "Today's Device Usage",
                             style: FontStyleHelper.shared
-                                .getPopppinsBold(Colors.white, 20),
+                                .getPopppinsBold(whiteText, 20),
                           ),
                           SizedBox(
                             height: 10,
@@ -64,7 +66,7 @@ class _AppUsagePageState extends State<AppUsagePage> {
                           Text(
                             "1 hour 10 min",
                             style: FontStyleHelper.shared
-                                .getPopppinsRegular(Colors.white, 20),
+                                .getPopppinsRegular(whiteText, 20),
                           ),
                           SizedBox(
                             height: 30,
@@ -79,10 +81,46 @@ class _AppUsagePageState extends State<AppUsagePage> {
                   ),
                 ).animate().fadeIn(delay: Duration(milliseconds: 300))
               ],
-            )
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            AppUsageCard()
           ],
         ),
       )),
+    );
+  }
+}
+
+class AppUsageCard extends StatelessWidget {
+  const AppUsageCard({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: ClipRRect(
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          shadowColor: Colors.grey,
+          child: Container(
+            height: 80,
+            child: Row(
+              children: [Image.asset("assets/luffy.jpg")],
+            ),
+            decoration: BoxDecoration(
+              color: Colors.black,
+              boxShadow: [],
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

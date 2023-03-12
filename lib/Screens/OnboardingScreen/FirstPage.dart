@@ -49,7 +49,7 @@ class FirstPage extends StatelessWidget {
                     child: Text(
                       "Restrict App Usage with Limited time app access",
                       textAlign: TextAlign.left,
-                      style: TextStyle(color: Colors.white, fontSize: 15),
+                      style: TextStyle(color: whiteText, fontSize: 15),
                     ).animate().fadeIn(delay: Duration(milliseconds: 800)),
                   ),
                 ],

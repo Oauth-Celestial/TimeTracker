@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
-import 'package:timetracker/Screens/DashBoard/Pages/AppDetail/AppDetail.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/AppHome/HomePage.dart';
 import 'package:timetracker/Helpers/DateHelper.dart';
 import 'package:timetracker/Services/RouteManager.dart';
+import 'package:timetracker/Services/Theme/ColorConstant.dart';
 
 class ParallaxContainer extends StatefulWidget {
   final Widget image;
@@ -52,8 +52,8 @@ class _ParallaxContainerState extends State<ParallaxContainer> {
           });
         },
         onTap: () {
-          RouteManager.instance
-              .push(to: AppDetailPage(app: widget.appData), context: context);
+          // RouteManager.instance
+          //     .push(to: AppDetailPage(app: widget.appData), context: context);
         },
 
         // THIS WIDGET HELPS US TO MAKE THE CARD TOUCH REACTIVE...
@@ -154,7 +154,7 @@ class _ParallaxContainerState extends State<ParallaxContainer> {
                               Text(
                                 "Today's Usage",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: whiteText,
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.normal,
                                 ),
@@ -164,7 +164,7 @@ class _ParallaxContainerState extends State<ParallaxContainer> {
                                 child: Text(
                                   appUsed,
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: whiteText,
                                     fontSize: 25.0,
                                     fontWeight: FontWeight.normal,
                                   ),
