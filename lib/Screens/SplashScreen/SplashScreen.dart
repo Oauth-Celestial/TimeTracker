@@ -44,9 +44,10 @@ class _SplashScreenState extends State<SplashScreen>
         children: [
           Container(
               alignment: Alignment.center,
-              child: LottieBuilder.asset("assets/stopwatch.json", repeat: false,
+              child: LottieBuilder.asset("assets/eye.json", repeat: false,
                   onLoaded: (composition) {
                 _controller?.duration = composition.duration;
+
                 _controller?.forward().whenComplete(() async {
                   final prefs = await SharedPreferences.getInstance();
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:timetracker/Controller/DeviceUsageController.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Controller/OnBoardingController.dart';
 import 'package:timetracker/Controller/UserTrackerController.dart';
@@ -10,7 +11,7 @@ import 'package:timetracker/Screens/DashBoard/Pages/AnimatedDrawer/Drawer.dart';
 import 'package:timetracker/Screens/OnboardingScreen/OnboardingHome.dart';
 import 'package:timetracker/Screens/OnboardingScreen/UsageAccessPage.dart';
 import 'package:timetracker/Screens/SplashScreen/SplashScreen.dart';
-import 'package:timetracker/Services/DataBaseHelper.dart';
+import 'package:timetracker/Services/Helpers/DataBaseHelper.dart';
 import 'package:timetracker/Services/Theme/ThemeManager.dart';
 import 'package:timetracker/Services/UserTracker.dart';
 
@@ -34,7 +35,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => UserTrackerController()),
         ChangeNotifierProvider(create: (_) => InstalledAppController()),
-        ChangeNotifierProvider(create: (_) => OnBoardingController())
+        ChangeNotifierProvider(create: (_) => OnBoardingController()),
+        ChangeNotifierProvider(create: (_) => DeviceUsageController())
       ],
       builder: ((context, child) {
         return ChangeNotifierProvider(
@@ -48,7 +50,7 @@ class MyApp extends StatelessWidget {
                   themeMode: Provider.of<ThemeProvider>(context).themeMode,
                   theme: MyTheme.lightTheme,
                   darkTheme: MyTheme.darkTheme,
-                  home: DashBoardPage());
+                  home: SplashScreen());
             });
       }),
     );

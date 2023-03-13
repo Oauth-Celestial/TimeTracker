@@ -1,8 +1,10 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
 import 'package:timetracker/Model/InstalledAppModel.dart';
+import 'package:timetracker/Services/Helpers/DateHelper.dart';
 
 class DataBaseHelper {
   static DataBaseHelper instance = DataBaseHelper();
@@ -58,6 +60,22 @@ class DataBaseHelper {
       print(record["appPackageName"]);
     }
     return records;
+  }
+
+  getDeviceUsage(String date) async {
+    // SELECT SUM(CAST(appDuration as int ))FROM DailyUsage WHERE usedOn = "2023/03/02"
+    String deviceUsage = "";
+
+    Database db = await getdataBase();
+    String sql =
+        """SELECT SUM(CAST(appDuration as int)) as deviceUsage  FROM DailyUsage WHERE usedOn = ?""";
+    List<Map>? records = await db.rawQuery(sql, [date]);
+    print("App Data is   $records");
+    for (Map<dynamic, dynamic> record in records) {
+      deviceUsage = DateHelper.instance
+          .getFormattedTimeFromSeconds(record["deviceUsage"] as int);
+    }
+    return deviceUsage;
   }
 
   saveAllDataToDb(

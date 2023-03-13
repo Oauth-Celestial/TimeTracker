@@ -3,7 +3,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
-import 'package:timetracker/Helpers/FontStyleHelper.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:timetracker/Services/Helpers/FontStyleHelper.dart';
 import 'package:timetracker/Services/Theme/ColorConstant.dart';
 
 class AppUsagePage extends StatefulWidget {
@@ -103,22 +104,75 @@ class AppUsageCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: ClipRRect(
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          shadowColor: Colors.grey,
-          child: Container(
-            height: 80,
-            child: Row(
-              children: [Image.asset("assets/luffy.jpg")],
+        child: Stack(
+          fit: StackFit.loose,
+          children: [
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              shadowColor: Colors.grey,
+              child: Container(
+                height: 80,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    ClipOval(
+                      child: Container(
+                          width: 50,
+                          height: 50,
+                          child: Image.asset(
+                            "assets/luffy.jpg",
+                            fit: BoxFit.fill,
+                          )),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12, right: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Usage Permission',
+                              textAlign: TextAlign.center,
+                              style: FontStyleHelper.shared
+                                  .getPopppinsBold(whiteText, 15)),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            '1 hour 10 min ',
+                            textAlign: TextAlign.center,
+                            style: FontStyleHelper.shared
+                                .getPopppinsMedium(whiteText, 13),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  boxShadow: [],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
             ),
-            decoration: BoxDecoration(
-              color: Colors.black,
-              boxShadow: [],
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
+            Shimmer.fromColors(
+                baseColor: Colors.transparent,
+                highlightColor: Colors.white.withOpacity(0.3),
+                period: Duration(seconds: 3),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    color: Colors.black,
+                    height: 80,
+                  ),
+                )),
+          ],
         ),
       ),
     );

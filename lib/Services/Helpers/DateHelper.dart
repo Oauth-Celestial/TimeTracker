@@ -35,7 +35,7 @@ class DateHelper {
     String result = "";
 
     if (h > 0) {
-      result = "$hourLeft Hours $minuteLeft Min ";
+      result = "$hourLeft Hours $minuteLeft Min $secondsLeft sec ";
     } else {
       if (m < 5) {
         result = "< 2min";

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ffi';
 import 'dart:math';
 
@@ -12,12 +13,13 @@ import 'package:im_animations/im_animations.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:timetracker/Controller/DeviceUsageController.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
-import 'package:timetracker/Helpers/FontStyleHelper.dart';
+import 'package:timetracker/Services/Helpers/FontStyleHelper.dart';
 import 'package:timetracker/Model/DashBoardCardModel.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/DashBoard/DashBoardCard.dart';
-import 'package:timetracker/Services/DataBaseHelper.dart';
-import 'package:timetracker/Helpers/DateHelper.dart';
+import 'package:timetracker/Services/Helpers/DataBaseHelper.dart';
+import 'package:timetracker/Services/Helpers/DateHelper.dart';
 import 'package:timetracker/Services/Theme/ColorConstant.dart';
 
 class DashBoardPage extends StatefulWidget {
@@ -32,36 +34,42 @@ class _DashBoardPageState extends State<DashBoardPage>
   MethodChannel platform = MethodChannel(
     'timeTracker',
   );
+
   List<DashboardCardModel> dashBoardCards = [
     DashboardCardModel(
         lottieFilePath: "assets/work.json",
         cardTitle: "Today's Device Usage",
         cardDesc: "1 Hour 10 Min",
         titleColor: whiteText,
-        descColor: whiteText),
+        descColor: whiteText,
+        shouldUpdate: true),
     DashboardCardModel(
         lottieFilePath: "assets/rocket.json",
         cardTitle: "Top Used Apps",
         cardDesc: "Get Apps You Use The Most",
         titleColor: whiteText,
-        descColor: whiteText),
+        descColor: whiteText,
+        shouldUpdate: false),
     DashboardCardModel(
         lottieFilePath: "assets/apps.json",
         cardTitle: "All Apps",
         cardDesc: "Detailed App Report",
         titleColor: whiteText,
-        descColor: whiteText)
+        descColor: whiteText,
+        shouldUpdate: false)
   ];
 
   @override
   void initState() {
     // TODO: implement initState
 
-    // platform.invokeMethod("getForegroundPackage",
-    //     {"dbPath": DataBaseHelper.instance.dataBasePath});
-    Provider.of<InstalledAppController>(context, listen: false).getAppStats();
+    platform.invokeMethod("getForegroundPackage",
+        {"dbPath": DataBaseHelper.instance.dataBasePath});
+    //Provider.of<InstalledAppController>(context, listen: false).getAppStats();
     String todaysDate = DateHelper.instance.getTodaysFormattedDate();
     DataBaseHelper.instance.getAllRecords(todaysDate);
+    Provider.of<DeviceUsageController>(context, listen: false)
+        .getTotalDeviceUsage(todaysDate);
     super.initState();
   }
 

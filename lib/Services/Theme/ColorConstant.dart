@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timetracker/Helpers/ColorHelper.dart';
+import 'package:timetracker/Services/Helpers/ColorHelper.dart';
 
 Color darkBackground = getColorForHex("#121212");
 Color faintBlack = Color(0xff272727);
