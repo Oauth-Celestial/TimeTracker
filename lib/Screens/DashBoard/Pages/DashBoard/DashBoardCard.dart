@@ -8,7 +8,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:timetracker/Controller/DeviceUsageController.dart';
 import 'package:timetracker/Services/Helpers/FontStyleHelper.dart';
 import 'package:timetracker/Model/DashBoardCardModel.dart';
-import 'package:timetracker/Screens/DashBoard/Pages/AppUsage/AppUsagePage.dart';
+import 'package:timetracker/Screens/DashBoard/Pages/AppUsage/DeviceUsagePage.dart';
 import 'package:timetracker/Screens/DashBoard/Pages/DashBoard/ParallexDelegate.dart';
 import 'package:timetracker/Services/RouteManager.dart';
 import 'package:timetracker/Services/Theme/ColorConstant.dart';
@@ -33,7 +33,7 @@ class DashBoardCard extends StatelessWidget {
         closedShape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         openBuilder: (context, action) {
-          return AppUsagePage(lottiePath: cardData.lottieFilePath);
+          return DeviceUsagePage(lottiePath: cardData.lottieFilePath);
         },
         closedBuilder: (context, action) {
           return Padding(
@@ -104,13 +104,15 @@ class DashBoardCard extends StatelessWidget {
                                     builder: (context, value, child) {
                                   return Row(
                                     children: [
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          value.appUsage,
-                                          style: FontStyleHelper.shared
-                                              .getPopppinsBold(
-                                                  cardData.descColor, 18),
+                                      Expanded(
+                                        child: Container(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            value.appUsage,
+                                            style: FontStyleHelper.shared
+                                                .getPopppinsBold(
+                                                    cardData.descColor, 18),
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -119,13 +121,15 @@ class DashBoardCard extends StatelessWidget {
                               ] else ...[
                                 Row(
                                   children: [
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        cardData.cardDesc,
-                                        style: FontStyleHelper.shared
-                                            .getPopppinsBold(
-                                                cardData.descColor, 18),
+                                    Expanded(
+                                      child: Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          cardData.cardDesc,
+                                          style: FontStyleHelper.shared
+                                              .getPopppinsBold(
+                                                  cardData.descColor, 18),
+                                        ),
                                       ),
                                     ),
                                   ],

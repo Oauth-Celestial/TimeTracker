@@ -1,18 +1,7 @@
-import 'dart:async';
-import 'dart:ffi';
-import 'dart:math';
-
-import 'package:animations/animations.dart';
-
-import 'package:d_chart/d_chart.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:im_animations/im_animations.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:timetracker/Controller/DeviceUsageController.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Services/Helpers/FontStyleHelper.dart';
@@ -44,16 +33,17 @@ class _DashBoardPageState extends State<DashBoardPage>
         descColor: whiteText,
         shouldUpdate: true),
     DashboardCardModel(
-        lottieFilePath: "assets/rocket.json",
-        cardTitle: "Top Used Apps",
-        cardDesc: "Get Apps You Use The Most",
+        lottieFilePath: "assets/Meditate.json",
+        cardTitle: "Limit App Usage",
+        cardDesc: "Maximizing Productivity: Limiting App Usage to Stay Focused",
         titleColor: whiteText,
         descColor: whiteText,
         shouldUpdate: false),
     DashboardCardModel(
-        lottieFilePath: "assets/apps.json",
-        cardTitle: "All Apps",
-        cardDesc: "Detailed App Report",
+        lottieFilePath: "assets/Report.json",
+        cardTitle: "App Report",
+        cardDesc:
+            "App Usage Analysis: Insights and Recommendations for Managing Screen Time",
         titleColor: whiteText,
         descColor: whiteText,
         shouldUpdate: false)

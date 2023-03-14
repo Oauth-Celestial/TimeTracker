@@ -1,22 +1,13 @@
 import 'package:app_usage/app_usage.dart';
+import 'package:device_apps/device_apps.dart';
+import 'package:flutter/cupertino.dart';
 
 class AppHelper {
   static AppHelper instance = AppHelper();
 
-  Future<List<AppUsageInfo>> getUsageStats() async {
-    try {
-      DateTime endDate = DateTime.now();
-      DateTime startDate = endDate.subtract(Duration(hours: 1));
-      List<AppUsageInfo> infoList =
-          await AppUsage().getAppUsage(startDate, endDate);
-
-      // for (var info in infoList) {
-      //   print(info.toString());
-      // }
-      return infoList;
-    } on AppUsageException catch (exception) {
-      print(exception);
-      return [];
-    }
+  Future<Widget> getAppIconFromPackage() async {
+    Application? app =
+        await DeviceApps.getApp('com.supercell.clashofclans', true);
+    return Image.memory((app as ApplicationWithIcon).icon);
   }
 }

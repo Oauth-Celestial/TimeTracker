@@ -37,10 +37,10 @@ class DateHelper {
     if (h > 0) {
       result = "$hourLeft Hours $minuteLeft Min $secondsLeft sec ";
     } else {
-      if (m < 5) {
-        result = "< 2min";
+      if (m < 1) {
+        result = "$secondsLeft sec";
       } else {
-        result = "$minuteLeft Min";
+        result = "$minuteLeft Min $secondsLeft sec";
       }
     }
 
