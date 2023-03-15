@@ -26,7 +26,7 @@ companion object{
     fun getTotalDeviceUsage():Int {
         // SELECT SUM(CAST(appDuration as int ))FROM DailyUsage WHERE usedOn = "2023/03/02"
         var appUsage = "0"
-        var sqlQuery = "SELECT SUM(CAST(appDuration as int )) FROM DailyUsage WHERE usedOn = ?"
+        var sqlQuery = "SELECT SUM(CAST(appDuration as int )) FROM DailyUsage WHERE usedOn = ? AND appPackageName NOT LIKE '%launcher%' "
         var todayDate: String = DateHelper.instance.getTodaysDate()
         val c: Cursor = db!!.rawQuery(sqlQuery, arrayOf<String>(todayDate))
 

@@ -6,7 +6,11 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timetracker/Controller/DeviceUsageController.dart';
+import 'package:timetracker/Model/AppModel.dart';
+import 'package:timetracker/Screens/DashBoard/Pages/AppUsage/DeviceUsageCard.dart';
 import 'package:timetracker/Services/Helpers/AppHelper..dart';
+import 'package:timetracker/Services/Helpers/DataBaseHelper.dart';
+import 'package:timetracker/Services/Helpers/DateHelper.dart';
 import 'package:timetracker/Services/Helpers/FontStyleHelper.dart';
 import 'package:timetracker/Services/Theme/ColorConstant.dart';
 
@@ -19,6 +23,17 @@ class DeviceUsagePage extends StatefulWidget {
 }
 
 class _DeviceUsagePage extends State<DeviceUsagePage> {
+  late Future<List<AppModelData>> data;
+  late Future<int> unlocks;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    String todaysDate = DateHelper.instance.getTodaysFormattedDate();
+    data = DataBaseHelper.instance.getAllRecords(todaysDate);
+    unlocks = DataBaseHelper.instance.getTotalUnlocks(todaysDate);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,152 +114,159 @@ class _DeviceUsagePage extends State<DeviceUsagePage> {
               ],
             ),
             SizedBox(
-              height: 15,
+              height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Text(
-                "Top Used App ",
-                style:
-                    FontStyleHelper.shared.getPopppinsBold(Colors.yellow, 20),
-              ),
+              padding: const EdgeInsets.all(8.0),
+              child: FutureBuilder<int>(
+                  future: unlocks,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Container(
+                        child: Column(
+                          children: [
+                            Text(
+                              "${snapshot.data ?? 0}",
+                              style: FontStyleHelper.shared
+                                  .getPopppinsBold(Colors.yellow, 25),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Unlocks",
+                              style: FontStyleHelper.shared
+                                  .getPopppinsMedium(Colors.yellow, 18),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return Container(
+                        height: 100,
+                        color: Colors.white,
+                      );
+                    }
+                  }),
             ),
-            SizedBox(
-              height: 5,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: AppUsageCard(
-                isForTopApp: true,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Text(
-                "All Apps",
-                style:
-                    FontStyleHelper.shared.getPopppinsBold(Colors.yellow, 20),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: 10,
-                  itemBuilder: ((context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                      child: AppUsageCard(
-                        isForTopApp: false,
-                      ),
+            FutureBuilder<List<AppModelData>>(
+                future: data,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            "Top Used App ",
+                            style: FontStyleHelper.shared
+                                .getPopppinsBold(Colors.yellow, 20),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: DeviceUsageCard(
+                            isForTopApp: true,
+                            appdata: snapshot.data![0],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            "All Apps",
+                            style: FontStyleHelper.shared
+                                .getPopppinsBold(Colors.yellow, 20),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: ((context, index) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                  child: DeviceUsageCard(
+                                    isForTopApp: false,
+                                    appdata: snapshot.data![index],
+                                  ),
+                                );
+                              })),
+                        )
+                      ],
                     );
-                  })),
-            )
+                  } else {
+                    return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text(
+                              "Top Used App ",
+                              style: FontStyleHelper.shared
+                                  .getPopppinsBold(Colors.yellow, 20),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Container()),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text(
+                              "All Apps",
+                              style: FontStyleHelper.shared
+                                  .getPopppinsBold(Colors.yellow, 20),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: 10,
+                                itemBuilder: ((context, index) {
+                                  return Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 5, 10, 5),
+                                      child: Container(
+                                        color: Colors.white,
+                                      ));
+                                })),
+                          )
+                        ]);
+                  }
+                })
           ],
         ),
       )),
-    );
-  }
-}
-
-class AppUsageCard extends StatelessWidget {
-  bool isForTopApp;
-  AppUsageCard({required this.isForTopApp});
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      child: Stack(
-        fit: StackFit.loose,
-        children: [
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            shadowColor: Colors.grey,
-            child: Container(
-              height: 80,
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 10,
-                  ),
-                  FutureBuilder<Widget>(
-                      future: AppHelper.instance.getAppIconFromPackage(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return ClipOval(
-                              child: Container(
-                            width: 50,
-                            height: 50,
-                            child: snapshot.data,
-                          ));
-                        } else {
-                          return ClipOval(
-                            child: Container(
-                                width: 50,
-                                height: 50,
-                                child: Image.asset(
-                                  "assets/luffy.jpg",
-                                  fit: BoxFit.fill,
-                                )),
-                          );
-                        }
-                      }),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15, right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Clash Of Clans',
-                            textAlign: TextAlign.center,
-                            style: FontStyleHelper.shared
-                                .getPopppinsBold(whiteText, 15)),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          '1 hour 10 min ',
-                          textAlign: TextAlign.center,
-                          style: FontStyleHelper.shared
-                              .getPopppinsMedium(whiteText, 13),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              decoration: BoxDecoration(
-                color: Colors.black,
-                boxShadow: [],
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
-          if (isForTopApp) ...[
-            Shimmer.fromColors(
-                baseColor: Colors.transparent,
-                highlightColor: Colors.white.withOpacity(0.3),
-                period: Duration(seconds: 3),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Container(
-                    color: Colors.black,
-                    height: 80,
-                  ),
-                )),
-          ]
-        ],
-      ),
     );
   }
 }

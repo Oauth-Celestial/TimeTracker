@@ -5,9 +5,8 @@ import 'package:flutter/cupertino.dart';
 class AppHelper {
   static AppHelper instance = AppHelper();
 
-  Future<Widget> getAppIconFromPackage() async {
-    Application? app =
-        await DeviceApps.getApp('com.supercell.clashofclans', true);
+  Future<Widget> getAppIconFromPackage(String appPackageName) async {
+    Application? app = await DeviceApps.getApp(appPackageName, true);
     return Image.memory((app as ApplicationWithIcon).icon);
   }
 }

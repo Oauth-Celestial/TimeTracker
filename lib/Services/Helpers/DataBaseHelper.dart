@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
+import 'package:timetracker/Model/AppModel.dart';
 import 'package:timetracker/Model/InstalledAppModel.dart';
 import 'package:timetracker/Services/Helpers/DateHelper.dart';
 
@@ -50,16 +51,37 @@ class DataBaseHelper {
     await database?.close();
   }
 
-  Future<List<Map>> getAllRecords(String date) async {
+  Future<int> getTotalUnlocks(String date) async {
+    int deviceUnlocks = 0;
+
+    Database db = await getdataBase();
+    String sql =
+        """SELECT SUM(CAST(launchCount as int)) as launchCount  FROM DailyUsage WHERE usedOn = ? AND appPackageName NOT LIKE '%launcher%'""";
+    List<Map>? records = await db.rawQuery(sql, [date]);
+    print("App Data is   $records");
+    for (Map<dynamic, dynamic> record in records) {
+      deviceUnlocks = record["launchCount"] as int;
+    }
+    return deviceUnlocks;
+  }
+
+  Future<List<AppModelData>> getAllRecords(String date) async {
+    List<AppModelData> usedApps = [];
     Database db = await getdataBase();
     List<InstalledAppData> appData = [];
     List<Map>? records = await db.rawQuery(
-        "select * from DailyUsage where usedOn = ? ORDER BY  CAST (appDuration as int) DESC ",
+        "select * from DailyUsage where usedOn = ? AND appPackageName NOT LIKE '%launcher%'  ORDER BY  CAST (appDuration as int) DESC ",
         [date]);
     for (Map<dynamic, dynamic> record in records) {
-      print(record["appPackageName"]);
+      // print(record["appPackageName"]);
+      usedApps.add(AppModelData(
+          appName: record["appName"],
+          appDuration: DateHelper.instance
+              .getFormattedTimeFromSeconds(int.parse(record["appDuration"])),
+          appPackageName: record["appPackageName"],
+          launchCount: record["launchCount"]));
     }
-    return records;
+    return usedApps;
   }
 
   getDeviceUsage(String date) async {
@@ -68,7 +90,7 @@ class DataBaseHelper {
 
     Database db = await getdataBase();
     String sql =
-        """SELECT SUM(CAST(appDuration as int)) as deviceUsage  FROM DailyUsage WHERE usedOn = ?""";
+        """SELECT SUM(CAST(appDuration as int)) as deviceUsage  FROM DailyUsage WHERE usedOn = ? AND appPackageName NOT LIKE '%launcher%'""";
     List<Map>? records = await db.rawQuery(sql, [date]);
     print("App Data is   $records");
     for (Map<dynamic, dynamic> record in records) {
