@@ -1,16 +1,11 @@
 import 'package:app_usage/app_usage.dart';
 import 'package:flutter/material.dart';
 import 'package:timetracker/Model/CardDataModel.dart';
-
-import 'package:timetracker/Model/InstalledAppModel.dart';
-import 'package:timetracker/Model/PieDataModel.dart';
 import 'package:usage_stats/usage_stats.dart';
 
 class InstalledAppController with ChangeNotifier {
-  List<InstalledAppData> userInstalledApps = [];
   bool hasLoaded = true;
-  List<appData> data = [];
-  List<PieChartDataModel> pieData = [];
+
   int totalScreenTime = 0;
 
   List<CardDataModel> cardData = [
@@ -29,9 +24,6 @@ class InstalledAppController with ChangeNotifier {
   ];
 
   getAllApps() async {
-    userInstalledApps.clear();
-    pieData.clear();
-
     totalScreenTime = 0;
     hasLoaded = false;
     totalScreenTime = 0;
@@ -43,7 +35,7 @@ class InstalledAppController with ChangeNotifier {
 
   refreshList() {
     hasLoaded = false;
-    userInstalledApps.clear();
+
     notifyListeners();
     getAllApps();
   }

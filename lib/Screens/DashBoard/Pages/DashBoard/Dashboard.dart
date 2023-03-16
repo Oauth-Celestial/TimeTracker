@@ -72,109 +72,114 @@ class _DashBoardPageState extends State<DashBoardPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: darkBackground,
-      body: SafeArea(
-        child: Container(
-          child: Consumer<InstalledAppController>(
-              builder: (context, value, child) {
-            String timeSpend = DateHelper.instance
-                .getFormattedTimeFromSeconds(value.totalScreenTime);
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: darkBackground,
+        body: SafeArea(
+          child: Container(
+            child: Consumer<InstalledAppController>(
+                builder: (context, value, child) {
+              String timeSpend = DateHelper.instance
+                  .getFormattedTimeFromSeconds(value.totalScreenTime);
 
-            if (value.hasLoaded) {
-              return Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListView(
-                    children: [
-                      SizedBox(
-                        height: 25,
-                      ),
+              if (value.hasLoaded) {
+                return Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView(
+                      children: [
+                        SizedBox(
+                          height: 25,
+                        ),
 
-                      Container(
-                          alignment: Alignment.centerLeft,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 18,
-                              ),
-                              Text(
-                                "Time Tracker",
-                                style: FontStyleHelper.shared
-                                    .getPopppinsRegular(whiteText, 24),
-                              ),
-                            ],
-                          )),
+                        Container(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 18,
+                                ),
+                                Text(
+                                  "Time Tracker",
+                                  style: FontStyleHelper.shared
+                                      .getPopppinsRegular(whiteText, 24),
+                                ),
+                              ],
+                            )),
 
-                      Container(
-                          alignment: Alignment.centerLeft,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 16,
-                              ),
-                              Text(
-                                "Good Evening",
-                                style: FontStyleHelper.shared
-                                    .getPopppinsBold(whiteText, 28),
-                              ),
-                            ],
-                          )),
+                        Container(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 16,
+                                ),
+                                Text(
+                                  "Good Evening",
+                                  style: FontStyleHelper.shared
+                                      .getPopppinsBold(whiteText, 28),
+                                ),
+                              ],
+                            )),
 
-                      // Scrollable(
-                      //   viewportBuilder: (context, position) {
-                      //     return DashBoardCard(
-                      //       scroll: Scrollable.of(context) ?? ScrollableState(),
-                      //       lottiePath: "assets/rocket.json",
-                      //     );
-                      //   },
-                      // ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Scrollable(
-                        viewportBuilder: (context, position) {
-                          return DashBoardCard(
-                            cardData: dashBoardCards[0],
-                          );
-                        },
-                      ).animate().fadeIn(delay: Duration(milliseconds: 400)),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Scrollable(
-                        viewportBuilder: (context, position) {
-                          return DashBoardCard(
-                            cardData: dashBoardCards[1],
-                          );
-                        },
-                      ).animate().fadeIn(delay: Duration(milliseconds: 600)),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Scrollable(
-                        viewportBuilder: (context, position) {
-                          return DashBoardCard(
-                            cardData: dashBoardCards[2],
-                          );
-                        },
-                      ).animate().fadeIn(delay: Duration(milliseconds: 800)),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
+                        // Scrollable(
+                        //   viewportBuilder: (context, position) {
+                        //     return DashBoardCard(
+                        //       scroll: Scrollable.of(context) ?? ScrollableState(),
+                        //       lottiePath: "assets/rocket.json",
+                        //     );
+                        //   },
+                        // ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Scrollable(
+                          viewportBuilder: (context, position) {
+                            return DashBoardCard(
+                              cardData: dashBoardCards[0],
+                            );
+                          },
+                        ).animate().fadeIn(delay: Duration(milliseconds: 400)),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Scrollable(
+                          viewportBuilder: (context, position) {
+                            return DashBoardCard(
+                              cardData: dashBoardCards[1],
+                            );
+                          },
+                        ).animate().fadeIn(delay: Duration(milliseconds: 600)),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Scrollable(
+                          viewportBuilder: (context, position) {
+                            return DashBoardCard(
+                              cardData: dashBoardCards[2],
+                            );
+                          },
+                        ).animate().fadeIn(delay: Duration(milliseconds: 800)),
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            } else {
-              return Container(
-                alignment: Alignment.center,
-                child: CircularProgressIndicator(
-                  color: Colors.amber,
-                ),
-              );
-            }
-          }),
+                );
+              } else {
+                return Container(
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(
+                    color: Colors.amber,
+                  ),
+                );
+              }
+            }),
+          ),
         ),
       ),
     );

@@ -1,10 +1,8 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
 import 'package:timetracker/Model/AppModel.dart';
-import 'package:timetracker/Model/InstalledAppModel.dart';
 import 'package:timetracker/Services/Helpers/DateHelper.dart';
 
 class DataBaseHelper {
@@ -68,7 +66,7 @@ class DataBaseHelper {
   Future<List<AppModelData>> getAllRecords(String date) async {
     List<AppModelData> usedApps = [];
     Database db = await getdataBase();
-    List<InstalledAppData> appData = [];
+
     List<Map>? records = await db.rawQuery(
         "select * from DailyUsage where usedOn = ? AND appPackageName NOT LIKE '%launcher%'  ORDER BY  CAST (appDuration as int) DESC ",
         [date]);
@@ -98,32 +96,5 @@ class DataBaseHelper {
           .getFormattedTimeFromSeconds(record["deviceUsage"] as int);
     }
     return deviceUsage;
-  }
-
-  saveAllDataToDb(
-    List<InstalledAppData> saveApps,
-    String fileName,
-  ) async {
-    var now = new DateTime.now().toString();
-    // var formatter = new DateFormat('dd-MM-yyyy');
-    // String formattedTime = DateFormat('kk:mm:a').format(now);
-    // String formattedDate = formatter.format(now);
-    print("apps saved length = ${saveApps.length}");
-    // if (now.hour >= 22 && now.minute > 45) {
-    for (InstalledAppData app in saveApps) {
-      print(database);
-      int? data = await database?.rawInsert(
-          'INSERT INTO appUsageTable(appName,Duration , Date) VALUES(?, ?, ?)',
-          [app.packageName, app.appDuration.inSeconds, now]);
-      print("data ${data}");
-    }
-
-    // database?.close();
-    // }
-
-    // int? data = await database?.rawInsert(
-    //     'INSERT INTO appUsageTable(appName,Duration , Date) VALUES(?, ?, ?)',
-    //     ["test", 10, "27 Feb 2023"]);
-    // print(data);
   }
 }

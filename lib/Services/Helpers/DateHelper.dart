@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-import 'package:timetracker/Model/InstalledAppModel.dart';
 
 class DateHelper {
   static DateHelper instance = DateHelper();
@@ -7,11 +6,6 @@ class DateHelper {
   getFormattedDbDate(DateTime date) {
     final DateTime now = date;
     return "${now.year}-${now.month}-${now.day}";
-  }
-
-  String getFormattedAppUsage(InstalledAppData app) {
-    String appUsed = getFormattedTimeFromSeconds(app.appDuration.inSeconds);
-    return appUsed;
   }
 
   String getFormattedTimeFromSeconds(int value) {

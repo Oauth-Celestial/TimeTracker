@@ -50,7 +50,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                 closedColor: Colors.transparent,
                 openColor: Colors.transparent,
                 openBuilder: ((context, action) {
-                  return HomePage();
+                  return Container();
                 }),
                 closedBuilder: (context, action) {
                   return Text(

@@ -52,11 +52,8 @@ class _DeviceUsagePage extends State<DeviceUsagePage> {
                   opacity: 0.8,
                   child: Container(
                     height: 200,
-                    child: Hero(
-                      tag: widget.lottiePath,
-                      child: Container(
-                        child: LottieBuilder.asset(widget.lottiePath),
-                      ),
+                    child: Container(
+                      child: LottieBuilder.asset(widget.lottiePath),
                     ),
                   ),
                 ),

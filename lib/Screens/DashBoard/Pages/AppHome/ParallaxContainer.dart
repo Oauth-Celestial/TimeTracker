@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:timetracker/Model/InstalledAppModel.dart';
+
 import 'package:timetracker/Screens/DashBoard/Pages/AppHome/HomePage.dart';
 import 'package:timetracker/Services/Helpers/DateHelper.dart';
 import 'package:timetracker/Services/RouteManager.dart';
@@ -11,14 +11,13 @@ class ParallaxContainer extends StatefulWidget {
   final double offset;
   final double i;
   final String text;
-  final InstalledAppData appData;
 
-  ParallaxContainer(
-      {required this.image,
-      required this.offset,
-      required this.i,
-      required this.text,
-      required this.appData});
+  ParallaxContainer({
+    required this.image,
+    required this.offset,
+    required this.i,
+    required this.text,
+  });
 
   @override
   _ParallaxContainerState createState() => _ParallaxContainerState();
@@ -32,7 +31,7 @@ class _ParallaxContainerState extends State<ParallaxContainer> {
 
   @override
   Widget build(BuildContext context) {
-    String appUsed = DateHelper.instance.getFormattedAppUsage(widget.appData);
+    //String appUsed = DateHelper.instance.getFormattedAppUsage(widget.appData);
     return Scaffold(
       body: GestureDetector(
         onTapDown: (value) {
@@ -96,7 +95,7 @@ class _ParallaxContainerState extends State<ParallaxContainer> {
                           // ),
 
                           child: Hero(
-                            tag: widget.appData.packageName,
+                            tag: "",
                             child: Container(
                                 child: widget.image,
                                 alignment: Alignment(0.0,
@@ -162,7 +161,7 @@ class _ParallaxContainerState extends State<ParallaxContainer> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 8.0),
                                 child: Text(
-                                  appUsed,
+                                  "",
                                   style: TextStyle(
                                     color: whiteText,
                                     fontSize: 25.0,
