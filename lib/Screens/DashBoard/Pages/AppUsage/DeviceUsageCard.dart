@@ -30,7 +30,7 @@ class DeviceUsageCard extends StatelessWidget {
                 ),
                 shadowColor: Colors.grey,
                 child: Container(
-                  height: 130,
+                  height: 80,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -44,19 +44,19 @@ class DeviceUsageCard extends StatelessWidget {
                             if (snapshot.hasData) {
                               return Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 15, left: 5),
+                                    const EdgeInsets.only(top: 18, left: 5),
                                 child: ClipOval(
                                     child: Container(
-                                  width: 50,
-                                  height: 50,
+                                  width: 40,
+                                  height: 40,
                                   child: snapshot.data,
                                 )),
                               );
                             } else {
                               return ClipOval(
                                 child: Container(
-                                    width: 50,
-                                    height: 50,
+                                    width: 40,
+                                    height: 40,
                                     child: Shimmer.fromColors(
                                       baseColor: Colors.black,
                                       highlightColor: Colors.grey,
@@ -69,49 +69,53 @@ class DeviceUsageCard extends StatelessWidget {
                             }
                           }),
                       SizedBox(
-                        width: 20,
+                        width: 30,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 20, right: 10),
+                        padding: const EdgeInsets.only(top: 15, right: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(appdata.appName,
                                 textAlign: TextAlign.center,
                                 style: FontStyleHelper.shared
-                                    .getPopppinsBold(Colors.yellowAccent, 18)),
+                                    .getPopppinsBold(Colors.yellowAccent, 16)),
                             SizedBox(
-                              height: 14,
+                              height: 10,
                             ),
                             Text(
                               appdata.appDuration,
                               textAlign: TextAlign.center,
                               style: FontStyleHelper.shared
-                                  .getPopppinsMedium(whiteText, 15),
+                                  .getPopppinsMedium(whiteText, 14),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("${appdata.launchCount}",
-                                      style: FontStyleHelper.shared
-                                          .getPopppinsBold(whiteText, 15)),
-                                  SizedBox(
-                                    height: 3,
-                                  ),
-                                  Text("Unlock",
-                                      style: FontStyleHelper.shared
-                                          .getPopppinsBold(whiteText, 15))
-                                ],
-                              ),
-                            )
                           ],
                         ),
                       ),
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.centerRight,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.lock_open_rounded,
+                                size: 18,
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text("${appdata.launchCount} Launch",
+                                  style: FontStyleHelper.shared
+                                      .getPopppinsBold(whiteText, 13)),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 30,
+                      )
                     ],
                   ),
                   decoration: BoxDecoration(
@@ -125,12 +129,12 @@ class DeviceUsageCard extends StatelessWidget {
                 Shimmer.fromColors(
                     baseColor: Colors.transparent,
                     highlightColor: Colors.white.withOpacity(0.3),
-                    period: Duration(seconds: 3),
+                    period: Duration(seconds: 5),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Container(
                         color: Colors.black,
-                        height: 130,
+                        height: 80,
                       ),
                     )),
               ]
@@ -139,7 +143,9 @@ class DeviceUsageCard extends StatelessWidget {
         );
       },
       openBuilder: ((context, action) {
-        return AppDetailPage();
+        return AppDetailPage(
+          appdata: appdata,
+        );
       }),
     );
   }

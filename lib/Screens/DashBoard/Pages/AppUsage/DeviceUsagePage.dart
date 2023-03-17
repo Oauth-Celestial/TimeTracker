@@ -143,8 +143,12 @@ class _DeviceUsagePage extends State<DeviceUsagePage> {
                       );
                     } else {
                       return Container(
+                        alignment: Alignment.center,
                         height: 100,
-                        color: Colors.white,
+                        color: Colors.transparent,
+                        child: CircularProgressIndicator(
+                          color: amber,
+                        ),
                       );
                     }
                   }),

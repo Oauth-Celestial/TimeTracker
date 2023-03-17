@@ -72,12 +72,15 @@ class DataBaseHelper {
         [date]);
     for (Map<dynamic, dynamic> record in records) {
       // print(record["appPackageName"]);
-      usedApps.add(AppModelData(
-          appName: record["appName"],
-          appDuration: DateHelper.instance
-              .getFormattedTimeFromSeconds(int.parse(record["appDuration"])),
-          appPackageName: record["appPackageName"],
-          launchCount: record["launchCount"]));
+      usedApps.add(
+        AppModelData(
+            appName: record["appName"],
+            appDuration: DateHelper.instance
+                .getFormattedTimeFromSeconds(int.parse(record["appDuration"])),
+            appPackageName: record["appPackageName"],
+            launchCount: record["launchCount"],
+            lastUsedOn: record["lastActive"]),
+      );
     }
     return usedApps;
   }
