@@ -94,10 +94,12 @@ class DataBaseHelper {
         """SELECT SUM(CAST(appDuration as int)) as deviceUsage  FROM DailyUsage WHERE usedOn = ? AND appPackageName NOT LIKE '%launcher%'""";
     List<Map>? records = await db.rawQuery(sql, [date]);
     print("App Data is   $records");
-    for (Map<dynamic, dynamic> record in records) {
-      deviceUsage = DateHelper.instance
-          .getFormattedTimeFromSeconds(record["deviceUsage"] as int);
-    }
+    try {
+      for (Map<dynamic, dynamic> record in records) {
+        deviceUsage = DateHelper.instance
+            .getFormattedTimeFromSeconds(record["deviceUsage"] as int);
+      }
+    } catch (e) {}
     return deviceUsage;
   }
 }
