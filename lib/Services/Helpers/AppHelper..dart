@@ -7,6 +7,7 @@ class AppHelper {
 
   Future<Widget> getAppIconFromPackage(String appPackageName) async {
     Application? app = await DeviceApps.getApp(appPackageName, true);
+
     return Image.memory((app as ApplicationWithIcon).icon);
   }
 }

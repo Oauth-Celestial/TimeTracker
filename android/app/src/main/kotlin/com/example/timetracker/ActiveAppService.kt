@@ -67,6 +67,15 @@ class ActiveAppService: Service() {
         try {
             var appUsage:Int =  DatabaseHandler.instance.getAppDuration(currentApp,appName)
             var appCount:Int = DatabaseHandler.instance.getAppLaunchCount(currentApp,appName)
+            var isFocusModeApp = DatabaseHandler.instance.inFocusMode(currentApp);
+            var focusModeAppDuration = -1
+            if (isFocusModeApp){
+                focusModeAppDuration = DatabaseHandler.instance.getFocusModeDurationFor(currentApp);
+                if(appUsage > focusModeAppDuration ){
+                    Log.e("Close Focus App",currentApp)
+                    closeFocusModeApp()
+                }
+            }
 
             if (previousApp != currentApp){
                 appCount += 1
@@ -139,9 +148,6 @@ class ActiveAppService: Service() {
 
             mNotificationManager.notify(mNotificationId,notification);
 
-
-
-
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }
@@ -211,8 +217,16 @@ class ActiveAppService: Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d("Ravi", "onStartCommand: Started")
         generateForegroundNotification()
-        startContinue()
+
         return super.onStartCommand(intent, flags, startId)
+    }
+
+    fun closeFocusModeApp(){
+        val startMain = Intent(Intent.ACTION_MAIN)
+        startMain.addCategory(Intent.CATEGORY_HOME)
+        startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        Toast.makeText(this, "Daily Usage Reached", Toast.LENGTH_SHORT).show()
+        this.startActivity(startMain)
     }
 
     fun closeRestrictedApp(){
@@ -275,7 +289,10 @@ class ActiveAppService: Service() {
 //            }
 //            builder.color =
             notification = builder.build()
+
             startForeground(mNotificationId, notification)
+            startContinue()
+
         }
 
 

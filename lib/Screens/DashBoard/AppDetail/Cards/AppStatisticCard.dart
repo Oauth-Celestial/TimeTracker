@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:timetracker/Model/AppModel.dart';
-import 'package:timetracker/Screens/DashBoard/AppDetail/AppUsageCard.dart';
+import 'package:timetracker/Screens/DashBoard/AppDetail/Cards/AppUsageCard.dart';
 import 'package:timetracker/Services/Helpers/FontStyleHelper.dart';
 import 'package:timetracker/Services/Theme/ColorConstant.dart';
 
-class FocusModeCard extends StatelessWidget {
+class AppStatisticsCard extends StatelessWidget {
   double leftPadding = 20;
   AppModelData appdata;
-  FocusModeCard({required this.appdata});
+  AppStatisticsCard({required this.appdata});
   @override
   Widget build(BuildContext context) {
     return Padding(

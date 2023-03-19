@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:timetracker/Controller/DeviceUsageController.dart';
+import 'package:timetracker/Controller/EnableFocusModeController.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Controller/OnBoardingController.dart';
 import 'package:timetracker/Controller/UserTrackerController.dart';
@@ -36,7 +37,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserTrackerController()),
         ChangeNotifierProvider(create: (_) => InstalledAppController()),
         ChangeNotifierProvider(create: (_) => OnBoardingController()),
-        ChangeNotifierProvider(create: (_) => DeviceUsageController())
+        ChangeNotifierProvider(create: (_) => DeviceUsageController()),
+        ChangeNotifierProvider(create: (_) => EnableFocusModeController()),
       ],
       builder: ((context, child) {
         return ChangeNotifierProvider(

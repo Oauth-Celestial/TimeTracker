@@ -5,9 +5,10 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timetracker/HelperWidget/FloatingAnimation.dart';
 import 'package:timetracker/Model/AppModel.dart';
-import 'package:timetracker/Screens/DashBoard/AppDetail/AppDetailCard.dart';
-import 'package:timetracker/Screens/DashBoard/AppDetail/AppStatisticCard.dart';
-import 'package:timetracker/Screens/DashBoard/AppDetail/AppUsageCard.dart';
+import 'package:timetracker/Screens/DashBoard/AppDetail/Cards/AppDetailCard.dart';
+import 'package:timetracker/Screens/DashBoard/AppDetail/Cards/AppStatisticCard.dart';
+import 'package:timetracker/Screens/DashBoard/AppDetail/Cards/AppUsageCard.dart';
+import 'package:timetracker/Screens/DashBoard/AppDetail/Cards/EnableFocusModeCard.dart';
 import 'package:timetracker/Services/Helpers/AppHelper..dart';
 import 'package:timetracker/Services/Helpers/FontStyleHelper.dart';
 import 'package:timetracker/Services/Theme/ColorConstant.dart';
@@ -86,6 +87,15 @@ class _AppDetailPageState extends State<AppDetailPage> {
                             description: "Set app usage duration for day",
                             hasDivider: true,
                             showButton: true,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          EnableFocusMode(
+                            title: "Focus Mode",
+                            description: "Add App To Focus Mode",
+                            showButton: true,
+                            hasDivider: true,
                           )
                         ],
                       ),

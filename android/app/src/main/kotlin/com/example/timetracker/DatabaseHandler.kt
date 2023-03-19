@@ -7,7 +7,7 @@ import android.util.Log
 import com.example.timetracker.Helpers.DateHelper
 import com.example.timetracker.Models.AppInfoModel
 
-class DatabaseHandler() {
+class DatabaseHandler {
 
 companion object{
     var instance:DatabaseHandler = DatabaseHandler()
@@ -15,6 +15,7 @@ companion object{
     var db:SQLiteDatabase? = null
     var dataBasePath:String? = null
     var dailyUsageTable:String = "DailyUsage"
+    var focusModeTable:String = "focusMode"
 
     fun openDataBase(dbPath:String){
         if (db == null){
@@ -38,7 +39,7 @@ companion object{
             }
 
         }
-        return appUsage.toInt();
+        return appUsage.toInt()
     }
 
     fun getAppLaunchCount(appPackageName:String,appName:String):Int{
@@ -59,6 +60,32 @@ companion object{
             appLaunch = 0
         }
 return  appLaunch
+
+    }
+
+
+    fun inFocusMode(appPackageName: String) : Boolean{
+        openDataBase(dataBasePath as String)
+        val sqlQuery = "SELECT * FROM $focusModeTable WHERE packageName = ?"
+        val c: Cursor = db!!.rawQuery(sqlQuery, arrayOf<String>(appPackageName))
+        return c.count > 0
+    }
+
+    fun getFocusModeDurationFor(appPackageName: String) : Int{
+        openDataBase(dataBasePath as String)
+        var appLimitedFor = -1
+        val sqlQuery = "SELECT * FROM $focusModeTable WHERE packageName = ?"
+        val c: Cursor = db!!.rawQuery(sqlQuery, arrayOf<String>(appPackageName))
+        if (c.count == 1){
+            var appUsage = ""
+            while(c.moveToNext()){
+                appUsage = c.getString(2)
+
+            }
+            appLimitedFor = appUsage.toInt()
+
+        }
+        return  appLimitedFor
 
     }
 
@@ -85,7 +112,7 @@ return  appLaunch
             val lastUsedTime = todaysTime.getQuoted()
 
 
-            val sql = "INSERT into DailyUsage (appName,appDuration,appPackageName,usedOn,lastActive,launchCount) VALUES(\"$appName\",\"0\",\"$appPackageName\",\"$todayDate\",$lastUsedTime,\"0\")";
+            val sql = "INSERT into DailyUsage (appName,appDuration,appPackageName,usedOn,lastActive,launchCount) VALUES(\"$appName\",\"0\",\"$appPackageName\",\"$todayDate\",$lastUsedTime,\"0\")"
 
             //val sql = "INSERT into DailyUsage (appName,appDuration,appPackageName,usedOn) VALUES($appdata,\"0\",\"$appPackageName\",\"$todayDate\")"
           Log.e("Insert Sql","$sql")
