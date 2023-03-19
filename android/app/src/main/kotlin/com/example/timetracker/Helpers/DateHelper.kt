@@ -1,5 +1,6 @@
 package com.example.timetracker.Helpers
 
+import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -22,6 +23,17 @@ class DateHelper {
         var todayDate:Date = Calendar.getInstance().time
         var formattedDate  = todayDate.toString("yyyy/MM/dd")
         return formattedDate
+    }
+
+    fun getCurrentSessionTime() : String{
+        val date = Date()
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+
+// Next, we'll format the date using the SimpleDateFormat object
+        val formattedTime = sdf.format(date)
+
+// Finally, we can use the formatted time string as needed
+        return formattedTime
     }
 
     fun getCurrentTime():String{

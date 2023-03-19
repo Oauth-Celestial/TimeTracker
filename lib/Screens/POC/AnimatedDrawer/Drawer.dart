@@ -1,6 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:timetracker/Screens/DashBoard/Pages/AppHome/HomePage.dart';
+import 'package:timetracker/Screens/POC/AppHome/HomePage.dart';
 import 'package:timetracker/Services/Theme/ColorConstant.dart';
 import 'package:timetracker/Services/Theme/ThemeSwitch.dart';
 

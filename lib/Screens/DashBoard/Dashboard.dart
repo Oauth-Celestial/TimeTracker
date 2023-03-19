@@ -6,7 +6,7 @@ import 'package:timetracker/Controller/DeviceUsageController.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
 import 'package:timetracker/Services/Helpers/FontStyleHelper.dart';
 import 'package:timetracker/Model/DashBoardCardModel.dart';
-import 'package:timetracker/Screens/DashBoard/Pages/DashBoard/DashBoardCard.dart';
+import 'package:timetracker/Screens/DashBoard/DeviceUsage/Cards/DashBoardCard.dart';
 import 'package:timetracker/Services/Helpers/DataBaseHelper.dart';
 import 'package:timetracker/Services/Helpers/DateHelper.dart';
 import 'package:timetracker/Services/Theme/ColorConstant.dart';

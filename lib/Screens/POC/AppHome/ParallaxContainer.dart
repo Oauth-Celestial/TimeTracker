@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-import 'package:timetracker/Screens/DashBoard/Pages/AppHome/HomePage.dart';
+import 'package:timetracker/Screens/POC/AppHome/HomePage.dart';
 import 'package:timetracker/Services/Helpers/DateHelper.dart';
 import 'package:timetracker/Services/RouteManager.dart';
 import 'package:timetracker/Services/Theme/ColorConstant.dart';

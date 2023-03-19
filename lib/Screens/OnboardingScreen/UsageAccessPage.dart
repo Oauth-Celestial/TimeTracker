@@ -6,7 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:timetracker/Services/Theme/ColorConstant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:timetracker/Screens/DashBoard/Pages/DashBoard/Dashboard.dart';
+import 'package:timetracker/Screens/DashBoard/Dashboard.dart';
 import 'package:timetracker/Services/RouteManager.dart';
 import 'package:timetracker/Services/TextConstant/TextConstant.dart';
 import 'package:usage_stats/usage_stats.dart';

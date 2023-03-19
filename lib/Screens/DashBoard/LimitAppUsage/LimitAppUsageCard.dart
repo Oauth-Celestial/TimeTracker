@@ -1,18 +1,18 @@
 import 'package:animations/animations.dart';
+import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timetracker/Model/AppModel.dart';
-import 'package:timetracker/Screens/DashBoard/AppDetail/AppDetailPage.dart';
+import 'package:timetracker/Screens/DashBoard/DeviceUsage/AppDetailPage.dart';
 import 'package:timetracker/Services/Helpers/AppHelper..dart';
 import 'package:timetracker/Services/Helpers/FontStyleHelper.dart';
 
 import '../../../../Services/Theme/ColorConstant.dart';
 
-class DeviceUsageCard extends StatelessWidget {
-  bool isForTopApp;
-  AppModelData appdata;
-  DeviceUsageCard({required this.isForTopApp, required this.appdata});
+class LimitAppUsageCard extends StatelessWidget {
+  Application appdata;
+  LimitAppUsageCard({required this.appdata});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class DeviceUsageCard extends StatelessWidget {
                       ),
                       FutureBuilder<Widget>(
                           future: AppHelper.instance
-                              .getAppIconFromPackage(appdata.appPackageName),
+                              .getAppIconFromPackage(appdata.packageName),
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               return Padding(
@@ -84,7 +84,7 @@ class DeviceUsageCard extends StatelessWidget {
                               height: 10,
                             ),
                             Text(
-                              appdata.appDuration,
+                              "",
                               textAlign: TextAlign.center,
                               style: FontStyleHelper.shared
                                   .getPopppinsMedium(whiteText, 14),
@@ -106,9 +106,6 @@ class DeviceUsageCard extends StatelessWidget {
                               SizedBox(
                                 height: 8,
                               ),
-                              Text("${appdata.launchCount} Launch",
-                                  style: FontStyleHelper.shared
-                                      .getPopppinsBold(whiteText, 13)),
                             ],
                           ),
                         ),
@@ -125,27 +122,12 @@ class DeviceUsageCard extends StatelessWidget {
                   ),
                 ),
               ),
-              if (isForTopApp) ...[
-                Shimmer.fromColors(
-                    baseColor: Colors.transparent,
-                    highlightColor: Colors.white.withOpacity(0.3),
-                    period: Duration(seconds: 5),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        color: Colors.black,
-                        height: 80,
-                      ),
-                    )),
-              ]
             ],
           ),
         );
       },
       openBuilder: ((context, action) {
-        return AppDetailPage(
-          appdata: appdata,
-        );
+        return Container();
       }),
     );
   }

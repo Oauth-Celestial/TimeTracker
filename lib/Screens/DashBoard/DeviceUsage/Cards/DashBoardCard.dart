@@ -8,8 +8,8 @@ import 'package:shimmer/shimmer.dart';
 import 'package:timetracker/Controller/DeviceUsageController.dart';
 import 'package:timetracker/Services/Helpers/FontStyleHelper.dart';
 import 'package:timetracker/Model/DashBoardCardModel.dart';
-import 'package:timetracker/Screens/DashBoard/Pages/AppUsage/DeviceUsagePage.dart';
-import 'package:timetracker/Screens/DashBoard/Pages/DashBoard/ParallexDelegate.dart';
+import 'package:timetracker/Screens/DashBoard/DeviceUsage/DeviceUsagePage.dart';
+import 'package:timetracker/Screens/POC/ParallexDelegate.dart';
 import 'package:timetracker/Services/RouteManager.dart';
 import 'package:timetracker/Services/Theme/ColorConstant.dart';
 

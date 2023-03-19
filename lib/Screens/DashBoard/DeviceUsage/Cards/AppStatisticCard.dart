@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timetracker/Model/AppModel.dart';
-import 'package:timetracker/Screens/DashBoard/AppDetail/Cards/AppUsageCard.dart';
+import 'package:timetracker/Screens/DashBoard/DeviceUsage/Cards/AppUsageCard.dart';
 import 'package:timetracker/Services/Helpers/FontStyleHelper.dart';
 import 'package:timetracker/Services/Theme/ColorConstant.dart';
 

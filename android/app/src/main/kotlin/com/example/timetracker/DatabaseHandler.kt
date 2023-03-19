@@ -16,6 +16,7 @@ companion object{
     var dataBasePath:String? = null
     var dailyUsageTable:String = "DailyUsage"
     var focusModeTable:String = "focusMode"
+    var appsesionTable:String = "appSession"
 
     fun openDataBase(dbPath:String){
         if (db == null){
@@ -123,6 +124,20 @@ return  appLaunch
             return appUsedFor
     }
 
+
+    fun insertAppSessionRecord(appPackageName: String,sessionStartedOn:String, sessionEndedOn:String){
+        openDataBase(dataBasePath as String)
+        val sql = "INSERT into $appsesionTable (packageName,startedAt,endOn) VALUES(${appPackageName.getQuoted()},${sessionStartedOn.getQuoted()},${sessionEndedOn.getQuoted()})"
+        db!!.execSQL(sql)
+        Log.e("Session Added ", "${appPackageName}")
+    }
+
+    fun updateCurrentSession(appPackageName: String,sessionStartedOn:String, sessionEndedOn:String){
+        openDataBase(dataBasePath as String)
+        val updateSql:String = "Update $appsesionTable SET endOn = ${sessionEndedOn.getQuoted()} WHERE startedAt = ${sessionStartedOn.getQuoted()}"
+        db!!.execSQL(updateSql)
+        Log.e("Session Updated ", " started At${sessionStartedOn} endon ${sessionEndedOn}")
+    }
 
 
     fun addOrUpdateAppDuration(appInfo:AppInfoModel){

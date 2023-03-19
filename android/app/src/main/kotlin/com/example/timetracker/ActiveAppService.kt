@@ -19,6 +19,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.example.timetracker.Helpers.AppRestrictWindow
+import com.example.timetracker.Helpers.DateHelper
 import com.example.timetracker.Models.AppInfoModel
 import java.util.*
 
@@ -29,6 +30,8 @@ class ActiveAppService: Service() {
     var window:AppRestrictWindow? = null
     var previousApp = ""
     var currentApp = ""
+    var sessionStartTime = ""
+    var appSession = 0
 
 
     private val mNotificationId = 123
@@ -41,9 +44,17 @@ class ActiveAppService: Service() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             previousApp = currentApp
+            currentApp = getTopPkgName(this)
+            if(sessionStartTime == ""){
+                sessionStartTime = DateHelper.instance.getCurrentSessionTime()
+                DatabaseHandler.instance.insertAppSessionRecord(currentApp,sessionStartTime,sessionStartTime)
 
-           currentApp = getTopPkgName(this)
+            }
+
+
             if(previousApp != currentApp){
+                sessionStartTime = ""
+
                 window?.close()
             }
         } else {
@@ -53,7 +64,9 @@ class ActiveAppService: Service() {
             previousApp = currentApp
             currentApp = tasks[0].processName
             if(previousApp != currentApp){
+                sessionStartTime = ""
                 window?.close()
+
             }
         }
         val packageManager: PackageManager = applicationContext.packageManager
@@ -80,6 +93,8 @@ class ActiveAppService: Service() {
             if (previousApp != currentApp){
                 appCount += 1
             }
+            val updatedSessionTime = DateHelper.instance.getCurrentSessionTime()
+            DatabaseHandler.instance.updateCurrentSession(currentApp,sessionStartTime,updatedSessionTime)
 
             DatabaseHandler.instance.addOrUpdateAppDuration(AppInfoModel(appName,currentApp,(appUsage +1).toString(),appCount.toString()))
             val icon: Drawable = this.packageManager.getApplicationIcon(currentApp)
