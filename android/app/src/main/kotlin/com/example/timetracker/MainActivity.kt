@@ -22,7 +22,7 @@ class MainActivity: FlutterActivity() {
                 val dbPath = hashMap["dbPath"]
                 Log.e("DbPath","$dbPath")//Get the argument based on the key passed from Flutter
                 DatabaseHandler.instance.dataBasePath = dbPath as String
-                DatabaseHandler.instance.openDataBase(dbPath as String)
+                DatabaseHandler.instance.openDataBase()
 //                DatabaseHandler.instance.clearTableData("DailyUsage")
 
 

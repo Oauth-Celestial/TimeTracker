@@ -20,8 +20,9 @@ class DashBoardCard extends StatelessWidget {
   // DashBoardCard({required this.scroll, required this.lottiePath});
 
   DashboardCardModel cardData;
+  Widget navigateTo;
 
-  DashBoardCard({required this.cardData});
+  DashBoardCard({required this.cardData, required this.navigateTo});
 
   final GlobalKey _backgroundImageKey = GlobalKey();
 
@@ -33,7 +34,7 @@ class DashBoardCard extends StatelessWidget {
         closedShape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         openBuilder: (context, action) {
-          return DeviceUsagePage(lottiePath: cardData.lottieFilePath);
+          return navigateTo;
         },
         closedBuilder: (context, action) {
           return Padding(

@@ -4,6 +4,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker/Controller/DeviceUsageController.dart';
 import 'package:timetracker/Controller/InstalledAppController.dart';
+import 'package:timetracker/Screens/DashBoard/DeviceUsage/DeviceUsagePage.dart';
+import 'package:timetracker/Screens/DashBoard/LimitAppUsage/LimitAppUsage.dart';
 import 'package:timetracker/Services/Helpers/FontStyleHelper.dart';
 import 'package:timetracker/Model/DashBoardCardModel.dart';
 import 'package:timetracker/Screens/DashBoard/DeviceUsage/Cards/DashBoardCard.dart';
@@ -53,8 +55,8 @@ class _DashBoardPageState extends State<DashBoardPage>
   void initState() {
     // TODO: implement initState
 
-    platform.invokeMethod("getForegroundPackage",
-        {"dbPath": DataBaseHelper.instance.dataBasePath});
+    // platform.invokeMethod("getForegroundPackage",
+    //     {"dbPath": DataBaseHelper.instance.dataBasePath});
     //Provider.of<InstalledAppController>(context, listen: false).getAppStats();
     String todaysDate = DateHelper.instance.getTodaysFormattedDate();
     DataBaseHelper.instance.getAllRecords(todaysDate);
@@ -139,8 +141,10 @@ class _DashBoardPageState extends State<DashBoardPage>
                         Scrollable(
                           viewportBuilder: (context, position) {
                             return DashBoardCard(
-                              cardData: dashBoardCards[0],
-                            );
+                                cardData: dashBoardCards[0],
+                                navigateTo: DeviceUsagePage(
+                                    lottiePath:
+                                        dashBoardCards[0].lottieFilePath));
                           },
                         ).animate().fadeIn(delay: Duration(milliseconds: 400)),
                         SizedBox(
@@ -150,6 +154,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                           viewportBuilder: (context, position) {
                             return DashBoardCard(
                               cardData: dashBoardCards[1],
+                              navigateTo: LimitAppUsage(),
                             );
                           },
                         ).animate().fadeIn(delay: Duration(milliseconds: 600)),
@@ -160,6 +165,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                           viewportBuilder: (context, position) {
                             return DashBoardCard(
                               cardData: dashBoardCards[2],
+                              navigateTo: LimitAppUsage(),
                             );
                           },
                         ).animate().fadeIn(delay: Duration(milliseconds: 800)),

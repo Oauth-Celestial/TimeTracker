@@ -17,8 +17,10 @@ companion object{
     var dailyUsageTable:String = "DailyUsage"
     var focusModeTable:String = "focusMode"
     var appsesionTable:String = "appSession"
+    var dbPath = "/data/user/0/com.example.timetracker/databases/tracker.db"
 
-    fun openDataBase(dbPath:String){
+    fun openDataBase(){
+
         if (db == null){
             db = SQLiteDatabase.openDatabase(dbPath,null,SQLiteDatabase.OPEN_READWRITE)
             Log.e("db","$db")
@@ -66,14 +68,14 @@ return  appLaunch
 
 
     fun inFocusMode(appPackageName: String) : Boolean{
-        openDataBase(dataBasePath as String)
+        openDataBase()
         val sqlQuery = "SELECT * FROM $focusModeTable WHERE packageName = ?"
         val c: Cursor = db!!.rawQuery(sqlQuery, arrayOf<String>(appPackageName))
         return c.count > 0
     }
 
     fun getFocusModeDurationFor(appPackageName: String) : Int{
-        openDataBase(dataBasePath as String)
+        openDataBase()
         var appLimitedFor = -1
         val sqlQuery = "SELECT * FROM $focusModeTable WHERE packageName = ?"
         val c: Cursor = db!!.rawQuery(sqlQuery, arrayOf<String>(appPackageName))
@@ -92,7 +94,7 @@ return  appLaunch
 
 
     fun getAppDuration(appPackageName:String,appName:String):Int {
-        openDataBase(dataBasePath as String)
+        openDataBase()
         var appUsedFor = 0
         var todayDate:String = DateHelper.instance.getTodaysDate()
         Log.e("Todays Date" ," Date for $appPackageName :-  $todayDate")
@@ -126,14 +128,14 @@ return  appLaunch
 
 
     fun insertAppSessionRecord(appPackageName: String,sessionStartedOn:String, sessionEndedOn:String){
-        openDataBase(dataBasePath as String)
+        openDataBase()
         val sql = "INSERT into $appsesionTable (packageName,startedAt,endOn) VALUES(${appPackageName.getQuoted()},${sessionStartedOn.getQuoted()},${sessionEndedOn.getQuoted()})"
         db!!.execSQL(sql)
         Log.e("Session Added ", "${appPackageName}")
     }
 
     fun updateCurrentSession(appPackageName: String,sessionStartedOn:String, sessionEndedOn:String){
-        openDataBase(dataBasePath as String)
+        openDataBase()
         val updateSql:String = "Update $appsesionTable SET endOn = ${sessionEndedOn.getQuoted()} WHERE startedAt = ${sessionStartedOn.getQuoted()}"
         db!!.execSQL(updateSql)
         Log.e("Session Updated ", " started At${sessionStartedOn} endon ${sessionEndedOn}")
@@ -141,7 +143,7 @@ return  appLaunch
 
 
     fun addOrUpdateAppDuration(appInfo:AppInfoModel){
-        openDataBase(dataBasePath as String)
+        openDataBase()
         if(db != null){
             var todayDate:String = DateHelper.instance.getTodaysDate()
             var todaysTime:String = DateHelper.instance.getCurrentTime()
@@ -164,14 +166,14 @@ return  appLaunch
 
     fun clearTableData(tableName:String){
 
-        openDataBase(dataBasePath as String)
+        openDataBase()
         if(db != null){
             db!!.execSQL("Delete from $tableName")
         }
     }
 
     fun getAllApps(){
-        openDataBase(dataBasePath as String)
+        openDataBase()
         if (db != null){
 
             val c: Cursor = db!!.rawQuery("select * from $dailyUsageTable ", null)
