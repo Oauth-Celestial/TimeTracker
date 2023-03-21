@@ -55,8 +55,8 @@ class _DashBoardPageState extends State<DashBoardPage>
   void initState() {
     // TODO: implement initState
 
-    // platform.invokeMethod("getForegroundPackage",
-    //     {"dbPath": DataBaseHelper.instance.dataBasePath});
+     platform.invokeMethod("getForegroundPackage",
+         {"dbPath": DataBaseHelper.instance.dataBasePath});
     //Provider.of<InstalledAppController>(context, listen: false).getAppStats();
     String todaysDate = DateHelper.instance.getTodaysFormattedDate();
     DataBaseHelper.instance.getAllRecords(todaysDate);
