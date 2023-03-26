@@ -70,9 +70,6 @@ class InstalledAppCard extends StatelessWidget {
                   onTap: () {
                     showModalBottomSheet(
                         backgroundColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(10))),
                         context: context,
                         builder: ((context) {
                           return Theme(
